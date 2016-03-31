@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0CB25C1D4B758B58BD0B063C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77AEF81FB5932F3795664450 /* Pods.framework */; };
+		3BF269C91CACF9D600173221 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF269C81CACF9D600173221 /* BaseViewController.m */; };
+		3BF269CC1CACFA6700173221 /* RootTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF269CB1CACFA6700173221 /* RootTabBarController.m */; };
 		3BFFAE521CACF7F40099D766 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFFAE511CACF7F30099D766 /* main.m */; };
 		3BFFAE551CACF7F40099D766 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFFAE541CACF7F40099D766 /* AppDelegate.m */; };
 		3BFFAE581CACF7F40099D766 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFFAE571CACF7F40099D766 /* ViewController.m */; };
@@ -35,6 +38,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3BF269C71CACF9D600173221 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
+		3BF269C81CACF9D600173221 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
+		3BF269CA1CACFA6700173221 /* RootTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootTabBarController.h; sourceTree = "<group>"; };
+		3BF269CB1CACFA6700173221 /* RootTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootTabBarController.m; sourceTree = "<group>"; };
 		3BFFAE4D1CACF7F30099D766 /* SchoolMarket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SchoolMarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BFFAE511CACF7F30099D766 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3BFFAE531CACF7F40099D766 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -51,6 +58,9 @@
 		3BFFAE711CACF7F40099D766 /* SchoolMarketUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SchoolMarketUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BFFAE751CACF7F40099D766 /* SchoolMarketUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolMarketUITests.m; sourceTree = "<group>"; };
 		3BFFAE771CACF7F40099D766 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		77AEF81FB5932F3795664450 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD44FC6465AFA88FAE9D0F6D /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		FA0952D30943B7CCF9901A8D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CB25C1D4B758B58BD0B063C /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +89,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3BF269C31CACF9B800173221 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3BF269C71CACF9D600173221 /* BaseViewController.h */,
+				3BF269C81CACF9D600173221 /* BaseViewController.m */,
+				3BF269CA1CACFA6700173221 /* RootTabBarController.h */,
+				3BF269CB1CACFA6700173221 /* RootTabBarController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		3BF269C41CACF9B800173221 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3BF269C51CACF9B800173221 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		3BF269C61CACF9B800173221 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		3BFFAE441CACF7F30099D766 = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +128,8 @@
 				3BFFAE691CACF7F40099D766 /* SchoolMarketTests */,
 				3BFFAE741CACF7F40099D766 /* SchoolMarketUITests */,
 				3BFFAE4E1CACF7F30099D766 /* Products */,
+				7E62BEA83E81D6CDBBE73E50 /* Pods */,
+				45B8B766276E0E844AC67D61 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,6 +146,10 @@
 		3BFFAE4F1CACF7F30099D766 /* SchoolMarket */ = {
 			isa = PBXGroup;
 			children = (
+				3BF269C31CACF9B800173221 /* Controller */,
+				3BF269C41CACF9B800173221 /* Model */,
+				3BF269C51CACF9B800173221 /* Utils */,
+				3BF269C61CACF9B800173221 /* View */,
 				3BFFAE531CACF7F40099D766 /* AppDelegate.h */,
 				3BFFAE541CACF7F40099D766 /* AppDelegate.m */,
 				3BFFAE561CACF7F40099D766 /* ViewController.h */,
@@ -140,6 +189,23 @@
 			path = SchoolMarketUITests;
 			sourceTree = "<group>";
 		};
+		45B8B766276E0E844AC67D61 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				77AEF81FB5932F3795664450 /* Pods.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7E62BEA83E81D6CDBBE73E50 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AD44FC6465AFA88FAE9D0F6D /* Pods.debug.xcconfig */,
+				FA0952D30943B7CCF9901A8D /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -147,9 +213,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3BFFAE7A1CACF7F40099D766 /* Build configuration list for PBXNativeTarget "SchoolMarket" */;
 			buildPhases = (
+				F7EACF7EB207E2FBF23C3FEE /* Check Pods Manifest.lock */,
 				3BFFAE491CACF7F30099D766 /* Sources */,
 				3BFFAE4A1CACF7F30099D766 /* Frameworks */,
 				3BFFAE4B1CACF7F30099D766 /* Resources */,
+				6B7BE8297F06D564E34AECD0 /* Embed Pods Frameworks */,
+				D623B28F9EB1DF11B959F9D8 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -268,12 +337,62 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		6B7BE8297F06D564E34AECD0 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D623B28F9EB1DF11B959F9D8 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F7EACF7EB207E2FBF23C3FEE /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3BFFAE491CACF7F30099D766 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				3BFFAE581CACF7F40099D766 /* ViewController.m in Sources */,
+				3BF269CC1CACFA6700173221 /* RootTabBarController.m in Sources */,
+				3BF269C91CACF9D600173221 /* BaseViewController.m in Sources */,
 				3BFFAE551CACF7F40099D766 /* AppDelegate.m in Sources */,
 				3BFFAE521CACF7F40099D766 /* main.m in Sources */,
 			);
@@ -412,6 +531,7 @@
 		};
 		3BFFAE7B1CACF7F40099D766 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AD44FC6465AFA88FAE9D0F6D /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SchoolMarket/Info.plist;
@@ -423,6 +543,7 @@
 		};
 		3BFFAE7C1CACF7F40099D766 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA0952D30943B7CCF9901A8D /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SchoolMarket/Info.plist;
@@ -499,6 +620,7 @@
 				3BFFAE7C1CACF7F40099D766 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3BFFAE7D1CACF7F40099D766 /* Build configuration list for PBXNativeTarget "SchoolMarketTests" */ = {
 			isa = XCConfigurationList;
@@ -507,6 +629,7 @@
 				3BFFAE7F1CACF7F40099D766 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3BFFAE801CACF7F40099D766 /* Build configuration list for PBXNativeTarget "SchoolMarketUITests" */ = {
 			isa = XCConfigurationList;
@@ -515,6 +638,7 @@
 				3BFFAE821CACF7F40099D766 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

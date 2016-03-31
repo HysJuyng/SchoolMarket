@@ -1,12 +1,12 @@
-//
-//  BaseViewController.h
-//  SchoolMarket
-//
-//  Created by linjy on 16/3/31.
-//  Copyright © 2016年 linjy. All rights reserved.
-//
+/*
+ BaseViewController
+ */
 
 #import <UIKit/UIKit.h>
+
+#import "FMDB.h"
+#import "AFNetworking.h"
+#import "SDWebImage-umbrella.h"
 
 @interface BaseViewController : UIViewController
 
