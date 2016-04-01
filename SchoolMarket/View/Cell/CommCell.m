@@ -13,7 +13,7 @@
     if (self) {
         
         //商品数量默认为0
-        goodsNum = 0;
+        commNum = 0;
         
         //商品图片imageView
         self.commImgv = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height / 5 * 3)];
