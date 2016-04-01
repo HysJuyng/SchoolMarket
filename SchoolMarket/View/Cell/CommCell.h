@@ -14,7 +14,7 @@
 @interface CommCell : UICollectionViewCell
 {
     @private
-    int goodsNum;
+    int commNum;
 }
 @property (weak,nonatomic) UIButton *btnAdd;     //加按钮
 @property (weak,nonatomic) UIButton *btnMinus;    //减按钮

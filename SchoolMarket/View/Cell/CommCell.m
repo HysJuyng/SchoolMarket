@@ -62,11 +62,11 @@
 
 //增加商品数量
 - (void)setNum{
-    goodsNum++;
+    commNum++;
 }
 //获取商品数量
 - (int)getNum{
-    return goodsNum;
+    return commNum;
 }
 
 @end
