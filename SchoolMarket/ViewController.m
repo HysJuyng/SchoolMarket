@@ -3,7 +3,7 @@
  */
 
 #import "ViewController.h"
-#import "GoodsCell.h"
+#import "CommCell.h"
 
 @interface ViewController () <UICollectionViewDataSource,UICollectionViewDelegate>
 
@@ -21,10 +21,10 @@
     //设layout
     UICollectionViewLayout *layout = [[UICollectionViewFlowLayout alloc]init];
     //创建
-    self.cv = [[UICollectionView alloc]initWithFrame:CGRectMake(20, 80, 335, 300) collectionViewLayout:layout];
+    self.cv = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 80, self.view.frame.size.width, 300) collectionViewLayout:layout];
     self.cv.backgroundColor = [UIColor grayColor];
     //注册cell   用哪个cell写哪个
-    [self.cv registerClass:[GoodsCell class] forCellWithReuseIdentifier:@"cellid"];
+    [self.cv registerClass:[CommCell class] forCellWithReuseIdentifier:@"cellid"];
     //代理 数据源
     self.cv.delegate = self;
     self.cv.dataSource = self;
@@ -39,10 +39,12 @@
 //单元格
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSString *cellid = @"cellid";
-    GoodsCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellid forIndexPath:indexPath];
+    CommCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellid forIndexPath:indexPath];
 
-    
-    cell.lbValue.text = @"12das";
+    //数据
+    cell.lbName.text = @"comm";
+    cell.lbSpecification.text = @"500ml";
+    cell.lbPrice.text = @"price";
     //添加事件
     [cell.btnAdd addTarget:self action:@selector(click:) forControlEvents:(UIControlEventTouchUpInside)];
     cell.btnAdd.tag = indexPath.row;
@@ -51,18 +53,18 @@
 }
 //单元格大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake(120, 120);
+    return CGSizeMake(self.cv.frame.size.width / 4, self.cv.frame.size.width / 12 * 5);
 }
 //边距
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
-    return UIEdgeInsetsMake(0.1, 0.1, 0.1, 0.1);
+    return UIEdgeInsetsMake(0.1, 20, 10, 15);
 }
 //点击事件 （重用bug）
 - (void)click:(UIButton *)button {
     NSLog(@"%d",button.tag);
     
     //获取button所在的cell
-    GoodsCell *cell = (GoodsCell *)[button superview];
+    CommCell *cell = (CommCell *)[button superview];
     
     //操作
     [cell setNum];
@@ -71,7 +73,7 @@
         cell.btnMinus.hidden = false;
         cell.lbNum.hidden = false;
         cell.lbNum.text = [NSString stringWithFormat:@"%d",num];
-        cell.lbValue.hidden = true;
+        cell.lbPrice.hidden = true;
     }
     
 }
