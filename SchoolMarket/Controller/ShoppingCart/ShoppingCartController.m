@@ -1,21 +1,17 @@
 /*
- 主页
+ 购物车
  */
 
-#import "HomepageController.h"
+#import "ShoppingCartController.h"
 
-@interface HomepageController ()
-
-
+@interface ShoppingCartController ()
 
 @end
 
-@implementation HomepageController
+@implementation ShoppingCartController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
     
 }
 

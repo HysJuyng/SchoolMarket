@@ -13,20 +13,23 @@
     if (self) {
         
         //商品数量默认为0
-        commNum = 0;
+        self->commNum = 0;
         
         //商品图片imageView
-        self.commImgv = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height / 5 * 3)];
+        UIImageView *tempimgv = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height / 5 * 3)];
+        self.commImgv = tempimgv;
         self.commImgv.backgroundColor = [UIColor lightGrayColor];
         [self addSubview:self.commImgv];
         
         //商品名称
-        self.lbName = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height / 5 * 3, self.frame.size.width, self.frame.size.height / 20 * 3)];
+        UILabel *tempName = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height / 5 * 3, self.frame.size.width, self.frame.size.height / 20 * 3)];
+        self.lbName = tempName;
         self.lbName.font = [UIFont systemFontOfSize:self.lbName.frame.size.height];
         [self addSubview:self.lbName];
         
         //商品规格
-        self.lbSpecification = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height / 4 * 3, self.frame.size.width, self.frame.size.height / 20)];
+        UILabel *tempSpecification = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height / 4 * 3, self.frame.size.width, self.frame.size.height / 20)];
+        self.lbSpecification = tempSpecification;
         self.lbSpecification.font = [UIFont systemFontOfSize:self.lbSpecification.frame.size.height];
         [self addSubview:self.lbSpecification];
         
@@ -48,11 +51,13 @@
         [self addSubview:self.btnMinus];
         
         //价格lable
-        self.lbPrice = [[UILabel alloc]initWithFrame:CGRectMake(0, self.frame.size.height / 20 * 17, self.frame.size.width / 2, self.frame.size.width / 4)];
+        UILabel *tempPrice = [[UILabel alloc]initWithFrame:CGRectMake(0, self.frame.size.height / 20 * 17, self.frame.size.width / 2, self.frame.size.width / 4)];
+        self.lbPrice = tempPrice;
         [self addSubview:self.lbPrice];
         
         //数量lable
-        self.lbNum = [[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width / 4, self.frame.size.height / 20 * 17, self.frame.size.width / 2, self.frame.size.width / 4)];
+        UILabel *tempNum = [[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width / 4, self.frame.size.height / 20 * 17, self.frame.size.width / 2, self.frame.size.width / 4)];
+        self.lbNum = tempNum;
         self.lbNum.textAlignment = NSTextAlignmentCenter;
         self.lbNum.hidden = true;  //默认隐藏
         [self addSubview:self.lbNum];

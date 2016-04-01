@@ -18,17 +18,25 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    //设layout
-    UICollectionViewLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-    //创建
-    self.cv = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 80, self.view.frame.size.width, 300) collectionViewLayout:layout];
-    self.cv.backgroundColor = [UIColor grayColor];
-    //注册cell   用哪个cell写哪个
-    [self.cv registerClass:[CommCell class] forCellWithReuseIdentifier:@"cellid"];
-    //代理 数据源
-    self.cv.delegate = self;
-    self.cv.dataSource = self;
-    [self.view addSubview:self.cv];
+//    //设layout
+//    UICollectionViewLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+//    //创建
+//    self.cv = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 80, self.view.frame.size.width, 300) collectionViewLayout:layout];
+//    self.cv.backgroundColor = [UIColor grayColor];
+//    //注册cell   用哪个cell写哪个
+//    [self.cv registerClass:[CommCell class] forCellWithReuseIdentifier:@"cellid"];
+//    //代理 数据源
+//    self.cv.delegate = self;
+//    self.cv.dataSource = self;
+//    [self.view addSubview:self.cv];
+    
+    NSError *error;
+    NSString *pathfile = [[NSBundle mainBundle]pathForResource:@"data" ofType:@"json"];
+    NSData *jdata = [[NSData alloc]initWithContentsOfFile:pathfile];
+    id jsonobj = [NSJSONSerialization JSONObjectWithData:jdata options:kNilOptions error:&error];
+    NSDictionary *dic = jsonobj;
+    NSLog(@"%@",pathfile);
+    
     
 }
 

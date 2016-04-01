@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		0CB25C1D4B758B58BD0B063C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77AEF81FB5932F3795664450 /* Pods.framework */; };
 		3BBA9D851CAD13C100DF67B7 /* CommCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBA9D841CAD13C100DF67B7 /* CommCell.m */; };
+		3BD86DC21CAEABC8004B651B /* SuperMarketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD86DC11CAEABC8004B651B /* SuperMarketViewController.m */; };
+		3BD86DC61CAEACE0004B651B /* ShoppingCartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD86DC51CAEACE0004B651B /* ShoppingCartController.m */; };
+		3BD86DCA1CAEAD36004B651B /* PersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD86DC91CAEAD36004B651B /* PersonalViewController.m */; };
+		3BD86DCD1CAEB0DA004B651B /* Property List.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BD86DCC1CAEB0DA004B651B /* Property List.plist */; };
+		3BD86DD01CAEB4D7004B651B /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 3BD86DCF1CAEB4D7004B651B /* data.json */; };
 		3BF269C91CACF9D600173221 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF269C81CACF9D600173221 /* BaseViewController.m */; };
 		3BF269CC1CACFA6700173221 /* RootTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF269CB1CACFA6700173221 /* RootTabBarController.m */; };
 		3BF492591CAE68BB00FB8B10 /* HomepageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF492581CAE68BB00FB8B10 /* HomepageController.m */; };
@@ -42,6 +47,14 @@
 /* Begin PBXFileReference section */
 		3BBA9D831CAD13C100DF67B7 /* CommCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommCell.h; path = Cell/CommCell.h; sourceTree = "<group>"; };
 		3BBA9D841CAD13C100DF67B7 /* CommCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommCell.m; path = Cell/CommCell.m; sourceTree = "<group>"; };
+		3BD86DC01CAEABC8004B651B /* SuperMarketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperMarketViewController.h; path = SuperMarket/SuperMarketViewController.h; sourceTree = "<group>"; };
+		3BD86DC11CAEABC8004B651B /* SuperMarketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SuperMarketViewController.m; path = SuperMarket/SuperMarketViewController.m; sourceTree = "<group>"; };
+		3BD86DC41CAEACE0004B651B /* ShoppingCartController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShoppingCartController.h; path = ShoppingCart/ShoppingCartController.h; sourceTree = "<group>"; };
+		3BD86DC51CAEACE0004B651B /* ShoppingCartController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShoppingCartController.m; path = ShoppingCart/ShoppingCartController.m; sourceTree = "<group>"; };
+		3BD86DC81CAEAD36004B651B /* PersonalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalViewController.h; path = Personal/PersonalViewController.h; sourceTree = "<group>"; };
+		3BD86DC91CAEAD36004B651B /* PersonalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalViewController.m; path = Personal/PersonalViewController.m; sourceTree = "<group>"; };
+		3BD86DCC1CAEB0DA004B651B /* Property List.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Property List.plist"; sourceTree = "<group>"; };
+		3BD86DCF1CAEB4D7004B651B /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		3BF269C71CACF9D600173221 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		3BF269C81CACF9D600173221 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		3BF269CA1CACFA6700173221 /* RootTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootTabBarController.h; sourceTree = "<group>"; };
@@ -104,9 +117,48 @@
 			name = Cell;
 			sourceTree = "<group>";
 		};
+		3BD86DC31CAEABD9004B651B /* SuperMarket */ = {
+			isa = PBXGroup;
+			children = (
+				3BD86DC01CAEABC8004B651B /* SuperMarketViewController.h */,
+				3BD86DC11CAEABC8004B651B /* SuperMarketViewController.m */,
+			);
+			name = SuperMarket;
+			sourceTree = "<group>";
+		};
+		3BD86DC71CAEACE3004B651B /* ShoppingCart */ = {
+			isa = PBXGroup;
+			children = (
+				3BD86DC41CAEACE0004B651B /* ShoppingCartController.h */,
+				3BD86DC51CAEACE0004B651B /* ShoppingCartController.m */,
+			);
+			name = ShoppingCart;
+			sourceTree = "<group>";
+		};
+		3BD86DCB1CAEAD3A004B651B /* Personal */ = {
+			isa = PBXGroup;
+			children = (
+				3BD86DC81CAEAD36004B651B /* PersonalViewController.h */,
+				3BD86DC91CAEAD36004B651B /* PersonalViewController.m */,
+			);
+			name = Personal;
+			sourceTree = "<group>";
+		};
+		3BD86DCE1CAEB4D7004B651B /* json */ = {
+			isa = PBXGroup;
+			children = (
+				3BD86DCF1CAEB4D7004B651B /* data.json */,
+			);
+			name = json;
+			path = SchoolMarket/json;
+			sourceTree = "<group>";
+		};
 		3BF269C31CACF9B800173221 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				3BD86DCB1CAEAD3A004B651B /* Personal */,
+				3BD86DC71CAEACE3004B651B /* ShoppingCart */,
+				3BD86DC31CAEABD9004B651B /* SuperMarket */,
 				3BF4925A1CAE68C300FB8B10 /* Homepage */,
 				3BF269C71CACF9D600173221 /* BaseViewController.h */,
 				3BF269C81CACF9D600173221 /* BaseViewController.m */,
@@ -158,6 +210,7 @@
 		3BFFAE441CACF7F30099D766 = {
 			isa = PBXGroup;
 			children = (
+				3BD86DCE1CAEB4D7004B651B /* json */,
 				3BFFAE4F1CACF7F30099D766 /* SchoolMarket */,
 				3BFFAE691CACF7F40099D766 /* SchoolMarketTests */,
 				3BFFAE741CACF7F40099D766 /* SchoolMarketUITests */,
@@ -191,7 +244,6 @@
 				3BFFAE591CACF7F40099D766 /* Main.storyboard */,
 				3BFFAE5C1CACF7F40099D766 /* Assets.xcassets */,
 				3BFFAE5E1CACF7F40099D766 /* LaunchScreen.storyboard */,
-				3BFFAE611CACF7F40099D766 /* Info.plist */,
 				3BFFAE501CACF7F30099D766 /* Supporting Files */,
 			);
 			path = SchoolMarket;
@@ -200,7 +252,9 @@
 		3BFFAE501CACF7F30099D766 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3BFFAE611CACF7F40099D766 /* Info.plist */,
 				3BFFAE511CACF7F30099D766 /* main.m */,
+				3BD86DCC1CAEB0DA004B651B /* Property List.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -351,6 +405,8 @@
 			files = (
 				3BFFAE601CACF7F40099D766 /* LaunchScreen.storyboard in Resources */,
 				3BFFAE5D1CACF7F40099D766 /* Assets.xcassets in Resources */,
+				3BD86DCD1CAEB0DA004B651B /* Property List.plist in Resources */,
+				3BD86DD01CAEB4D7004B651B /* data.json in Resources */,
 				3BFFAE5B1CACF7F40099D766 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -424,12 +480,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BD86DC21CAEABC8004B651B /* SuperMarketViewController.m in Sources */,
 				3BFFAE581CACF7F40099D766 /* ViewController.m in Sources */,
 				3BF492591CAE68BB00FB8B10 /* HomepageController.m in Sources */,
+				3BD86DC61CAEACE0004B651B /* ShoppingCartController.m in Sources */,
 				3BF269CC1CACFA6700173221 /* RootTabBarController.m in Sources */,
 				3BF269C91CACF9D600173221 /* BaseViewController.m in Sources */,
 				3BFFAE551CACF7F40099D766 /* AppDelegate.m in Sources */,
 				3BBA9D851CAD13C100DF67B7 /* CommCell.m in Sources */,
+				3BD86DCA1CAEAD36004B651B /* PersonalViewController.m in Sources */,
 				3BFFAE521CACF7F40099D766 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -521,7 +580,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -558,7 +617,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -571,7 +630,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SchoolMarket/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.linjy.SchoolMarket;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -584,7 +643,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SchoolMarket/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.linjy.SchoolMarket;
 				PRODUCT_NAME = "$(TARGET_NAME)";

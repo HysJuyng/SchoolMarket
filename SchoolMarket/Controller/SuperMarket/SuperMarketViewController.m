@@ -1,16 +1,14 @@
 /*
- 主页
+ 超市
  */
 
-#import "HomepageController.h"
+#import "SuperMarketViewController.h"
 
-@interface HomepageController ()
-
-
+@interface SuperMarketViewController ()
 
 @end
 
-@implementation HomepageController
+@implementation SuperMarketViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

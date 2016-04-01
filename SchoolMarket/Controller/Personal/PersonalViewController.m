@@ -1,21 +1,17 @@
 /*
- 主页
+ 个人页面
  */
 
-#import "HomepageController.h"
+#import "PersonalViewController.h"
 
-@interface HomepageController ()
-
-
+@interface PersonalViewController ()
 
 @end
 
-@implementation HomepageController
+@implementation PersonalViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
     
 }
 

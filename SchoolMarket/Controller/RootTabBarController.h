@@ -1,12 +1,14 @@
-//
-//  RootTabBarController.h
-//  SchoolMarket
-//
-//  Created by linjy on 16/3/31.
-//  Copyright © 2016年 linjy. All rights reserved.
-//
+/*
+ tabbar
+ 四个页面：主页  超市  购物车  个人
+ */
 
 #import <UIKit/UIKit.h>
+
+#import "HomepageController.h"
+#import "SuperMarketViewController.h"
+#import "ShoppingCartController.h"
+#import "PersonalViewController.h"
 
 @interface RootTabBarController : UITabBarController
 

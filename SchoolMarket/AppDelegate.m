@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "RootTabBarController.h"
+
 #import "ViewController.h"
 
 @interface AppDelegate ()
@@ -18,9 +20,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    ViewController *vc = [[ViewController alloc]init];
-    UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:vc];
-    self.window.rootViewController = navi;
+//    ViewController *vc = [[ViewController alloc]init];
+//    UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:vc];
+//    self.window.rootViewController = navi;
+    
+    RootTabBarController *rootTabbar = [[RootTabBarController alloc] init];
+    self.window.rootViewController = rootTabbar;
     
     return YES;
 }
