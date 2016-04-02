@@ -20,6 +20,7 @@
     SuperMarketViewController *supermarketVC = [[SuperMarketViewController alloc] init];
     ShoppingCartController *shopcartVC = [[ShoppingCartController alloc] init];
     PersonalViewController *personalVC = [[PersonalViewController alloc] init];
+    
     //navigation化
     UINavigationController *homeNavi = [[UINavigationController alloc] initWithRootViewController:homeVC];
     UINavigationController *supermarketNavi = [[UINavigationController alloc] initWithRootViewController:supermarketVC];
@@ -28,6 +29,8 @@
     
     //添加vc到tabbar
     self.viewControllers = [[NSArray alloc] initWithObjects:homeNavi,supermarketNavi,shopcartNavi,personalNavi, nil];
+    
+    self.selectedIndex = 1;
     
     //各tabbar属性 (图片待补)
     UITabBarItem *home = [[UITabBarItem alloc]initWithTitle:@"主页" image:nil tag:1];
