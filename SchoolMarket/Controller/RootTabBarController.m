@@ -30,7 +30,7 @@
     //添加vc到tabbar
     self.viewControllers = [[NSArray alloc] initWithObjects:homeNavi,supermarketNavi,shopcartNavi,personalNavi, nil];
     
-    self.selectedIndex = 1;
+//    self.selectedIndex = 0;
     
     //各tabbar属性 (图片待补)
     UITabBarItem *home = [[UITabBarItem alloc]initWithTitle:@"主页" image:nil tag:1];
@@ -46,9 +46,6 @@
     
 }
 
-- (void)goSuperMarket {
-    self.selectedIndex = 1;
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

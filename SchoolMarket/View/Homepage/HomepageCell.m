@@ -12,13 +12,13 @@
     if (self) {
         
         //头图片
-        UIImageView *tempimgv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 10, 15, 15)];
+        UIImageView *tempimgv = [[UIImageView alloc]initWithFrame:CGRectMake(5, 10, 15, 15)];
         self.imgvTitle = tempimgv;
         self.imgvTitle.backgroundColor = [UIColor blueColor];
         [self addSubview:self.imgvTitle];
         
         //头标题
-        UILabel *temptitle = [[UILabel alloc]initWithFrame:CGRectMake(20, 10, 100, 15)];
+        UILabel *temptitle = [[UILabel alloc]initWithFrame:CGRectMake(25, 10, 100, 15)];
         self.lbTitle = temptitle;
         self.lbTitle.textAlignment = NSTextAlignmentLeft;
         [self addSubview:self.lbTitle];

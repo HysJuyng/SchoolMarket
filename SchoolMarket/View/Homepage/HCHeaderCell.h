@@ -8,4 +8,10 @@
 
 @interface HCHeaderCell : UITableViewCell
 
+@property (weak,nonatomic) UICollectionView *cvHeader;
+
+
+//初始化
+- (instancetype)initWithFrame:(CGRect)frame;
+
 @end
