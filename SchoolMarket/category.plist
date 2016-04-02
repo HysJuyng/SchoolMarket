@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>食品零食</string>
+		<key>subcategories</key>
+		<array>
+			<string>全部</string>
+			<string>饼干糕点</string>
+			<string>膨化食品</string>
+			<string>坚果炒货</string>
+			<string>果冻蜜饯</string>
+			<string>方便素食</string>
+			<string>糖果巧克力</string>
+		</array>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>饮料饮品</string>
+		<key>New item</key>
+		<string></string>
+	</dict>
+</array>
+</plist>

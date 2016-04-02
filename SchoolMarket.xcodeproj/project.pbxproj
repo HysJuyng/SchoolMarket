@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0BE93E4F1CAFB4C6003558CA /* category.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0BE93E4E1CAFB4C6003558CA /* category.plist */; };
 		0CB25C1D4B758B58BD0B063C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77AEF81FB5932F3795664450 /* Pods.framework */; };
 		3BBA9D851CAD13C100DF67B7 /* CommCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBA9D841CAD13C100DF67B7 /* CommCell.m */; };
 		3BD86DC21CAEABC8004B651B /* SuperMarketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD86DC11CAEABC8004B651B /* SuperMarketViewController.m */; };
 		3BD86DC61CAEACE0004B651B /* ShoppingCartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD86DC51CAEACE0004B651B /* ShoppingCartController.m */; };
 		3BD86DCA1CAEAD36004B651B /* PersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD86DC91CAEAD36004B651B /* PersonalViewController.m */; };
-		3BD86DCD1CAEB0DA004B651B /* Property List.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BD86DCC1CAEB0DA004B651B /* Property List.plist */; };
 		3BD86DD01CAEB4D7004B651B /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 3BD86DCF1CAEB4D7004B651B /* data.json */; };
 		3BF269C91CACF9D600173221 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF269C81CACF9D600173221 /* BaseViewController.m */; };
 		3BF269CC1CACFA6700173221 /* RootTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF269CB1CACFA6700173221 /* RootTabBarController.m */; };
@@ -45,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0BE93E4E1CAFB4C6003558CA /* category.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = category.plist; sourceTree = "<group>"; };
 		3BBA9D831CAD13C100DF67B7 /* CommCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommCell.h; path = Cell/CommCell.h; sourceTree = "<group>"; };
 		3BBA9D841CAD13C100DF67B7 /* CommCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommCell.m; path = Cell/CommCell.m; sourceTree = "<group>"; };
 		3BD86DC01CAEABC8004B651B /* SuperMarketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperMarketViewController.h; path = SuperMarket/SuperMarketViewController.h; sourceTree = "<group>"; };
@@ -53,7 +54,6 @@
 		3BD86DC51CAEACE0004B651B /* ShoppingCartController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShoppingCartController.m; path = ShoppingCart/ShoppingCartController.m; sourceTree = "<group>"; };
 		3BD86DC81CAEAD36004B651B /* PersonalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalViewController.h; path = Personal/PersonalViewController.h; sourceTree = "<group>"; };
 		3BD86DC91CAEAD36004B651B /* PersonalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalViewController.m; path = Personal/PersonalViewController.m; sourceTree = "<group>"; };
-		3BD86DCC1CAEB0DA004B651B /* Property List.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Property List.plist"; sourceTree = "<group>"; };
 		3BD86DCF1CAEB4D7004B651B /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		3BF269C71CACF9D600173221 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		3BF269C81CACF9D600173221 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
@@ -254,7 +254,7 @@
 			children = (
 				3BFFAE611CACF7F40099D766 /* Info.plist */,
 				3BFFAE511CACF7F30099D766 /* main.m */,
-				3BD86DCC1CAEB0DA004B651B /* Property List.plist */,
+				0BE93E4E1CAFB4C6003558CA /* category.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -404,8 +404,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BFFAE601CACF7F40099D766 /* LaunchScreen.storyboard in Resources */,
+				0BE93E4F1CAFB4C6003558CA /* category.plist in Resources */,
 				3BFFAE5D1CACF7F40099D766 /* Assets.xcassets in Resources */,
-				3BD86DCD1CAEB0DA004B651B /* Property List.plist in Resources */,
 				3BD86DD01CAEB4D7004B651B /* data.json in Resources */,
 				3BFFAE5B1CACF7F40099D766 /* Main.storyboard in Resources */,
 			);
