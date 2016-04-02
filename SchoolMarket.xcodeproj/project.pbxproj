@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0BE93E4F1CAFB4C6003558CA /* category.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0BE93E4E1CAFB4C6003558CA /* category.plist */; };
+		0B3E19F11CAFC1DD00C3A2AD /* SuperMarketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3E19F01CAFC1DD00C3A2AD /* SuperMarketViewController.m */; };
+		0B3E1A011CAFC3F300C3A2AD /* Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3E1A001CAFC3F300C3A2AD /* Categories.m */; };
+		0B3E1A031CAFC40E00C3A2AD /* categories.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0B3E1A021CAFC40E00C3A2AD /* categories.plist */; };
+		0B3E1A061CAFCA7100C3A2AD /* CategoriesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3E1A051CAFCA7100C3A2AD /* CategoriesCell.m */; };
 		0CB25C1D4B758B58BD0B063C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77AEF81FB5932F3795664450 /* Pods.framework */; };
 		3BBA9D851CAD13C100DF67B7 /* CommCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBA9D841CAD13C100DF67B7 /* CommCell.m */; };
-		3BD86DC21CAEABC8004B651B /* SuperMarketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD86DC11CAEABC8004B651B /* SuperMarketViewController.m */; };
 		3BD86DC61CAEACE0004B651B /* ShoppingCartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD86DC51CAEACE0004B651B /* ShoppingCartController.m */; };
 		3BD86DCA1CAEAD36004B651B /* PersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD86DC91CAEAD36004B651B /* PersonalViewController.m */; };
 		3BD86DD01CAEB4D7004B651B /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 3BD86DCF1CAEB4D7004B651B /* data.json */; };
@@ -45,11 +47,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0BE93E4E1CAFB4C6003558CA /* category.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = category.plist; sourceTree = "<group>"; };
+		0B3E19EF1CAFC1DD00C3A2AD /* SuperMarketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperMarketViewController.h; sourceTree = "<group>"; };
+		0B3E19F01CAFC1DD00C3A2AD /* SuperMarketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperMarketViewController.m; sourceTree = "<group>"; };
+		0B3E19FF1CAFC3F300C3A2AD /* Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Categories.h; sourceTree = "<group>"; };
+		0B3E1A001CAFC3F300C3A2AD /* Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Categories.m; sourceTree = "<group>"; };
+		0B3E1A021CAFC40E00C3A2AD /* categories.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = categories.plist; sourceTree = "<group>"; };
+		0B3E1A041CAFCA7100C3A2AD /* CategoriesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesCell.h; sourceTree = "<group>"; };
+		0B3E1A051CAFCA7100C3A2AD /* CategoriesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesCell.m; sourceTree = "<group>"; };
 		3BBA9D831CAD13C100DF67B7 /* CommCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommCell.h; path = Cell/CommCell.h; sourceTree = "<group>"; };
 		3BBA9D841CAD13C100DF67B7 /* CommCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommCell.m; path = Cell/CommCell.m; sourceTree = "<group>"; };
-		3BD86DC01CAEABC8004B651B /* SuperMarketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperMarketViewController.h; path = SuperMarket/SuperMarketViewController.h; sourceTree = "<group>"; };
-		3BD86DC11CAEABC8004B651B /* SuperMarketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SuperMarketViewController.m; path = SuperMarket/SuperMarketViewController.m; sourceTree = "<group>"; };
 		3BD86DC41CAEACE0004B651B /* ShoppingCartController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShoppingCartController.h; path = ShoppingCart/ShoppingCartController.h; sourceTree = "<group>"; };
 		3BD86DC51CAEACE0004B651B /* ShoppingCartController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShoppingCartController.m; path = ShoppingCart/ShoppingCartController.m; sourceTree = "<group>"; };
 		3BD86DC81CAEAD36004B651B /* PersonalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalViewController.h; path = Personal/PersonalViewController.h; sourceTree = "<group>"; };
@@ -108,6 +114,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B3E19EE1CAFC1DD00C3A2AD /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0B3E19EF1CAFC1DD00C3A2AD /* SuperMarketViewController.h */,
+				0B3E19F01CAFC1DD00C3A2AD /* SuperMarketViewController.m */,
+			);
+			name = Controller;
+			path = SuperMarket/Controller;
+			sourceTree = "<group>";
+		};
+		0B3E19F71CAFC38900C3A2AD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0B3E19FF1CAFC3F300C3A2AD /* Categories.h */,
+				0B3E1A001CAFC3F300C3A2AD /* Categories.m */,
+			);
+			name = Model;
+			path = SuperMarket/Model;
+			sourceTree = "<group>";
+		};
+		0B3E19FA1CAFC38900C3A2AD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0B3E1A041CAFCA7100C3A2AD /* CategoriesCell.h */,
+				0B3E1A051CAFCA7100C3A2AD /* CategoriesCell.m */,
+			);
+			name = View;
+			path = SuperMarket/View;
+			sourceTree = "<group>";
+		};
 		3BBA9D861CAD13C500DF67B7 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,8 +156,9 @@
 		3BD86DC31CAEABD9004B651B /* SuperMarket */ = {
 			isa = PBXGroup;
 			children = (
-				3BD86DC01CAEABC8004B651B /* SuperMarketViewController.h */,
-				3BD86DC11CAEABC8004B651B /* SuperMarketViewController.m */,
+				0B3E19F71CAFC38900C3A2AD /* Model */,
+				0B3E19FA1CAFC38900C3A2AD /* View */,
+				0B3E19EE1CAFC1DD00C3A2AD /* Controller */,
 			);
 			name = SuperMarket;
 			sourceTree = "<group>";
@@ -254,7 +291,7 @@
 			children = (
 				3BFFAE611CACF7F40099D766 /* Info.plist */,
 				3BFFAE511CACF7F30099D766 /* main.m */,
-				0BE93E4E1CAFB4C6003558CA /* category.plist */,
+				0B3E1A021CAFC40E00C3A2AD /* categories.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -404,7 +441,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BFFAE601CACF7F40099D766 /* LaunchScreen.storyboard in Resources */,
-				0BE93E4F1CAFB4C6003558CA /* category.plist in Resources */,
+				0B3E1A031CAFC40E00C3A2AD /* categories.plist in Resources */,
 				3BFFAE5D1CACF7F40099D766 /* Assets.xcassets in Resources */,
 				3BD86DD01CAEB4D7004B651B /* data.json in Resources */,
 				3BFFAE5B1CACF7F40099D766 /* Main.storyboard in Resources */,
@@ -480,14 +517,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3BD86DC21CAEABC8004B651B /* SuperMarketViewController.m in Sources */,
+				0B3E1A011CAFC3F300C3A2AD /* Categories.m in Sources */,
 				3BFFAE581CACF7F40099D766 /* ViewController.m in Sources */,
 				3BF492591CAE68BB00FB8B10 /* HomepageController.m in Sources */,
 				3BD86DC61CAEACE0004B651B /* ShoppingCartController.m in Sources */,
 				3BF269CC1CACFA6700173221 /* RootTabBarController.m in Sources */,
+				0B3E1A061CAFCA7100C3A2AD /* CategoriesCell.m in Sources */,
 				3BF269C91CACF9D600173221 /* BaseViewController.m in Sources */,
 				3BFFAE551CACF7F40099D766 /* AppDelegate.m in Sources */,
 				3BBA9D851CAD13C100DF67B7 /* CommCell.m in Sources */,
+				0B3E19F11CAFC1DD00C3A2AD /* SuperMarketViewController.m in Sources */,
 				3BD86DCA1CAEAD36004B651B /* PersonalViewController.m in Sources */,
 				3BFFAE521CACF7F40099D766 /* main.m in Sources */,
 			);
