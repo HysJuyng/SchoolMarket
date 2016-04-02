@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0CB25C1D4B758B58BD0B063C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77AEF81FB5932F3795664450 /* Pods.framework */; };
+		3B8946831CAF95A500959786 /* HomepageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B8946821CAF95A500959786 /* HomepageCell.m */; };
+		3B8946861CAFBA4400959786 /* HCLastFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B8946851CAFBA4400959786 /* HCLastFootView.m */; };
+		3B89468C1CAFC84900959786 /* HCHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B89468B1CAFC84900959786 /* HCHeaderView.m */; };
+		3B89468F1CAFF03C00959786 /* HCHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B89468E1CAFF03C00959786 /* HCHeaderCell.m */; };
 		3BBA9D851CAD13C100DF67B7 /* CommCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBA9D841CAD13C100DF67B7 /* CommCell.m */; };
 		3BD86DC21CAEABC8004B651B /* SuperMarketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD86DC11CAEABC8004B651B /* SuperMarketViewController.m */; };
 		3BD86DC61CAEACE0004B651B /* ShoppingCartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD86DC51CAEACE0004B651B /* ShoppingCartController.m */; };
@@ -45,6 +49,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3B8946811CAF95A500959786 /* HomepageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomepageCell.h; path = Homepage/HomepageCell.h; sourceTree = "<group>"; };
+		3B8946821CAF95A500959786 /* HomepageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomepageCell.m; path = Homepage/HomepageCell.m; sourceTree = "<group>"; };
+		3B8946841CAFBA4400959786 /* HCLastFootView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HCLastFootView.h; path = Homepage/HCLastFootView.h; sourceTree = "<group>"; };
+		3B8946851CAFBA4400959786 /* HCLastFootView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HCLastFootView.m; path = Homepage/HCLastFootView.m; sourceTree = "<group>"; };
+		3B89468A1CAFC84900959786 /* HCHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HCHeaderView.h; path = Homepage/HCHeaderView.h; sourceTree = "<group>"; };
+		3B89468B1CAFC84900959786 /* HCHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HCHeaderView.m; path = Homepage/HCHeaderView.m; sourceTree = "<group>"; };
+		3B89468D1CAFF03C00959786 /* HCHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HCHeaderCell.h; path = Homepage/HCHeaderCell.h; sourceTree = "<group>"; };
+		3B89468E1CAFF03C00959786 /* HCHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HCHeaderCell.m; path = Homepage/HCHeaderCell.m; sourceTree = "<group>"; };
 		3BBA9D831CAD13C100DF67B7 /* CommCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommCell.h; path = Cell/CommCell.h; sourceTree = "<group>"; };
 		3BBA9D841CAD13C100DF67B7 /* CommCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommCell.m; path = Cell/CommCell.m; sourceTree = "<group>"; };
 		3BD86DC01CAEABC8004B651B /* SuperMarketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperMarketViewController.h; path = SuperMarket/SuperMarketViewController.h; sourceTree = "<group>"; };
@@ -203,6 +215,14 @@
 		3BF4925E1CAE6BA800FB8B10 /* Homepage */ = {
 			isa = PBXGroup;
 			children = (
+				3B8946811CAF95A500959786 /* HomepageCell.h */,
+				3B8946821CAF95A500959786 /* HomepageCell.m */,
+				3B8946841CAFBA4400959786 /* HCLastFootView.h */,
+				3B8946851CAFBA4400959786 /* HCLastFootView.m */,
+				3B89468A1CAFC84900959786 /* HCHeaderView.h */,
+				3B89468B1CAFC84900959786 /* HCHeaderView.m */,
+				3B89468D1CAFF03C00959786 /* HCHeaderCell.h */,
+				3B89468E1CAFF03C00959786 /* HCHeaderCell.m */,
 			);
 			name = Homepage;
 			sourceTree = "<group>";
@@ -484,8 +504,12 @@
 				3BFFAE581CACF7F40099D766 /* ViewController.m in Sources */,
 				3BF492591CAE68BB00FB8B10 /* HomepageController.m in Sources */,
 				3BD86DC61CAEACE0004B651B /* ShoppingCartController.m in Sources */,
+				3B8946831CAF95A500959786 /* HomepageCell.m in Sources */,
+				3B8946861CAFBA4400959786 /* HCLastFootView.m in Sources */,
+				3B89468C1CAFC84900959786 /* HCHeaderView.m in Sources */,
 				3BF269CC1CACFA6700173221 /* RootTabBarController.m in Sources */,
 				3BF269C91CACF9D600173221 /* BaseViewController.m in Sources */,
+				3B89468F1CAFF03C00959786 /* HCHeaderCell.m in Sources */,
 				3BFFAE551CACF7F40099D766 /* AppDelegate.m in Sources */,
 				3BBA9D851CAD13C100DF67B7 /* CommCell.m in Sources */,
 				3BD86DCA1CAEAD36004B651B /* PersonalViewController.m in Sources */,

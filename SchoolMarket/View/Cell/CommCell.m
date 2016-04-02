@@ -53,6 +53,7 @@
         //价格lable
         UILabel *tempPrice = [[UILabel alloc]initWithFrame:CGRectMake(0, self.frame.size.height / 20 * 17, self.frame.size.width / 2, self.frame.size.width / 4)];
         self.lbPrice = tempPrice;
+        self.lbPrice.font = [UIFont systemFontOfSize:self.lbPrice.frame.size.height / 2];
         [self addSubview:self.lbPrice];
         
         //数量lable
