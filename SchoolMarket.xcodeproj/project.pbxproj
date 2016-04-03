@@ -15,6 +15,10 @@
 		0B3E1A031CAFC40E00C3A2AD /* categories.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0B3E1A021CAFC40E00C3A2AD /* categories.plist */; };
 		0B3E1A061CAFCA7100C3A2AD /* CategoriesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3E1A051CAFCA7100C3A2AD /* CategoriesCell.m */; };
 		0CB25C1D4B758B58BD0B063C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77AEF81FB5932F3795664450 /* Pods.framework */; };
+		3B8946831CAF95A500959786 /* HomepageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B8946821CAF95A500959786 /* HomepageCell.m */; };
+		3B8946861CAFBA4400959786 /* HCLastFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B8946851CAFBA4400959786 /* HCLastFootView.m */; };
+		3B89468C1CAFC84900959786 /* HCHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B89468B1CAFC84900959786 /* HCHeaderView.m */; };
+		3B89468F1CAFF03C00959786 /* HCHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B89468E1CAFF03C00959786 /* HCHeaderCell.m */; };
 		3BBA9D851CAD13C100DF67B7 /* CommCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBA9D841CAD13C100DF67B7 /* CommCell.m */; };
 		3BD86DC61CAEACE0004B651B /* ShoppingCartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD86DC51CAEACE0004B651B /* ShoppingCartController.m */; };
 		3BD86DCA1CAEAD36004B651B /* PersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD86DC91CAEAD36004B651B /* PersonalViewController.m */; };
@@ -255,6 +259,14 @@
 		3BF4925E1CAE6BA800FB8B10 /* Homepage */ = {
 			isa = PBXGroup;
 			children = (
+				3B8946811CAF95A500959786 /* HomepageCell.h */,
+				3B8946821CAF95A500959786 /* HomepageCell.m */,
+				3B8946841CAFBA4400959786 /* HCLastFootView.h */,
+				3B8946851CAFBA4400959786 /* HCLastFootView.m */,
+				3B89468A1CAFC84900959786 /* HCHeaderView.h */,
+				3B89468B1CAFC84900959786 /* HCHeaderView.m */,
+				3B89468D1CAFF03C00959786 /* HCHeaderCell.h */,
+				3B89468E1CAFF03C00959786 /* HCHeaderCell.m */,
 			);
 			name = Homepage;
 			sourceTree = "<group>";
@@ -536,9 +548,13 @@
 				3BFFAE581CACF7F40099D766 /* ViewController.m in Sources */,
 				3BF492591CAE68BB00FB8B10 /* HomepageController.m in Sources */,
 				3BD86DC61CAEACE0004B651B /* ShoppingCartController.m in Sources */,
+				3B8946831CAF95A500959786 /* HomepageCell.m in Sources */,
+				3B8946861CAFBA4400959786 /* HCLastFootView.m in Sources */,
+				3B89468C1CAFC84900959786 /* HCHeaderView.m in Sources */,
 				3BF269CC1CACFA6700173221 /* RootTabBarController.m in Sources */,
 				0B3E1A061CAFCA7100C3A2AD /* CategoriesCell.m in Sources */,
 				3BF269C91CACF9D600173221 /* BaseViewController.m in Sources */,
+				3B89468F1CAFF03C00959786 /* HCHeaderCell.m in Sources */,
 				3BFFAE551CACF7F40099D766 /* AppDelegate.m in Sources */,
 				0B3B117D1CB0B9F700E2B122 /* CategoriesView.m in Sources */,
 				3BBA9D851CAD13C100DF67B7 /* CommCell.m in Sources */,

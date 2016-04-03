@@ -46,6 +46,10 @@
     
 }
 
+- (void)goSuperMarket {
+    self.selectedIndex = 1;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     
