@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+// 告诉编译器，Categories是一个类
 @class Categories;
 
 @interface CategoriesCell : UITableViewCell

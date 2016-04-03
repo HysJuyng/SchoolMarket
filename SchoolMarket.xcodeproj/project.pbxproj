@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B3B11741CB0AE4E00E2B122 /* SubCategoriesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3B11731CB0AE4E00E2B122 /* SubCategoriesCell.m */; };
+		0B3B11771CB0B52C00E2B122 /* CategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3B11761CB0B52C00E2B122 /* CategoriesViewController.m */; };
+		0B3B117D1CB0B9F700E2B122 /* CategoriesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3B117C1CB0B9F700E2B122 /* CategoriesView.m */; };
 		0B3E19F11CAFC1DD00C3A2AD /* SuperMarketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3E19F01CAFC1DD00C3A2AD /* SuperMarketViewController.m */; };
 		0B3E1A011CAFC3F300C3A2AD /* Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3E1A001CAFC3F300C3A2AD /* Categories.m */; };
 		0B3E1A031CAFC40E00C3A2AD /* categories.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0B3E1A021CAFC40E00C3A2AD /* categories.plist */; };
@@ -47,6 +50,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0B3B11721CB0AE4E00E2B122 /* SubCategoriesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubCategoriesCell.h; sourceTree = "<group>"; };
+		0B3B11731CB0AE4E00E2B122 /* SubCategoriesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubCategoriesCell.m; sourceTree = "<group>"; };
+		0B3B11751CB0B52C00E2B122 /* CategoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesViewController.h; sourceTree = "<group>"; };
+		0B3B11761CB0B52C00E2B122 /* CategoriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesViewController.m; sourceTree = "<group>"; };
+		0B3B117B1CB0B9F700E2B122 /* CategoriesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesView.h; sourceTree = "<group>"; };
+		0B3B117C1CB0B9F700E2B122 /* CategoriesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesView.m; sourceTree = "<group>"; };
 		0B3E19EF1CAFC1DD00C3A2AD /* SuperMarketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperMarketViewController.h; sourceTree = "<group>"; };
 		0B3E19F01CAFC1DD00C3A2AD /* SuperMarketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperMarketViewController.m; sourceTree = "<group>"; };
 		0B3E19FF1CAFC3F300C3A2AD /* Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Categories.h; sourceTree = "<group>"; };
@@ -119,6 +128,8 @@
 			children = (
 				0B3E19EF1CAFC1DD00C3A2AD /* SuperMarketViewController.h */,
 				0B3E19F01CAFC1DD00C3A2AD /* SuperMarketViewController.m */,
+				0B3B11751CB0B52C00E2B122 /* CategoriesViewController.h */,
+				0B3B11761CB0B52C00E2B122 /* CategoriesViewController.m */,
 			);
 			name = Controller;
 			path = SuperMarket/Controller;
@@ -139,6 +150,10 @@
 			children = (
 				0B3E1A041CAFCA7100C3A2AD /* CategoriesCell.h */,
 				0B3E1A051CAFCA7100C3A2AD /* CategoriesCell.m */,
+				0B3B11721CB0AE4E00E2B122 /* SubCategoriesCell.h */,
+				0B3B11731CB0AE4E00E2B122 /* SubCategoriesCell.m */,
+				0B3B117B1CB0B9F700E2B122 /* CategoriesView.h */,
+				0B3B117C1CB0B9F700E2B122 /* CategoriesView.m */,
 			);
 			name = View;
 			path = SuperMarket/View;
@@ -401,7 +416,7 @@
 				TargetAttributes = {
 					3BFFAE4C1CACF7F30099D766 = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = 367RRF9ZJ7;
+						DevelopmentTeam = JB8VVE957X;
 					};
 					3BFFAE651CACF7F40099D766 = {
 						CreatedOnToolsVersion = 7.1;
@@ -525,8 +540,11 @@
 				0B3E1A061CAFCA7100C3A2AD /* CategoriesCell.m in Sources */,
 				3BF269C91CACF9D600173221 /* BaseViewController.m in Sources */,
 				3BFFAE551CACF7F40099D766 /* AppDelegate.m in Sources */,
+				0B3B117D1CB0B9F700E2B122 /* CategoriesView.m in Sources */,
 				3BBA9D851CAD13C100DF67B7 /* CommCell.m in Sources */,
 				0B3E19F11CAFC1DD00C3A2AD /* SuperMarketViewController.m in Sources */,
+				0B3B11771CB0B52C00E2B122 /* CategoriesViewController.m in Sources */,
+				0B3B11741CB0AE4E00E2B122 /* SubCategoriesCell.m in Sources */,
 				3BD86DCA1CAEAD36004B651B /* PersonalViewController.m in Sources */,
 				3BFFAE521CACF7F40099D766 /* main.m in Sources */,
 			);
@@ -668,11 +686,14 @@
 			baseConfigurationReference = AD44FC6465AFA88FAE9D0F6D /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SchoolMarket/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.linjy.SchoolMarket;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -681,11 +702,14 @@
 			baseConfigurationReference = FA0952D30943B7CCF9901A8D /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SchoolMarket/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.linjy.SchoolMarket;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
