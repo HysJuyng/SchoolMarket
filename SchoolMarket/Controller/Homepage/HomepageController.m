@@ -8,6 +8,9 @@
 
 @property (strong,nonatomic) UITableView *tableview;
 
+@property (nonatomic,strong) NSMutableArray *hotComms;
+@property (nonatomic,strong) NSMutableArray *recommendComms;
+@property (nonatomic,strong) NSMutableArray *adverImgs;
 @end
 
 @implementation HomepageController
@@ -39,7 +42,37 @@
     self.tableview.separatorStyle = NO;  //去掉分割线
     [self.view addSubview:self.tableview];
     
+    
+//    AFRequest *request = [[AFRequest alloc] init];
+//    //获取商品数据源
+//    //-------推荐
+//    NSString *recommendCommUrl = @"";
+//    [request getComm:recommendCommUrl andParameter:nil andCommBlock:^(NSMutableArray * _Nonnull comms) {
+//        self.recommendComms = comms;  //获得推荐商品
+//        //刷新推荐商品
+//        NSIndexPath *recommendSection = [NSIndexPath indexPathForRow:0 inSection:1];
+//        [self.tableview reloadRowsAtIndexPaths:[NSArray arrayWithObject:recommendSection] withRowAnimation:(UITableViewRowAnimationNone)];
+//    }];
+//    //-------热卖
+//    NSString *hotCommUrl = @"";
+//    [request getComm:hotCommUrl andParameter:nil andCommBlock:^(NSMutableArray * _Nonnull comms) {
+//        self.hotComms = comms;  //获得热卖商品
+//        //刷新热卖section
+//        NSIndexPath *hotSection = [NSIndexPath indexPathForRow:0 inSection:2];
+//        [self.tableview reloadRowsAtIndexPaths:[NSArray arrayWithObject:hotSection] withRowAnimation:(UITableViewRowAnimationNone)];
+//    }];
+//    //------广告
+//    self.adverImgs = [[NSMutableArray alloc] init];
+//    NSString *adverUrl = @"";
+//    [request getImgs:adverUrl andParameter:nil andImgsBlock:^(NSMutableArray * _Nonnull responseArr) {
+//        self.adverImgs = responseArr;  //获得广告图片
+//        //刷新广告区域视图
+//        [[self.tableview headerViewForSection:0] reloadInputViews];;  //测试 刷新头视图
+//    }];
+
 }
+
+
 
 //tableview分区区数 （1：头（广告、特价等按钮）  2：推荐   3:热卖  ）
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView; {
@@ -66,7 +99,7 @@
 //tableview头视图
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        HCHeaderView *hcHeaderView = [[HCHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 148) andImgs:nil];
+        HCHeaderView *hcHeaderView = [[HCHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 148) andImgs:self.adverImgs];
         hcHeaderView.lbTitle.text = @"title";
         return hcHeaderView;
     }
@@ -109,7 +142,11 @@
         //注册cv cell
         [cell.cvComm registerClass:[CommCell class] forCellWithReuseIdentifier:@"commcell"];
         //collection tag
-        cell.cvComm.tag = 102;
+        if (indexPath.section == 1) {
+            cell.cvComm.tag = 102;   //推荐
+        } else {
+            cell.cvComm.tag = 103;    //热卖
+        }
         
         //cell点击样式
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -150,9 +187,11 @@
     cell.lbName.text = @"comm";
     cell.lbSpecification.text = @"500ml";
     cell.lbPrice.text = @"羊2.50";
-    
+    [cell.btnAdd addTarget:self action:@selector(commCellClickAdd:) forControlEvents:(UIControlEventTouchUpInside)];
+    [cell.btnMinus addTarget:self action:@selector(commCellClickMinus:) forControlEvents:(UIControlEventTouchUpInside)];
     return cell;
 }
+
 //cv cell大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (collectionView.tag == 101 ) {  //若collectionview为头部的collectionview
@@ -168,6 +207,39 @@
     }
     //若collectionview为非头部的collectionview
     return UIEdgeInsetsMake(5, self.view.frame.size.width / 15, 5, 20);
+}
+
+//商品单元格 添加按钮事件 （重用bug）
+- (void)commCellClickAdd:(UIButton *)button {
+    //获取button所在的cell
+    CommCell *cell = (CommCell *)[button superview];
+    
+    //操作
+    [cell addNum];
+    int num = [cell commNum];
+    if (num > 0) {
+        cell.btnMinus.hidden = false;
+        cell.lbNum.hidden = false;
+        cell.lbNum.text = [NSString stringWithFormat:@"%d",num];
+        cell.lbPrice.hidden = true;
+    }
+}
+//商品单元格 减少按钮事件
+- (void)commCellClickMinus:(UIButton *)button {
+    //获取button所在的cell
+    CommCell *cell = (CommCell *)[button superview];
+    
+    //操作
+    [cell minusNum];
+    int num = [cell commNum];
+    if (num == 0) {
+        cell.btnMinus.hidden = true;
+        cell.lbNum.hidden = true;
+        cell.lbNum.text = @"";
+        cell.lbPrice.hidden = false;
+    } else {
+        cell.lbNum.text = [NSString stringWithFormat:@"%d",num];
+    }
 }
 
 //跳转到超市

@@ -24,8 +24,9 @@
 @property (weak,nonatomic) UILabel *lbName;    //商品名称
 @property (weak,nonatomic) UILabel *lbSpecification;    //商品规格
 
+@property int commNum;
 
-- (void)setNum;
-- (int)getNum;
+- (void)addNum;  //商品数量++
+- (void)minusNum; //商品数量--
 
 @end

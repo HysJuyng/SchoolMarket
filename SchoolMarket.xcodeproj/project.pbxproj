@@ -9,6 +9,15 @@
 /* Begin PBXBuildFile section */
 		0BE93E4F1CAFB4C6003558CA /* (null) in Resources */ = {isa = PBXBuildFile; };
 		0CB25C1D4B758B58BD0B063C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77AEF81FB5932F3795664450 /* Pods.framework */; };
+		3B4072F61CB36DE80058C084 /* CategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4072E91CB36DE80058C084 /* CategoriesViewController.m */; };
+		3B4072F71CB36DE80058C084 /* SuperMarketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4072EB1CB36DE80058C084 /* SuperMarketViewController.m */; };
+		3B4072F81CB36DE80058C084 /* Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4072EE1CB36DE80058C084 /* Categories.m */; };
+		3B4072F91CB36DE80058C084 /* CategoriesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4072F11CB36DE80058C084 /* CategoriesCell.m */; };
+		3B4072FA1CB36DE80058C084 /* CategoriesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4072F31CB36DE80058C084 /* CategoriesView.m */; };
+		3B4072FB1CB36DE80058C084 /* SubCategoriesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4072F51CB36DE80058C084 /* SubCategoriesCell.m */; };
+		3B4072FD1CB36E270058C084 /* categories.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B4072FC1CB36E270058C084 /* categories.plist */; };
+		3B4073001CB382CB0058C084 /* AFRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4072FF1CB382CB0058C084 /* AFRequest.m */; };
+		3B4073031CB38C930058C084 /* Comm.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4073021CB38C930058C084 /* Comm.m */; };
 		3B5889391CAFFDA400074B96 /* HCHeaderCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5889381CAFFDA400074B96 /* HCHeaderCollectionCell.m */; };
 		3B8946831CAF95A500959786 /* HomepageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B8946821CAF95A500959786 /* HomepageCell.m */; };
 		3B8946861CAFBA4400959786 /* HCLastFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B8946851CAFBA4400959786 /* HCLastFootView.m */; };
@@ -49,6 +58,23 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3B4072E81CB36DE80058C084 /* CategoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesViewController.h; sourceTree = "<group>"; };
+		3B4072E91CB36DE80058C084 /* CategoriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesViewController.m; sourceTree = "<group>"; };
+		3B4072EA1CB36DE80058C084 /* SuperMarketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperMarketViewController.h; sourceTree = "<group>"; };
+		3B4072EB1CB36DE80058C084 /* SuperMarketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperMarketViewController.m; sourceTree = "<group>"; };
+		3B4072ED1CB36DE80058C084 /* Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Categories.h; sourceTree = "<group>"; };
+		3B4072EE1CB36DE80058C084 /* Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Categories.m; sourceTree = "<group>"; };
+		3B4072F01CB36DE80058C084 /* CategoriesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesCell.h; sourceTree = "<group>"; };
+		3B4072F11CB36DE80058C084 /* CategoriesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesCell.m; sourceTree = "<group>"; };
+		3B4072F21CB36DE80058C084 /* CategoriesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesView.h; sourceTree = "<group>"; };
+		3B4072F31CB36DE80058C084 /* CategoriesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesView.m; sourceTree = "<group>"; };
+		3B4072F41CB36DE80058C084 /* SubCategoriesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubCategoriesCell.h; sourceTree = "<group>"; };
+		3B4072F51CB36DE80058C084 /* SubCategoriesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubCategoriesCell.m; sourceTree = "<group>"; };
+		3B4072FC1CB36E270058C084 /* categories.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = categories.plist; sourceTree = "<group>"; };
+		3B4072FE1CB382CB0058C084 /* AFRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFRequest.h; path = AFNetworking/AFRequest.h; sourceTree = "<group>"; };
+		3B4072FF1CB382CB0058C084 /* AFRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFRequest.m; path = AFNetworking/AFRequest.m; sourceTree = "<group>"; };
+		3B4073011CB38C930058C084 /* Comm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comm.h; sourceTree = "<group>"; };
+		3B4073021CB38C930058C084 /* Comm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comm.m; sourceTree = "<group>"; };
 		3B5889371CAFFDA400074B96 /* HCHeaderCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HCHeaderCollectionCell.h; path = Homepage/HCHeaderCollectionCell.h; sourceTree = "<group>"; };
 		3B5889381CAFFDA400074B96 /* HCHeaderCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HCHeaderCollectionCell.m; path = Homepage/HCHeaderCollectionCell.m; sourceTree = "<group>"; };
 		3B8946811CAF95A500959786 /* HomepageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomepageCell.h; path = Homepage/HomepageCell.h; sourceTree = "<group>"; };
@@ -70,6 +96,8 @@
 		3BF269C81CACF9D600173221 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		3BF269CA1CACFA6700173221 /* RootTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootTabBarController.h; sourceTree = "<group>"; };
 		3BF269CB1CACFA6700173221 /* RootTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootTabBarController.m; sourceTree = "<group>"; };
+		3BF35CFA1CB410B800BDF195 /* Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
+		3BF35CFB1CB411B600BDF195 /* HomepageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomepageView.h; path = Homepage/HomepageView.h; sourceTree = "<group>"; };
 		3BF492571CAE68BB00FB8B10 /* HomepageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomepageController.h; path = Homepage/HomepageController.h; sourceTree = "<group>"; };
 		3BF492581CAE68BB00FB8B10 /* HomepageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomepageController.m; path = Homepage/HomepageController.m; sourceTree = "<group>"; };
 		3BFFAE4D1CACF7F30099D766 /* SchoolMarket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SchoolMarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,40 +147,47 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0B3E19EE1CAFC1DD00C3A2AD /* Controller */ = {
+		3B4072E61CB36DE80058C084 /* SuperMarket */ = {
 			isa = PBXGroup;
 			children = (
-				0B3E19EF1CAFC1DD00C3A2AD /* SuperMarketViewController.h */,
-				0B3E19F01CAFC1DD00C3A2AD /* SuperMarketViewController.m */,
-				0B3B11751CB0B52C00E2B122 /* CategoriesViewController.h */,
-				0B3B11761CB0B52C00E2B122 /* CategoriesViewController.m */,
+				3B4072E71CB36DE80058C084 /* Controller */,
+				3B4072EC1CB36DE80058C084 /* Model */,
+				3B4072EF1CB36DE80058C084 /* View */,
 			);
-			name = Controller;
-			path = SuperMarket/Controller;
+			path = SuperMarket;
 			sourceTree = "<group>";
 		};
-		0B3E19F71CAFC38900C3A2AD /* Model */ = {
+		3B4072E71CB36DE80058C084 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				0B3E19FF1CAFC3F300C3A2AD /* Categories.h */,
-				0B3E1A001CAFC3F300C3A2AD /* Categories.m */,
+				3B4072E81CB36DE80058C084 /* CategoriesViewController.h */,
+				3B4072E91CB36DE80058C084 /* CategoriesViewController.m */,
+				3B4072EA1CB36DE80058C084 /* SuperMarketViewController.h */,
+				3B4072EB1CB36DE80058C084 /* SuperMarketViewController.m */,
 			);
-			name = Model;
-			path = SuperMarket/Model;
+			path = Controller;
 			sourceTree = "<group>";
 		};
-		0B3E19FA1CAFC38900C3A2AD /* View */ = {
+		3B4072EC1CB36DE80058C084 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				0B3E1A041CAFCA7100C3A2AD /* CategoriesCell.h */,
-				0B3E1A051CAFCA7100C3A2AD /* CategoriesCell.m */,
-				0B3B11721CB0AE4E00E2B122 /* SubCategoriesCell.h */,
-				0B3B11731CB0AE4E00E2B122 /* SubCategoriesCell.m */,
-				0B3B117B1CB0B9F700E2B122 /* CategoriesView.h */,
-				0B3B117C1CB0B9F700E2B122 /* CategoriesView.m */,
+				3B4072ED1CB36DE80058C084 /* Categories.h */,
+				3B4072EE1CB36DE80058C084 /* Categories.m */,
 			);
-			name = View;
-			path = SuperMarket/View;
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3B4072EF1CB36DE80058C084 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3B4072F01CB36DE80058C084 /* CategoriesCell.h */,
+				3B4072F11CB36DE80058C084 /* CategoriesCell.m */,
+				3B4072F21CB36DE80058C084 /* CategoriesView.h */,
+				3B4072F31CB36DE80058C084 /* CategoriesView.m */,
+				3B4072F41CB36DE80058C084 /* SubCategoriesCell.h */,
+				3B4072F51CB36DE80058C084 /* SubCategoriesCell.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		3BBA9D861CAD13C500DF67B7 /* Cell */ = {
@@ -162,16 +197,6 @@
 				3BBA9D841CAD13C100DF67B7 /* CommCell.m */,
 			);
 			name = Cell;
-			sourceTree = "<group>";
-		};
-		3BD86DC31CAEABD9004B651B /* SuperMarket */ = {
-			isa = PBXGroup;
-			children = (
-				0B3E19F71CAFC38900C3A2AD /* Model */,
-				0B3E19FA1CAFC38900C3A2AD /* View */,
-				0B3E19EE1CAFC1DD00C3A2AD /* Controller */,
-			);
-			name = SuperMarket;
 			sourceTree = "<group>";
 		};
 		3BD86DC71CAEACE3004B651B /* ShoppingCart */ = {
@@ -204,9 +229,9 @@
 		3BF269C31CACF9B800173221 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				3B4072E61CB36DE80058C084 /* SuperMarket */,
 				3BD86DCB1CAEAD3A004B651B /* Personal */,
 				3BD86DC71CAEACE3004B651B /* ShoppingCart */,
-				3BD86DC31CAEABD9004B651B /* SuperMarket */,
 				3BF4925A1CAE68C300FB8B10 /* Homepage */,
 				3BF269C71CACF9D600173221 /* BaseViewController.h */,
 				3BF269C81CACF9D600173221 /* BaseViewController.m */,
@@ -219,6 +244,9 @@
 		3BF269C41CACF9B800173221 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3B4073011CB38C930058C084 /* Comm.h */,
+				3B4073021CB38C930058C084 /* Comm.m */,
+				3BF35CFA1CB410B800BDF195 /* Model.h */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -226,6 +254,8 @@
 		3BF269C51CACF9B800173221 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				3B4072FE1CB382CB0058C084 /* AFRequest.h */,
+				3B4072FF1CB382CB0058C084 /* AFRequest.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -261,6 +291,7 @@
 				3B89468E1CAFF03C00959786 /* HCHeaderCell.m */,
 				3B5889371CAFFDA400074B96 /* HCHeaderCollectionCell.h */,
 				3B5889381CAFFDA400074B96 /* HCHeaderCollectionCell.m */,
+				3BF35CFB1CB411B600BDF195 /* HomepageView.h */,
 			);
 			name = Homepage;
 			sourceTree = "<group>";
@@ -300,8 +331,8 @@
 				3BFFAE561CACF7F40099D766 /* ViewController.h */,
 				3BFFAE571CACF7F40099D766 /* ViewController.m */,
 				3BFFAE591CACF7F40099D766 /* Main.storyboard */,
-				3BFFAE5C1CACF7F40099D766 /* Assets.xcassets */,
 				3BFFAE5E1CACF7F40099D766 /* LaunchScreen.storyboard */,
+				3BFFAE5C1CACF7F40099D766 /* Assets.xcassets */,
 				3BFFAE501CACF7F30099D766 /* Supporting Files */,
 			);
 			path = SchoolMarket;
@@ -310,6 +341,7 @@
 		3BFFAE501CACF7F30099D766 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3B4072FC1CB36E270058C084 /* categories.plist */,
 				3BFFAE611CACF7F40099D766 /* Info.plist */,
 				3BFFAE511CACF7F30099D766 /* main.m */,
 			);
@@ -462,6 +494,7 @@
 			files = (
 				3BFFAE601CACF7F40099D766 /* LaunchScreen.storyboard in Resources */,
 				0BE93E4F1CAFB4C6003558CA /* (null) in Resources */,
+				3B4072FD1CB36E270058C084 /* categories.plist in Resources */,
 				3BFFAE5D1CACF7F40099D766 /* Assets.xcassets in Resources */,
 				3BD86DD01CAEB4D7004B651B /* data.json in Resources */,
 				3BFFAE5B1CACF7F40099D766 /* Main.storyboard in Resources */,
@@ -537,26 +570,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B3E1A011CAFC3F300C3A2AD /* Categories.m in Sources */,
 				3BFFAE581CACF7F40099D766 /* ViewController.m in Sources */,
 				3BF492591CAE68BB00FB8B10 /* HomepageController.m in Sources */,
 				3BD86DC61CAEACE0004B651B /* ShoppingCartController.m in Sources */,
 				3B8946831CAF95A500959786 /* HomepageCell.m in Sources */,
+				3B4072F81CB36DE80058C084 /* Categories.m in Sources */,
 				3B8946861CAFBA4400959786 /* HCLastFootView.m in Sources */,
+				3B4072FA1CB36DE80058C084 /* CategoriesView.m in Sources */,
 				3B89468C1CAFC84900959786 /* HCHeaderView.m in Sources */,
 				3BF269CC1CACFA6700173221 /* RootTabBarController.m in Sources */,
-				0B3E1A061CAFCA7100C3A2AD /* CategoriesCell.m in Sources */,
 				3BF269C91CACF9D600173221 /* BaseViewController.m in Sources */,
+				3B4072F71CB36DE80058C084 /* SuperMarketViewController.m in Sources */,
+				3B4073031CB38C930058C084 /* Comm.m in Sources */,
 				3B89468F1CAFF03C00959786 /* HCHeaderCell.m in Sources */,
 				3BFFAE551CACF7F40099D766 /* AppDelegate.m in Sources */,
-				0B3B117D1CB0B9F700E2B122 /* CategoriesView.m in Sources */,
 				3BBA9D851CAD13C100DF67B7 /* CommCell.m in Sources */,
-				0B3E19F11CAFC1DD00C3A2AD /* SuperMarketViewController.m in Sources */,
-				0B3B11771CB0B52C00E2B122 /* CategoriesViewController.m in Sources */,
-				0B3B11741CB0AE4E00E2B122 /* SubCategoriesCell.m in Sources */,
 				3BD86DCA1CAEAD36004B651B /* PersonalViewController.m in Sources */,
 				3BFFAE521CACF7F40099D766 /* main.m in Sources */,
+				3B4072F61CB36DE80058C084 /* CategoriesViewController.m in Sources */,
 				3B5889391CAFFDA400074B96 /* HCHeaderCollectionCell.m in Sources */,
+				3B4072FB1CB36DE80058C084 /* SubCategoriesCell.m in Sources */,
+				3B4073001CB382CB0058C084 /* AFRequest.m in Sources */,
+				3B4072F91CB36DE80058C084 /* CategoriesCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
