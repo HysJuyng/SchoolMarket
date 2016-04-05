@@ -3,17 +3,29 @@
  */
 
 #import "SuperMarketViewController.h"
+#import "Categories.h"
+#import "CategoriesCell.h"
 
-@interface SuperMarketViewController ()
+@interface SuperMarketViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, weak) UIButton *openTimeView;
 @property (nonatomic, weak) UITableView *category;
-@property (nonatomic, weak) UIScrollView *detailCategory;
+@property (nonatomic, weak) UITableView *subCategory;
 @property (nonatomic, weak) UICollectionView *goods;
+
+@property (nonatomic, strong) NSArray *categoriesList;
 
 @end
 
 @implementation SuperMarketViewController
+
+- (NSArray *)categoriesList
+{
+    if (_categoriesList == nil) {
+        _categoriesList = [Categories categoriesList];
+    }
+    return _categoriesList;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -23,15 +35,27 @@
     
     [self BarButtonItem];
     [self OpenTimeView];
-    [self Category];
-    [self DetailCategory];
-    [self Goods];
+    [self CategoryTableView];
+    [self SubCategoryScrollView];
+    [self GoodsCollectionView];
     
+
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    
+#pragma mark - 设置tableView
+/**  数据源方法 */
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.categoriesList.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // 创建cell
+    CategoriesCell *cell = [CategoriesCell cellWithTableView:tableView];
+    // 通过数据模型，设置Cell内容
+    cell.mainCategories = self.categoriesList[indexPath.row];
+    return cell;
 }
 
 #pragma mark - 创建导航控制器Item
@@ -82,22 +106,24 @@
         
         // 设置时钟图片
         
-        
         [self.view addSubview:(self.openTimeView = openTimeView)];
     }
     return self.openTimeView;
 }
 
 /**  创建大分类category */
-- (UITableView *)Category
+- (UITableView *)CategoryTableView
 {
     if (self.category == nil) {
-        CGFloat categoryW = self.view.bounds.size.width * 0.3;
-        CGFloat categoryH = self.view.bounds.size.height * 2;
         CGFloat categoryY = CGRectGetMaxY(self.openTimeView.frame);
+        CGFloat categoryW = self.view.bounds.size.width * 0.3;
+        CGFloat categoryH = self.view.bounds.size.height - categoryY - self.tabBarController.tabBar.frame.size.height;
         
-        UITableView *category = [[UITableView alloc] initWithFrame:CGRectMake(0, categoryY, categoryW, categoryH)];
-        category.backgroundColor = [UIColor blueColor];
+        UITableView *category = [[UITableView alloc] initWithFrame:CGRectMake(0, categoryY, categoryW, categoryH) style:UITableViewStylePlain];
+        category.delegate = self;
+        category.dataSource = self;
+        // 设置单元格分割线
+        category.separatorStyle = NO;
         
         [self.view addSubview:(self.category = category)];
     }
@@ -105,28 +131,47 @@
 }
 
 /**  创建小分类detailCategory */
-- (UIScrollView *)DetailCategory
+//- (UIScrollView *)SubCategoryScrollView
+//{
+//    if (self.subCategory == nil) {
+//        CGFloat subX = CGRectGetMaxX(self.category.frame);
+//        CGFloat subY = self.category.frame.origin.y;
+//        CGFloat subW = self.view.bounds.size.height * 2;
+//        
+//        UIScrollView *subCategory = [[UIScrollView alloc] initWithFrame:CGRectMake(subX, subY, subW, 40)];
+//        //    self.detailCategory.showsVerticalScrollIndicator = NO;
+//        subCategory.backgroundColor = [UIColor blackColor];
+//        
+//        [self.view addSubview:(self.subCategory = subCategory)];
+//    }
+//    return self.subCategory;
+//}
+- (UITableView *)SubCategoryScrollView
 {
-    if (self.detailCategory == nil) {
-        CGFloat detailX = CGRectGetMaxX(self.category.frame);
-        CGFloat detailY = self.category.frame.origin.y;
-        CGFloat detailW = self.view.bounds.size.height * 2;
+    if (self.subCategory == nil) {
+        CGFloat subH = self.view.bounds.size.width - CGRectGetWidth(self.category.frame);
+        CGFloat subW = 44.0;
+        CGFloat subX = subH * 0.5 + CGRectGetWidth(self.category.frame) - subW / 2;
+        CGFloat subY = self.category.frame.origin.y - (subH - subW) * 0.5;
         
-        UIScrollView *detailCategory = [[UIScrollView alloc] initWithFrame:CGRectMake(detailX, detailY, detailW, 40)];
-        //    self.detailCategory.showsVerticalScrollIndicator = NO;
-        detailCategory.backgroundColor = [UIColor blackColor];
+        UITableView *subCategory = [[UITableView alloc] initWithFrame:CGRectMake(subX, subY, 44, subH)];
+        self.subCategory.showsVerticalScrollIndicator = NO;
+        subCategory.backgroundColor = [UIColor blackColor];
+        subCategory.transform = CGAffineTransformMakeRotation(-M_PI_2);
+        subCategory.delegate = self;
+        subCategory.dataSource = self;
         
-        [self.view addSubview:(self.detailCategory = detailCategory)];
+        [self.view addSubview:(self.subCategory = subCategory)];
     }
-    return self.detailCategory;
+    return self.subCategory;
 }
 
 /**  创建商品展示goods */
-- (UICollectionView *)Goods
+- (UICollectionView *)GoodsCollectionView
 {
     if (self.goods == nil) {
-        CGFloat goodsX = self.detailCategory.frame.origin.x;
-        CGFloat goodsY = CGRectGetMaxY(self.detailCategory.frame);
+        CGFloat goodsX = self.subCategory.frame.origin.x;
+        CGFloat goodsY = CGRectGetMaxY(self.subCategory.frame);
         CGFloat goodsW = self.view.bounds.size.width - self.category.frame.size.width;
         CGFloat goodsH = self.view.bounds.size.height * 2;
         
@@ -138,6 +183,4 @@
     }
     return self.goods;
 }
-
-
 @end
