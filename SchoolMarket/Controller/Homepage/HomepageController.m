@@ -15,6 +15,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSLog(@"123");
+    
     //导航栏按钮  左1：定位地区   右1：搜索 右2：消息
     //左1 定位地区
     UIBarButtonItem *tempregion = [[UIBarButtonItem alloc] initWithImage:nil style:(UIBarButtonItemStylePlain) target:self action:@selector(regionClick)];
