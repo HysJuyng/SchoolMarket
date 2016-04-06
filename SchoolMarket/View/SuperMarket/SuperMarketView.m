@@ -10,16 +10,20 @@
 #import "Categories.h"
 #import "CategoriesCell.h"
 #import "SubCategoriesCell.h"
+#import "CommCell.h"
 
-@interface SuperMarketView () <UITableViewDataSource, UITableViewDelegate>
+@interface SuperMarketView () <UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic, weak) UIButton *openTimeView;
 @property (nonatomic, weak) UITableView *category;
 @property (nonatomic, weak) UITableView *subCategory;
-@property (nonatomic, weak) UICollectionView *goods;
+@property (nonatomic, weak) UICollectionView *comm;
 
 @property (nonatomic, strong) NSArray *categoriesList;
 @property (nonatomic, strong) Categories *selectedCategory;
+
+/**  collectionViewCell边距 */
+@property (nonatomic, assign) CGFloat margin;
 
 @end
 
@@ -40,7 +44,7 @@
         [self openTimeViewWithFrame:frame];
         [self categoryTableView];
         [self subCategoryTablelView];
-        [self goodsCollectionView];
+        [self commCollectionView];
         
         [self setSelectedIndexPath:self.category];
         // 被点击的分类
@@ -84,48 +88,52 @@
     return self.openTimeView;
 }
 
-#pragma mark 大分类
+#pragma mark - 分类
 /**  创建大分类category */
-- (void)categoryTableView
+- (UITableView *)categoryTableView
 {
-    CGFloat categoryY = CGRectGetMaxY(self.openTimeView.frame);
-    CGFloat categoryW = self.frame.size.width * 0.3;
-    CGFloat categoryH = self.frame.size.height - categoryY;
+    if (self.category == nil) {
+        CGFloat categoryY = CGRectGetMaxY(self.openTimeView.frame);
+        CGFloat categoryW = self.frame.size.width * 0.3;
+        CGFloat categoryH = self.frame.size.height - categoryY;
         
-    UITableView *category = [[UITableView alloc] initWithFrame:CGRectMake(0, categoryY, categoryW, categoryH) style:UITableViewStylePlain];
-    category.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.06];
-    category.delegate = self;
-    category.dataSource = self;
-    // 设置单元格分割线
-    category.separatorStyle = UITableViewCellSeparatorStyleNone;
+        UITableView *category = [[UITableView alloc] initWithFrame:CGRectMake(0, categoryY, categoryW, categoryH) style:UITableViewStylePlain];
+        category.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.06];
+        category.delegate = self;
+        category.dataSource = self;
+        // 设置单元格分割线
+        category.separatorStyle = UITableViewCellSeparatorStyleNone;
         
-    [self addSubview:(self.category = category)];
+        [self addSubview:(self.category = category)];
+    }
+    return self.category;
 }
 
-#pragma mark 小分类
 /**  创建小分类subCategory */
-- (void)subCategoryTablelView
+- (UITableView *)subCategoryTablelView
 {
-    CGFloat subH = self.frame.size.width - CGRectGetWidth(self.category.frame);
-    CGFloat subW = 44;
-    CGFloat subX = subH * 0.5 + CGRectGetWidth(self.category.frame) - subW / 2;
-    CGFloat subY = self.category.frame.origin.y - (subH - subW) * 0.5;
-    
-    UITableView *subCategory = [[UITableView alloc] initWithFrame:CGRectMake(subX, subY, subW, subH)];
-    subCategory.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.06];
-    // 使滚动条不可见
-    subCategory.showsVerticalScrollIndicator = NO;
-    // 逆时针旋转90°
-    subCategory.transform = CGAffineTransformMakeRotation(-M_PI_2);
-    subCategory.separatorStyle = UITableViewCellSeparatorStyleNone;
-    subCategory.delegate = self;
-    subCategory.dataSource = self;
-    
-    [self addSubview:(self.subCategory = subCategory)];
+    if (self.subCategory == nil) {
+        CGFloat subH = self.frame.size.width - CGRectGetWidth(self.category.frame);
+        CGFloat subW = 44;
+        CGFloat subX = subH * 0.5 + CGRectGetWidth(self.category.frame) - subW / 2;
+        CGFloat subY = self.category.frame.origin.y - (subH - subW) * 0.5;
+        
+        UITableView *subCategory = [[UITableView alloc] initWithFrame:CGRectMake(subX, subY, subW, subH)];
+        subCategory.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.06];
+        // 使滚动条不可见
+        subCategory.showsVerticalScrollIndicator = NO;
+        // 逆时针旋转90°
+        subCategory.transform = CGAffineTransformMakeRotation(-M_PI_2);
+        subCategory.separatorStyle = UITableViewCellSeparatorStyleNone;
+        subCategory.delegate = self;
+        subCategory.dataSource = self;
+        
+        [self addSubview:(self.subCategory = subCategory)];
+    }
+    return self.subCategory;
 }
 
-#pragma mark - 数据源方法
-/**  数据源方法 */
+#pragma mark 数据源方法
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView == self.category) {
@@ -137,6 +145,7 @@
     }
 }
 
+/**  设置tableViewCell */
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // 创建cell
@@ -159,11 +168,10 @@
         tableView.rowHeight = cell.textLabel.frame.size.height + 10;
         cell.textLabel.textAlignment = NSTextAlignmentCenter;
     }
-    
     return cell;
 }
 
-#pragma mark - 代理方法
+#pragma mark 代理方法
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView == self.category) {
@@ -183,19 +191,98 @@
     [tableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionTop];
 }
 
-#pragma mark 商品展示
-/**  创建商品展示goods */
-- (void)goodsCollectionView
+#pragma mark - 商品展示
+/**  创建商品展示comm */
+- (UICollectionView *)commCollectionView
 {
-    CGFloat goodsX = self.subCategory.frame.origin.x;
-    CGFloat goodsY = CGRectGetMaxY(self.subCategory.frame);
-    CGFloat goodsW = self.frame.size.width - self.category.frame.size.width;
-    CGFloat goodsH = self.frame.size.height - goodsY;
+    if (self.comm == nil) {
+        CGFloat commX = self.subCategory.frame.origin.x;
+        CGFloat commY = CGRectGetMaxY(self.subCategory.frame);
+        CGFloat commW = self.frame.size.width - self.category.frame.size.width;
+        CGFloat commH = self.frame.size.height - commY;
         
-    UICollectionViewLayout *layout = [[UICollectionViewLayout alloc] init];
-    UICollectionView *goods = [[UICollectionView alloc] initWithFrame:CGRectMake(goodsX, goodsY, goodsW, goodsH) collectionViewLayout:layout];
-    goods.backgroundColor = [UIColor whiteColor];
+        UICollectionViewLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+        UICollectionView *comm = [[UICollectionView alloc] initWithFrame:CGRectMake(commX, commY, commW, commH) collectionViewLayout:layout];
+        comm.backgroundColor = [UIColor whiteColor];
+        comm.dataSource = self;
+        comm.delegate = self;
+        self.margin = comm.frame.size.width * 0.05;
+        
+        [self addSubview:(self.comm = comm)];
+        [self.comm registerClass:[CommCell class] forCellWithReuseIdentifier:@"commcell"];
+    }
+    return self.comm;
+}
+
+#pragma mark 数据源方法
+/**  返回collectionViewCell数量 */
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return 50;
+}
+
+/**  设置cell单元格 */
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *ID = @"commcell";
+    CommCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ID forIndexPath:indexPath];
+    cell.lbName.text = @"comm";
+    cell.lbSpecification.text = @"500ml";
+    cell.lbPrice.text = @"羊2.50";
     
-    [self addSubview:(self.goods = goods)];
+    // 添加监听方法
+    [cell.btnAdd addTarget:self action:@selector(commCellClickAdd:) forControlEvents:(UIControlEventTouchUpInside)];
+    [cell.btnMinus addTarget:self action:@selector(commCellClickMinus:) forControlEvents:(UIControlEventTouchUpInside)];
+    return cell;
+}
+
+/**  商品单元格 添加按钮事件 （重用bug） */
+- (void)commCellClickAdd:(UIButton *)button {
+    //获取button所在的cell
+    CommCell *cell = (CommCell *)[button superview];
+    
+    //操作
+    [cell addNum];
+    int num = [cell commNum];
+    if (num > 0) {
+        cell.btnMinus.hidden = false;
+        cell.lbNum.hidden = false;
+        cell.lbNum.text = [NSString stringWithFormat:@"%d",num];
+        cell.lbPrice.hidden = true;
+    }
+}
+
+/**  商品单元格 减少按钮事件 */
+- (void)commCellClickMinus:(UIButton *)button {
+    //获取button所在的cell
+    CommCell *cell = (CommCell *)[button superview];
+    
+    //操作
+    [cell minusNum];
+    int num = [cell commNum];
+    if (num == 0) {
+        cell.btnMinus.hidden = true;
+        cell.lbNum.hidden = true;
+        cell.lbNum.text = @"";
+        cell.lbPrice.hidden = false;
+    } else {
+        cell.lbNum.text = [NSString stringWithFormat:@"%d",num];
+    }
+}
+
+#pragma mark 代理方法
+/**  设置cell边距 */
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    CGFloat margin = self.margin;
+    return UIEdgeInsetsMake(margin, margin, margin, margin);
+}
+
+/**  设置cell规格 */
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat cellW = (collectionView.frame.size.width - self.margin * 4) / 2;
+    CGFloat cellH = cellW * 5 / 3;
+    return CGSizeMake(cellW, cellH);
 }
 @end
