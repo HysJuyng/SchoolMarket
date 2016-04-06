@@ -184,9 +184,15 @@
     //若collectionview为非头部的collectionview
     NSString *cvcell = @"commcell";
     CommCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cvcell forIndexPath:indexPath];
-    cell.lbName.text = @"comm";
-    cell.lbSpecification.text = @"500ml";
-    cell.lbPrice.text = @"羊2.50";
+    if (collectionView.tag == 102) {
+        cell.lbName.text = @"comm";
+        cell.lbSpecification.text = @"500ml";
+        cell.lbPrice.text = @"羊2.50";
+    } else if (collectionView.tag == 103) {
+        cell.lbName.text = @"comm";
+        cell.lbSpecification.text = @"500ml";
+        cell.lbPrice.text = @"羊2.50";
+    }
     [cell.btnAdd addTarget:self action:@selector(commCellClickAdd:) forControlEvents:(UIControlEventTouchUpInside)];
     [cell.btnMinus addTarget:self action:@selector(commCellClickMinus:) forControlEvents:(UIControlEventTouchUpInside)];
     return cell;

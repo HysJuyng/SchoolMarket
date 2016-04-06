@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "RootTabBarController.h"
 
-#import "ViewController.h"
+#import "LoginViewController.h"
 
 @interface AppDelegate ()
 
@@ -20,12 +20,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-//    ViewController *vc = [[ViewController alloc]init];
-//    UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:vc];
-//    self.window.rootViewController = navi;
+    LoginViewController *vc = [[LoginViewController alloc]init];
+    UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:vc];
+    self.window.rootViewController = navi;
     
-    RootTabBarController *rootTabbar = [[RootTabBarController alloc] init];
-    self.window.rootViewController = rootTabbar;
+//    RootTabBarController *rootTabbar = [[RootTabBarController alloc] init];
+//    self.window.rootViewController = rootTabbar;
     
     return YES;
 }

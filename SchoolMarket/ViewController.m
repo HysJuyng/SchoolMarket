@@ -37,12 +37,7 @@
 //    id jsonobj = [NSJSONSerialization JSONObjectWithData:jdata options:kNilOptions error:&error];
 //    NSDictionary *dic = jsonobj;
 //    NSLog(@"%@",pathfile);
-    
-    AFRequest *test = [[AFRequest alloc] init];
-    NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/getimages.jhtml";
-    NSArray *imgs = [[NSArray alloc] init];
-    imgs = [test getArrayOfImgsByUrl:url andPramaer:nil];
-    NSLog(@"%@",imgs);
+
     
 }
 
