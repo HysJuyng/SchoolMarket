@@ -36,7 +36,7 @@
         UICollectionViewLayout *layout = [[UICollectionViewFlowLayout alloc]init];
         UICollectionView *tempcv = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 30, superVC.view.frame.size.width, superVC.view.frame.size.width / 6 * 5 + 20) collectionViewLayout:layout];
         self.cvComm = tempcv;
-        self.cvComm.backgroundColor = [UIColor greenColor];
+        self.cvComm.backgroundColor = [UIColor whiteColor];
         [self addSubview:self.cvComm];
     }
     return self;

@@ -66,13 +66,17 @@
     return self;
 }
 
+
+//getter setter
+@synthesize commNum;
+
 //增加商品数量
-- (void)setNum{
+- (void)addNum{
     commNum++;
 }
-//获取商品数量
-- (int)getNum{
-    return commNum;
+//减少商品数量
+- (void)minusNum {
+    commNum--;
 }
 
 @end

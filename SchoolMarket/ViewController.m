@@ -4,6 +4,7 @@
 
 #import "ViewController.h"
 #import "CommCell.h"
+#import "AFRequest.h"
 
 @interface ViewController () <UICollectionViewDataSource,UICollectionViewDelegate>
 
@@ -30,13 +31,13 @@
 //    self.cv.dataSource = self;
 //    [self.view addSubview:self.cv];
     
-    NSError *error;
-    NSString *pathfile = [[NSBundle mainBundle]pathForResource:@"data" ofType:@"json"];
-    NSData *jdata = [[NSData alloc]initWithContentsOfFile:pathfile];
-    id jsonobj = [NSJSONSerialization JSONObjectWithData:jdata options:kNilOptions error:&error];
-    NSDictionary *dic = jsonobj;
-    NSLog(@"%@",pathfile);
-    
+//    NSError *error;
+//    NSString *pathfile = [[NSBundle mainBundle]pathForResource:@"data" ofType:@"json"];
+//    NSData *jdata = [[NSData alloc]initWithContentsOfFile:pathfile];
+//    id jsonobj = [NSJSONSerialization JSONObjectWithData:jdata options:kNilOptions error:&error];
+//    NSDictionary *dic = jsonobj;
+//    NSLog(@"%@",pathfile);
+
     
 }
 
@@ -75,8 +76,8 @@
     CommCell *cell = (CommCell *)[button superview];
     
     //操作
-    [cell setNum];
-    int num = [cell getNum];
+    [cell addNum];
+    int num = [cell commNum];
     if (num > 0) {
         cell.btnMinus.hidden = false;
         cell.lbNum.hidden = false;
