@@ -5,7 +5,7 @@
 	<dict>
 		<key>name</key>
 		<string>食品零食</string>
-		<key>subcategories</key>
+		<key>subCategories</key>
 		<array>
 			<string>全部</string>
 			<string>饼干糕点</string>
@@ -19,7 +19,7 @@
 	<dict>
 		<key>name</key>
 		<string>饮料饮品</string>
-		<key>subcategories</key>
+		<key>subCategories</key>
 		<array>
 			<string>全部</string>
 			<string>茶饮料</string>
@@ -34,7 +34,7 @@
 	<dict>
 		<key>name</key>
 		<string>营养冲调</string>
-		<key>subcategories</key>
+		<key>subCategories</key>
 		<array>
 			<string>全部</string>
 			<string>咖啡</string>
@@ -44,7 +44,7 @@
 	<dict>
 		<key>name</key>
 		<string>牛奶乳品</string>
-		<key>subcategories</key>
+		<key>subCategories</key>
 		<array>
 			<string>全部</string>
 			<string>纯牛奶</string>
@@ -57,7 +57,7 @@
 	<dict>
 		<key>name</key>
 		<string>酒</string>
-		<key>subcategories</key>
+		<key>subCategories</key>
 		<array>
 			<string>全部</string>
 			<string>啤酒</string>
@@ -67,7 +67,7 @@
 	<dict>
 		<key>name</key>
 		<string>粮油干活</string>
-		<key>subcategories</key>
+		<key>subCategories</key>
 		<array>
 			<string>全部</string>
 			<string>厨房调料</string>
@@ -78,7 +78,7 @@
 	<dict>
 		<key>name</key>
 		<string>家居清洁</string>
-		<key>subcategories</key>
+		<key>subCategories</key>
 		<array>
 			<string>全部</string>
 			<string>厨卫清洁</string>
@@ -90,7 +90,7 @@
 	<dict>
 		<key>name</key>
 		<string>纸巾洗护</string>
-		<key>subcategories</key>
+		<key>subCategories</key>
 		<array>
 			<string>全部</string>
 			<string>口腔护理</string>
@@ -103,7 +103,7 @@
 	<dict>
 		<key>name</key>
 		<string>代购</string>
-		<key>subcategories</key>
+		<key>subCategories</key>
 		<array>
 			<string>全部</string>
 			<string>香烟</string>
@@ -113,7 +113,7 @@
 	<dict>
 		<key>name</key>
 		<string>办公用品</string>
-		<key>subcategories</key>
+		<key>subCategories</key>
 		<array>
 			<string>全部</string>
 			<string>办公文具</string>
@@ -122,7 +122,7 @@
 	<dict>
 		<key>name</key>
 		<string>进口商品</string>
-		<key>subcategories</key>
+		<key>subCategories</key>
 		<array>
 			<string>全部</string>
 			<string>进口零食</string>

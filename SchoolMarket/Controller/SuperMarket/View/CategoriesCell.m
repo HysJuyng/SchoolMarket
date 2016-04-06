@@ -27,22 +27,19 @@
     return cell;
 }
 
-/**  setter方法 */
-- (void)setMainCategories:(Categories *)mainCategories
-{
-    // 赋值，在其它方法中使用模型时才可以访问到
-    _mainCategories = mainCategories;
-    
-    self.textLabel.text = mainCategories.name;
-    self.textLabel.font = [UIFont systemFontOfSize:14.0];
-}
-
 /**  cell初始化方法 */
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.backgroundColor = [UIColor clearColor];
         
+        UIView *whiteSelectedBg = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+        whiteSelectedBg.backgroundColor = [UIColor whiteColor];
+        UIView *greenSelectedBg = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, self.frame.size.height)];
+        greenSelectedBg.backgroundColor = [UIColor greenColor];
+        [whiteSelectedBg addSubview:greenSelectedBg];
+        [self.selectedBackgroundView addSubview:whiteSelectedBg];
     }
     return self;
 }
@@ -51,10 +48,8 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     if (selected) {
-        self.contentView.backgroundColor = [UIColor whiteColor];
         self.textLabel.textColor = [UIColor greenColor];
     } else {
-        self.contentView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.08];
         self.textLabel.textColor = [UIColor blackColor];
     }
 }

@@ -7,13 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-// 告诉编译器，Categories是一个类
-@class Categories;
 
 @interface CategoriesCell : UITableViewCell
-
-/**  分类的数据模型 */
-@property (nonatomic, strong) Categories *mainCategories;
 
 /**  提供一个类方法快速创建Cell */
 + (instancetype)cellWithTableView:(UITableView *)tableView;

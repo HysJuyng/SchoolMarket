@@ -10,15 +10,15 @@
 
 @implementation Categories
 
-@synthesize image = _image;
-
-- (UIImage *)image
-{
-    if (_image == nil) {
-        _image = [UIImage imageNamed:self.icon];
-    }
-    return _image;
-}
+//@synthesize image = _image;
+//
+//- (UIImage *)image
+//{
+//    if (_image == nil) {
+//        _image = [UIImage imageNamed:self.icon];
+//    }
+//    return _image;
+//}
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict
 {
