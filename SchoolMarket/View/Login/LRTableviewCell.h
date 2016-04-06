@@ -5,7 +5,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LRTableviewCell : UITableViewCell
+@interface LRTableviewCell : UITableViewCell <UITextFieldDelegate>
 
 @property (nonatomic,weak) UIImageView *titleImgv;   //标题图片
 @property (nonatomic,weak) UITextField *tfContent;   //内容输入框
