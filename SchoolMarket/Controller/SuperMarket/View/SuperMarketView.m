@@ -19,7 +19,7 @@
 @property (nonatomic, weak) UICollectionView *goods;
 
 @property (nonatomic, strong) NSArray *categoriesList;
-@property (nonatomic, assign) NSInteger *selectedCategory;
+@property (nonatomic, strong) Categories *selectedCategory;
 
 @end
 
@@ -168,7 +168,7 @@
 {
     if (tableView == self.category) {
         // 被点击的分类
-        self.selectedCategory = indexPath.row;
+        self.selectedCategory = self.categoriesList[indexPath.row];
         // 刷新子分类数据
         [self.subCategory reloadData];
         [self setSelectedIndexPath:self.subCategory];
