@@ -4,7 +4,7 @@
 
 #import "LoginViewController.h"
 
-@interface LoginViewController ()
+@interface LoginViewController () <LRFootViewDelegate>
 
 @property (nonatomic,strong) UITableView *loginTableview;
 @end
@@ -20,13 +20,6 @@
     UIBarButtonItem *tempregister = [[UIBarButtonItem alloc] initWithTitle:@"注册" style:(UIBarButtonItemStylePlain) target:self action:@selector(registerClick)];
     self.btnRegister = tempregister;
     self.navigationItem.rightBarButtonItem = self.btnRegister;
-    
-    
-    //获取验证码按钮   添加到手机号cell里面
-    UIButton *tempcode = [UIButton buttonWithType:(UIButtonTypeRoundedRect)];
-    self.btnGetCode = tempcode;
-    [self.btnGetCode setTitle:@"获取验证码" forState:(UIControlStateNormal)];
-    [self.btnGetCode addTarget:self action:@selector(getIdentifyingCode) forControlEvents:(UIControlEventTouchUpInside)];
     
     
     //tableview
@@ -64,9 +57,6 @@
     if (indexPath.row == 0) {
         //    cell.titleImgv.image = //设置图片
         cell.tfContent.placeholder = @"输入您的手机号码";  //设置提示文本
-        self.btnGetCode.frame = CGRectMake(self.view.frame.size.width / 4 * 3, 8, self.view.frame.size.width / 5, 30);
-        self.btnGetCode.titleLabel.adjustsFontSizeToFitWidth = true;
-        [cell addSubview:self.btnGetCode];
     } else if (indexPath.row == 1) {
         //    cell.titleImgv.image = //设置图片
         cell.tfContent.placeholder = @"输入您的密码";  //设置提示文本
@@ -74,6 +64,19 @@
     }
 
     return cell;
+}
+
+//阅读并同意
+- (void)ReadAndAgreeClick {
+    NSLog(@"点击同意");
+}
+//登录或注册
+- (void)LoginOrRegClick {
+    NSLog(@"登录");
+}
+//打开用户服务协议
+- (void)UrSerAgreeClick {
+    NSLog(@"用户服务协议");
 }
 
 //获取验证码
