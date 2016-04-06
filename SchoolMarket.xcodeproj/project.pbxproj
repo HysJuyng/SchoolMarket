@@ -24,9 +24,13 @@
 		3B89468C1CAFC84900959786 /* HCHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B89468B1CAFC84900959786 /* HCHeaderView.m */; };
 		3B89468F1CAFF03C00959786 /* HCHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B89468E1CAFF03C00959786 /* HCHeaderCell.m */; };
 		3BBA9D851CAD13C100DF67B7 /* CommCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBA9D841CAD13C100DF67B7 /* CommCell.m */; };
+		3BC7F5AA1CB4AC44006A1754 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC7F5A91CB4AC44006A1754 /* LoginViewController.m */; };
+		3BC7F5AE1CB4AC88006A1754 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC7F5AD1CB4AC88006A1754 /* RegisterViewController.m */; };
 		3BD86DC61CAEACE0004B651B /* ShoppingCartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD86DC51CAEACE0004B651B /* ShoppingCartController.m */; };
 		3BD86DCA1CAEAD36004B651B /* PersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD86DC91CAEAD36004B651B /* PersonalViewController.m */; };
 		3BD86DD01CAEB4D7004B651B /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 3BD86DCF1CAEB4D7004B651B /* data.json */; };
+		3BD8EF5B1CB4B37900194F21 /* LRFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD8EF5A1CB4B37900194F21 /* LRFootView.m */; };
+		3BD8EF5E1CB4B8A600194F21 /* LRTableviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD8EF5D1CB4B8A600194F21 /* LRTableviewCell.m */; };
 		3BF269C91CACF9D600173221 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF269C81CACF9D600173221 /* BaseViewController.m */; };
 		3BF269CC1CACFA6700173221 /* RootTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF269CB1CACFA6700173221 /* RootTabBarController.m */; };
 		3BF492591CAE68BB00FB8B10 /* HomepageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF492581CAE68BB00FB8B10 /* HomepageController.m */; };
@@ -87,11 +91,20 @@
 		3B89468E1CAFF03C00959786 /* HCHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HCHeaderCell.m; path = Homepage/HCHeaderCell.m; sourceTree = "<group>"; };
 		3BBA9D831CAD13C100DF67B7 /* CommCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommCell.h; path = Cell/CommCell.h; sourceTree = "<group>"; };
 		3BBA9D841CAD13C100DF67B7 /* CommCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommCell.m; path = Cell/CommCell.m; sourceTree = "<group>"; };
+		3BC7F5A81CB4AC44006A1754 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Login/LoginViewController.h; sourceTree = "<group>"; };
+		3BC7F5A91CB4AC44006A1754 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = Login/LoginViewController.m; sourceTree = "<group>"; };
+		3BC7F5AC1CB4AC88006A1754 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterViewController.h; path = Login/RegisterViewController.h; sourceTree = "<group>"; };
+		3BC7F5AD1CB4AC88006A1754 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegisterViewController.m; path = Login/RegisterViewController.m; sourceTree = "<group>"; };
 		3BD86DC41CAEACE0004B651B /* ShoppingCartController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShoppingCartController.h; path = ShoppingCart/ShoppingCartController.h; sourceTree = "<group>"; };
 		3BD86DC51CAEACE0004B651B /* ShoppingCartController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShoppingCartController.m; path = ShoppingCart/ShoppingCartController.m; sourceTree = "<group>"; };
 		3BD86DC81CAEAD36004B651B /* PersonalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalViewController.h; path = Personal/PersonalViewController.h; sourceTree = "<group>"; };
 		3BD86DC91CAEAD36004B651B /* PersonalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalViewController.m; path = Personal/PersonalViewController.m; sourceTree = "<group>"; };
 		3BD86DCF1CAEB4D7004B651B /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
+		3BD8EF591CB4B37900194F21 /* LRFootView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LRFootView.h; path = Login/LRFootView.h; sourceTree = "<group>"; };
+		3BD8EF5A1CB4B37900194F21 /* LRFootView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LRFootView.m; path = Login/LRFootView.m; sourceTree = "<group>"; };
+		3BD8EF5C1CB4B8A600194F21 /* LRTableviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LRTableviewCell.h; path = Login/LRTableviewCell.h; sourceTree = "<group>"; };
+		3BD8EF5D1CB4B8A600194F21 /* LRTableviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LRTableviewCell.m; path = Login/LRTableviewCell.m; sourceTree = "<group>"; };
+		3BD8EF5F1CB4BBF700194F21 /* LoginHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginHeader.h; path = Login/LoginHeader.h; sourceTree = "<group>"; };
 		3BF269C71CACF9D600173221 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		3BF269C81CACF9D600173221 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		3BF269CA1CACFA6700173221 /* RootTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootTabBarController.h; sourceTree = "<group>"; };
@@ -199,6 +212,29 @@
 			name = Cell;
 			sourceTree = "<group>";
 		};
+		3BC7F5AB1CB4AC4B006A1754 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				3BC7F5A81CB4AC44006A1754 /* LoginViewController.h */,
+				3BC7F5A91CB4AC44006A1754 /* LoginViewController.m */,
+				3BC7F5AC1CB4AC88006A1754 /* RegisterViewController.h */,
+				3BC7F5AD1CB4AC88006A1754 /* RegisterViewController.m */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		3BC7F5B21CB4AEF3006A1754 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				3BD8EF591CB4B37900194F21 /* LRFootView.h */,
+				3BD8EF5A1CB4B37900194F21 /* LRFootView.m */,
+				3BD8EF5C1CB4B8A600194F21 /* LRTableviewCell.h */,
+				3BD8EF5D1CB4B8A600194F21 /* LRTableviewCell.m */,
+				3BD8EF5F1CB4BBF700194F21 /* LoginHeader.h */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
 		3BD86DC71CAEACE3004B651B /* ShoppingCart */ = {
 			isa = PBXGroup;
 			children = (
@@ -229,6 +265,7 @@
 		3BF269C31CACF9B800173221 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				3BC7F5AB1CB4AC4B006A1754 /* Login */,
 				3B4072E61CB36DE80058C084 /* SuperMarket */,
 				3BD86DCB1CAEAD3A004B651B /* Personal */,
 				3BD86DC71CAEACE3004B651B /* ShoppingCart */,
@@ -263,6 +300,7 @@
 		3BF269C61CACF9B800173221 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3BC7F5B21CB4AEF3006A1754 /* Login */,
 				3BF4925E1CAE6BA800FB8B10 /* Homepage */,
 				3BBA9D861CAD13C500DF67B7 /* Cell */,
 			);
@@ -571,11 +609,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BFFAE581CACF7F40099D766 /* ViewController.m in Sources */,
+				3BC7F5AA1CB4AC44006A1754 /* LoginViewController.m in Sources */,
 				3BF492591CAE68BB00FB8B10 /* HomepageController.m in Sources */,
+				3BD8EF5B1CB4B37900194F21 /* LRFootView.m in Sources */,
 				3BD86DC61CAEACE0004B651B /* ShoppingCartController.m in Sources */,
+				3BD8EF5E1CB4B8A600194F21 /* LRTableviewCell.m in Sources */,
 				3B8946831CAF95A500959786 /* HomepageCell.m in Sources */,
 				3B4072F81CB36DE80058C084 /* Categories.m in Sources */,
 				3B8946861CAFBA4400959786 /* HCLastFootView.m in Sources */,
+				3BC7F5AE1CB4AC88006A1754 /* RegisterViewController.m in Sources */,
 				3B4072FA1CB36DE80058C084 /* CategoriesView.m in Sources */,
 				3B89468C1CAFC84900959786 /* HCHeaderView.m in Sources */,
 				3BF269CC1CACFA6700173221 /* RootTabBarController.m in Sources */,
