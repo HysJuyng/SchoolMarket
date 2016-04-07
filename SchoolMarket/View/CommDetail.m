@@ -8,7 +8,6 @@
 
 #import "CommDetail.h"
 #import "RootTabBarController.h"
-#import "AppDelegate.h"
 
 @implementation CommDetail
 
@@ -16,7 +15,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.shoppingCartNum = 0;
         CGFloat detailTblW = frame.size.width;
         CGFloat detailTblH = frame.size.height * 0.9;
         [self detailTblWithFrame:CGRectMake(0, 0, detailTblW, detailTblH)];
@@ -130,6 +128,7 @@
         CGFloat SCBtnH = frame.size.height;
         CGFloat SCBtnW = SCBtnH;
         CGFloat SCBtnY = frame.size.height - SCBtnH * 1.2;
+        
         [self shoppingCartBtnWithView:bottomToolView andFrame:CGRectMake(10.0, SCBtnY, SCBtnW, SCBtnH)];
         
         self.bottomToolView = bottomToolView;
@@ -138,25 +137,28 @@
     return self.bottomToolView;
 }
 
+/**  购买按钮和数量变化按钮 */
 - (void)buyAndChangeNumBtnWithView:(UIView *)view andFrame:(CGRect)frame
 {
     if (self.buyBtn == nil || self.changeNumBtn == nil) {
+        // 立即购买按钮
         if (self.buyBtn == nil) {
-            // 立即购买按钮
             UIButton *buyBtn = [[UIButton alloc] initWithFrame:frame];
             
             // 设置标题
             [buyBtn setTitle:@"立即购买" forState:UIControlStateNormal];
             
             // 监听方法
-            [buyBtn addTarget:self action:@selector(buy) forControlEvents:UIControlEventTouchUpInside];
+            [buyBtn addTarget:commVC action:@selector(increase) forControlEvents:UIControlEventTouchUpInside];
             
             self.buyBtn = buyBtn;
             [view addSubview:self.buyBtn];
         }
+        
+        // 数量变化按钮
         if (self.changeNumBtn == nil) {
-            // 数量变化按钮
             UIButton *changeNumBtn = [[UIButton alloc] initWithFrame:frame];
+            
             // 设置圆角和背景颜色
             changeNumBtn.layer.cornerRadius = 8.0;
             changeNumBtn.backgroundColor = [UIColor whiteColor];
@@ -174,6 +176,7 @@
     }
 }
 
+/**  增加按钮和减少按钮 */
 - (void)increaseAndDecreaseBtnWithButton:(UIButton *)btn
 {
     if (self.increaseBtn == nil || self.decreaseBtn == nil) {
@@ -188,11 +191,12 @@
             [increaseBtn setTitle:@"+" forState:UIControlStateNormal];
             
             // 监听方法
-            [increaseBtn addTarget:self action:@selector(increase) forControlEvents:UIControlEventTouchUpInside];
+            [increaseBtn addTarget:commVC action:@selector(increase) forControlEvents:UIControlEventTouchUpInside];
             
             self.increaseBtn = increaseBtn;
             [btn addSubview:self.increaseBtn];
         }
+        
         // 减少按钮
         if (self.decreaseBtn == nil) {
             UIButton *decreaseBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, btnW, btnH)];
@@ -201,23 +205,24 @@
             [decreaseBtn setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
             
             // 监听方法
-            [decreaseBtn addTarget:self action:@selector(decrease) forControlEvents:UIControlEventTouchUpInside];
+            [decreaseBtn addTarget:commVC action:@selector(decrease) forControlEvents:UIControlEventTouchUpInside];
             
             self.decreaseBtn = decreaseBtn;
             [btn addSubview:self.decreaseBtn];
         }
     }
 }
+
 /**  购物车按钮 */
 - (void)shoppingCartBtnWithView:(UIView *)view andFrame:(CGRect)frame
 {
     UIButton *shoppingCartBtn = [[UIButton alloc] initWithFrame:frame];
     
     // 设置圆角和背景颜色
-    shoppingCartBtn.layer.cornerRadius = 25;
+    shoppingCartBtn.layer.cornerRadius = shoppingCartBtn.frame.size.height * 0.5;
     shoppingCartBtn.backgroundColor = [UIColor whiteColor];
     
-    // 设置标题文字属性(按钮数量需从网络获取)
+    // 设置标题文字(购物车商品数量)属性(数量需从网络获取)
     [shoppingCartBtn setTitle:[NSString stringWithFormat:@"%d", self.shoppingCartNum] forState:UIControlStateNormal];
     [shoppingCartBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     shoppingCartBtn.titleLabel.font = [UIFont systemFontOfSize:18.0];
@@ -225,63 +230,9 @@
     shoppingCartBtn.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
     
     // 监听方法
-    [shoppingCartBtn addTarget:self action:@selector(shoppingCart) forControlEvents:UIControlEventTouchUpInside];
+    [shoppingCartBtn addTarget:commVC action:@selector(shoppingCart) forControlEvents:UIControlEventTouchUpInside];
     
     self.shoppingCartBtn = shoppingCartBtn;
     [view addSubview:self.shoppingCartBtn];
-}
-
-#pragma mark 点击事件
-/**  立即购买 */
-- (void)buy
-{
-    [self increase];
-}
-
-/**  增加数量 */
-- (void)increase
-{
-    if (self.changeNumBtn.isHidden == YES) {
-        self.buyBtn.hidden = YES;
-        self.changeNumBtn.hidden = NO;
-    }
-    // 需要加一个判断库存是否充足的条件
-    [self changeNumWithBtn:self.changeNumBtn andNum:1];
-    [self changeNumWithBtn:self.shoppingCartBtn andNum:1];
-}
-
-/**  减少数量 */
-- (void)decrease
-{
-    if (self.shoppingCartNum > 1) {
-        [self changeNumWithBtn:self.changeNumBtn andNum:-1];
-        [self changeNumWithBtn:self.shoppingCartBtn andNum:-1];
-    } else {
-        self.changeNumBtn.hidden = YES;
-        self.buyBtn.hidden = NO;
-        [self changeNumWithBtn:self.shoppingCartBtn andNum:-1];
-    }
-}
-
-/**  数量变化 */
-- (void)changeNumWithBtn:(UIButton *)btn andNum:(int)num
-{
-    // 获取当前数量
-    int currentNum = btn.currentTitle.intValue;
-    
-    // 改变数量
-    currentNum += num;
-    self.shoppingCartNum = currentNum;
-    
-    // 改变按钮标题
-    [btn setTitle:[NSString stringWithFormat:@"%d", currentNum] forState:UIControlStateNormal];
-}
-
-/**  购物车 */
-- (void)shoppingCart
-{
-    RootTabBarController *rootTabbar = [[RootTabBarController alloc] init];
-    self.window.rootViewController = rootTabbar;
-    rootTabbar.selectedIndex = 2;
 }
 @end

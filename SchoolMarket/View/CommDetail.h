@@ -8,9 +8,26 @@
 
 #import <UIKit/UIKit.h>
 #import "Comm.h"
+#import "CommDetailViewController.h"
+
+@protocol CommDetailDelegate <NSObject>
+
+@required
+/**  数量变化 */
+- (void)changeNumWithBtn:(UIButton *)btn andNum:(int)num;
+/**  增加数量 */
+- (void)increase;
+/**  减少数量 */
+- (void)decrease;
+/**  转向购物车 */
+- (void)shoppingCart;
+
+@end
 
 @interface CommDetail : UIView <UITableViewDataSource, UITableViewDelegate>
-
+{
+    CommDetailViewController *commVC;
+}
 /**  商品详情（容器） */
 @property (nonatomic, weak) UITableView *detailTbl;
 

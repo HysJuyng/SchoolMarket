@@ -25,12 +25,12 @@
 //    UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:vc];
 //    self.window.rootViewController = navi;
     
-    CommDetailViewController *vc = [[CommDetailViewController alloc]init];
-    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:vc];
-    self.window.rootViewController = nav;
+//    CommDetailViewController *vc = [[CommDetailViewController alloc]init];
+//    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:vc];
+//    self.window.rootViewController = nav;
     
-//    RootTabBarController *rootTabbar = [[RootTabBarController alloc] init];
-//    self.window.rootViewController = rootTabbar;
+    RootTabBarController *rootTabbar = [[RootTabBarController alloc] init];
+    self.window.rootViewController = rootTabbar;
     
     return YES;
 }
