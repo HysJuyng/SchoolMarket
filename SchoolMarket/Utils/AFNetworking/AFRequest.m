@@ -19,7 +19,7 @@
         NSDictionary *dic = responseObject;
         NSArray *commsArr = [[NSArray alloc] initWithArray:[dic objectForKey:@"comm"]];   //提取字典数组
         for (int i = 0; i < commsArr.count; i++) {  //遍历字典数组
-            Comm *comm = [[Comm alloc] init];
+            Commodity *comm = [[Commodity alloc] init];
             [comm dicToObject:commsArr[i]];   //字典转comm对象
             [comms addObject:comm];   //添加到结果集
         }

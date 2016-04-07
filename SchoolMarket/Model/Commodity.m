@@ -2,14 +2,13 @@
  商品model
  */
 
-#import "Comm.h"
+#import "Commodity.h"
 
-@implementation Comm
+@implementation Commodity
 
-//getter setter
-@synthesize commId;
-@synthesize clasId;
-@synthesize supMarkId;
+@synthesize commodityId;
+@synthesize classId;
+@synthesize superMarketId;
 @synthesize picture;
 @synthesize commName;
 @synthesize price;
@@ -21,11 +20,11 @@
 
 
 //字典转换为对象
-- (Comm*)dicToObject:(NSDictionary*)commDic {
-    Comm *comm = [[Comm alloc] init];
-    [comm setCommId:[[commDic valueForKey:@"commId"]intValue]];
-    [comm setClasId:[[commDic valueForKey:@"clasId"]intValue]];
-    [comm setSupMarkId:[[commDic valueForKey:@"supMarkId"]intValue]];
+- (Commodity*)dicToObject:(NSDictionary*)commDic {
+    Commodity *comm = [[Commodity alloc] init];
+    [comm setCommodityId:[[commDic valueForKey:@"commodityId"]intValue]];
+    [comm setClassId:[[commDic valueForKey:@"classId"]intValue]];
+    [comm setSuperMarketId:[[commDic valueForKey:@"superMarketId"]intValue]];
     [comm setPicture:[commDic valueForKey:@"picture"]];
     [comm setCommName:[commDic valueForKey:@"commName"]];
     [comm setPrice:[[commDic valueForKey:@"price"]floatValue]];
@@ -35,5 +34,6 @@
     [comm setStock:[[commDic valueForKey:@"stock"]intValue]];
     return comm;
 }
+
 
 @end

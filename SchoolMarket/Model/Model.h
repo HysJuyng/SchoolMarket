@@ -5,7 +5,7 @@
 #ifndef Model_h
 #define Model_h
 
-#import "Comm.h"
+#import "Commodity.h"
 
 
 #endif /* Model_h */

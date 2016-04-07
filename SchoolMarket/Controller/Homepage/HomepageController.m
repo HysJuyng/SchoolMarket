@@ -118,7 +118,10 @@
 //hc 单元格
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {   //第一区为广告和其它按钮
-        HCHeaderCell *cell = [[HCHeaderCell alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width / 4)];
+        HCHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"guanggao"];
+        if (cell == nil) {
+            cell = [[HCHeaderCell alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width / 4)];
+        }
         
         //collectionview的实现
         cell.cvHeader.dataSource =self;
@@ -133,8 +136,17 @@
         
         return cell;
     } else if (indexPath.section > 0) {   //第二区为商品展示
-        HomepageCell *cell = [[HomepageCell alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width + 15) andSuperVC:self];
-        cell.lbTitle.text = [NSString stringWithFormat:@"title%ld",indexPath.row];
+        NSString *cellid = [[NSString alloc]init];
+        if (indexPath.section == 1) {
+            cellid = @"tuijian";
+        } else if(indexPath.section == 2) {
+            cellid = @"remai";
+        }
+        HomepageCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+        if (cell == nil) {
+            cell = [[HomepageCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid andSuperVc:self andFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width + 15)];
+        }
+        cell.lbTitle.text = [NSString stringWithFormat:@"title%ld",indexPath.section];
         
         //collectionview的实现
         cell.cvComm.dataSource = self;

@@ -43,7 +43,7 @@
     shopcartNavi.tabBarItem = shopcart;
     personalNavi.tabBarItem = personal;
     
-    
+
 }
 
 
