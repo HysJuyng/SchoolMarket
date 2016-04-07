@@ -12,18 +12,16 @@
 #import "SubCategoriesCell.h"
 #import "CommCell.h"
 
-@interface SuperMarketView () <UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
+@interface SuperMarketView ()
 
-@property (nonatomic, weak) UIButton *openTimeView;
-@property (nonatomic, weak) UITableView *category;
-@property (nonatomic, weak) UITableView *subCategory;
-@property (nonatomic, weak) UICollectionView *comm;
-
+/**  分类对象数组 */
 @property (nonatomic, strong) NSArray *categoriesList;
-@property (nonatomic, strong) Categories *selectedCategory;
 
 /**  collectionViewCell边距 */
 @property (nonatomic, assign) CGFloat margin;
+
+/**  被选择的分类 */
+@property (nonatomic, strong) Categories *selectedCategory;
 
 @end
 
