@@ -29,14 +29,23 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        self.backgroundColor = [UIColor clearColor];
+        
+        UIView *bg = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+        bg.backgroundColor = [UIColor whiteColor];
+        self.selectedBackgroundView = bg;
+    }
     return self;
 }
-
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
+    if (selected) {
+        self.textLabel.textColor = [UIColor greenColor];
+    } else {
+        self.textLabel.textColor = [UIColor blackColor];
+    }
 }
-
 @end

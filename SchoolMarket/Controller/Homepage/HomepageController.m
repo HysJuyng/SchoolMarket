@@ -171,6 +171,7 @@
     //若collectionview为非头部的collectionview
     return 6;
 }
+
 //cv 单元格
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (collectionView.tag == 101) {  //若collectionview为头部的collectionview
