@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Comm.h"
-#import "CommDetailViewController.h"
+@class CommDetailViewController;
 
 @protocol CommDetailDelegate <NSObject>
 

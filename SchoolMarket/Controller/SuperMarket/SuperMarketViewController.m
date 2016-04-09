@@ -46,7 +46,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
     
@@ -55,7 +54,7 @@
     CGFloat frameY = CGRectGetMaxY(self.navigationController.navigationBar.frame);
     CGFloat frameW = self.view.bounds.size.width;
     CGFloat frameH = CGRectGetMinY(self.tabBarController.tabBar.frame);
-    
+        
     CGRect frame = CGRectMake(0, frameY, frameW, frameH);
     [self openTimeViewWithFrame:frame];
     [self categoryTableViewWithFrame:frame];

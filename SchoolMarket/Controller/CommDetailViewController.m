@@ -86,6 +86,8 @@
 /**  购物车 */
 - (void)shoppingCart
 {
-    self.tabBarController.selectedIndex = 2;
+    RootTabBarController *vc = [[RootTabBarController alloc] init];
+    self.view.window.rootViewController = vc;
+    vc.selectedIndex = 2;
 }
 @end
