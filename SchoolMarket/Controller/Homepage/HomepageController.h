@@ -7,6 +7,7 @@
 #import "CommCell.h"
 #import "HomepageView.h"
 #import "Model.h"
+#import "CommDetailViewController.h"
 
 #import "AFRequest.h"
 

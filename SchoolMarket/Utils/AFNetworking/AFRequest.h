@@ -8,6 +8,7 @@
 
 
 typedef void (^responseBlock)( NSMutableArray * _Nonnull responseArr);
+typedef void (^postBack)( NSString * _Nonnull flag);
 
 @interface AFRequest : NSObject
 
@@ -22,5 +23,7 @@ typedef void (^responseBlock)( NSMutableArray * _Nonnull responseArr);
 
 //发送请求
 - (void)postMessage:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull responseBlock)responseblock;
+
+- (void)postLogin:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBack)postback;
 
 @end

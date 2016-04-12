@@ -222,6 +222,9 @@
     shoppingCartBtn.layer.cornerRadius = shoppingCartBtn.frame.size.height * 0.5;
     shoppingCartBtn.backgroundColor = [UIColor whiteColor];
     
+    //设置图片
+    [shoppingCartBtn setBackgroundImage:[UIImage imageNamed:@"cart_btn"] forState:(UIControlStateNormal)];
+    
     // 设置标题文字(购物车商品数量)属性(数量需从网络获取)
     [shoppingCartBtn setTitle:[NSString stringWithFormat:@"%d", self.shoppingCartNum] forState:UIControlStateNormal];
     [shoppingCartBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];

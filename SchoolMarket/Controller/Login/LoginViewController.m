@@ -83,12 +83,12 @@
     NSIndexPath *phoneIndex = [NSIndexPath indexPathForRow:0 inSection:0];
     NSString *phone = [NSString stringWithString:((LRTableviewCell*)[self.loginTableview cellForRowAtIndexPath:phoneIndex]).tfContent.text];
     //获取密码
-    NSIndexPath *passworkIndex = [NSIndexPath indexPathForItem:1 inSection:0];
-    NSString *passwork = [NSString stringWithString:((LRTableviewCell*)[self.loginTableview cellForRowAtIndexPath:passworkIndex]).tfContent.text];
+    NSIndexPath *passwordIndex = [NSIndexPath indexPathForItem:1 inSection:0];
+    NSString *password = [NSString stringWithString:((LRTableviewCell*)[self.loginTableview cellForRowAtIndexPath:passwordIndex]).tfContent.text];
     
-    NSLog(@"%@,%@",phone,passwork);
+    NSLog(@"%@,%@",phone,password);
     //检验输入是否符合要求
-    NSString *flag = [self textIsRequirements:phone andPasswork:passwork andCode:nil];
+    NSString *flag = [self textIsRequirements:phone andPasswork:password andCode:nil];
     //根据返回的flag 推出alert
     if (![flag  isEqual: @"success"]) {
         UIAlertController *actionsheet = [UIAlertController alertControllerWithTitle:nil message:flag preferredStyle:(UIAlertControllerStyleAlert)];
@@ -99,6 +99,7 @@
         [self presentViewController:actionsheet animated:true completion:nil];
     }else {   //检验成功 发送数据
         NSLog(@"%@",flag);
+        [self login:phone andPasswork:password];
     }
     
     
@@ -128,6 +129,32 @@
     [self.navigationController pushViewController:subvc animated:true];
 }
 
+//登录并验证
+- (void)login:(NSString*)name andPasswork:(NSString*)password {
+    AFRequest *post = [[AFRequest alloc] init];
+    NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/userLogin.jhtml";
+    NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+    [param setObject:name forKey:@"username"];
+    [param setObject:password forKey:@"password"];
+    [post postLogin:url andParameter:param andResponse:^(NSString * _Nonnull flag) {
+        NSString *messgae = [flag valueForKey:@"message"];
+        if ([messgae isEqualToString:@"success"]) {
+            //登录 成功 返回上级
+            [self.navigationController popViewControllerAnimated:true];
+        } else {
+            //登录 失败 提示失败信息
+            UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"error" message:messgae preferredStyle:(UIAlertControllerStyleAlert)];
+            //取消按钮
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
+                NSLog(@"取消");
+            }];
+            [alertC addAction:cancel];
+            
+            //推出alert
+            [self presentViewController:alertC animated:true completion:nil];
+        }
+    }];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

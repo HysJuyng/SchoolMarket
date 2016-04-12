@@ -70,7 +70,7 @@
 }
 //点击事件 （重用bug）
 - (void)click:(UIButton *)button {
-    NSLog(@"%d",button.tag);
+    NSLog(@"%ld",(long)button.tag);
     
     //获取button所在的cell
     CommCell *cell = (CommCell *)[button superview];

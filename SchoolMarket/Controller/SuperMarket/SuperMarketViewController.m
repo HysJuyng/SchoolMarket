@@ -6,7 +6,7 @@
 #import "Categories.h"
 #import "CategoriesCell.h"
 #import "SubCategoriesCell.h"
-#import "Comm.h"
+#import "Commodity.h"
 #import "CommCell.h"
 #import "CommDetailViewController.h"
 
@@ -30,7 +30,7 @@
 @property (nonatomic, strong) Categories *selectedCategory;
 
 /**  被选择的商品 */
-@property (nonatomic, strong) Comm *selectedComm;
+@property (nonatomic, strong) Commodity *selectedComm;
 
 @end
 
@@ -74,22 +74,25 @@
 - (void)BarButtonItem
 {
     // 设置定位
-    UIButton *test = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    UIButton *test = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    test.frame = CGRectMake(0, 0, 20, 20);
     test.backgroundColor = [UIColor orangeColor];
     UIBarButtonItem *locationItem = [[UIBarButtonItem alloc] initWithCustomView:test];
     self.navigationItem.leftBarButtonItem = locationItem;
     
     // 设置消息
-    UIButton *test1 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-    test1.backgroundColor = [UIColor magentaColor];
-    UIBarButtonItem *chatItem = [[UIBarButtonItem alloc] initWithCustomView:test1];
+    UIButton *btnsearch = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    btnsearch.frame = CGRectMake(0, 0, 30, 30);
+    [btnsearch setImage:[UIImage imageNamed:@"home_search"] forState:(UIControlStateNormal)];
+    UIBarButtonItem *searchItem = [[UIBarButtonItem alloc] initWithCustomView:btnsearch];
     
     // 设置搜索
-    UIButton *test2 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-    test2.backgroundColor = [UIColor purpleColor];
-    UIBarButtonItem *searchItem = [[UIBarButtonItem alloc] initWithCustomView:test2];
+    UIButton *btnmessage = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    btnmessage.frame = CGRectMake(0, 0, 30, 30);
+    [btnmessage setImage:[UIImage imageNamed:@"home_message"] forState:(UIControlStateNormal)];
+    UIBarButtonItem *messageItem = [[UIBarButtonItem alloc] initWithCustomView:btnmessage];
     
-    self.navigationItem.rightBarButtonItems = @[chatItem, searchItem];
+    self.navigationItem.rightBarButtonItems = @[ searchItem,messageItem];
 }
 
 #pragma mark - 添加控件
@@ -103,7 +106,7 @@
         UIButton *openTimeView = [[UIButton alloc] initWithFrame:CGRectMake(0, frame.origin.y, openTimeViewW, 20)];
         
         // 设置按钮颜色
-        openTimeView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
+        openTimeView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.1];
         
         // 设置按钮文字
         [openTimeView setTitle:@"超市营业时间：9:00 - 23:00" forState:UIControlStateNormal];
@@ -116,6 +119,8 @@
         openTimeView.enabled = NO;
         
         // 设置时钟图片
+        UIImage *clock = [UIImage imageNamed:@"supermarket_time"];
+        [openTimeView setImage:clock forState:(UIControlStateNormal)];
         
         [self.view addSubview:(self.openTimeView = openTimeView)];
     }

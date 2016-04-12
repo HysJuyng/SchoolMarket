@@ -13,7 +13,7 @@
     if (self) {
         
         //标题图片
-        UIImageView *tempimgv = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, self.frame.size.height - 10, self.frame.size.height - 10)];
+        UIImageView *tempimgv = [[UIImageView alloc] initWithFrame:CGRectMake(5, 10, self.frame.size.height - 20, self.frame.size.height - 20)];
         self.titleImgv = tempimgv;
         self.titleImgv.backgroundColor = [UIColor blueColor];
         [self addSubview:self.titleImgv];
@@ -25,10 +25,9 @@
         [self addSubview:self.lbTitle];
         
         //next图标(右箭头)
-        UIImageView *tempnext = [[UIImageView alloc] initWithFrame:CGRectMake(supervc.view.frame.size.width - self.frame.size.height + 5, 5, self.frame.size.height - 10, self.frame.size.height - 10)];
+        UIImageView *tempnext = [[UIImageView alloc] initWithFrame:CGRectMake(supervc.view.frame.size.width - self.frame.size.height + 5, 15, self.frame.size.height - 20, self.frame.size.height - 20)];
         self.nextImgv = tempnext;
-        self.nextImgv.backgroundColor = [UIColor blueColor];
-//        self.nextImgv.image =
+        self.nextImgv.image = [UIImage imageNamed:@"personal_arrow_right"];
         [self addSubview:self.nextImgv];
         
     }

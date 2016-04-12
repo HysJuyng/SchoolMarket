@@ -19,11 +19,6 @@
     
     self.title = @"账户信息";
     
-    //导航栏按钮
-    UIBarButtonItem *tempback = [[UIBarButtonItem alloc] initWithImage:nil style:(UIBarButtonItemStylePlain) target:self action:@selector(doBack)];
-    self.btnBack = tempback;
-    self.navigationItem.leftBarButtonItem = self.btnBack;
-    
     //创建tableview
     self.personalMsgTableview = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStyleGrouped)];
     self.personalMsgTableview.delegate = self;
@@ -105,6 +100,8 @@
 //跳转修改姓名
 - (void)goToChangeName {
     PersonalNameController *subvc = [[PersonalNameController alloc] init];
+    //返回按钮
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:(UIBarButtonItemStylePlain) target:nil action:nil];
     [self.navigationController pushViewController:subvc animated:true];
 }
 //actionsheet打开性别选择

@@ -7,6 +7,7 @@
 #import "BaseViewController.h"
 #import "RegisterViewController.h"
 #import "LoginHeader.h"
+#import "AFRequest.h"
 
 @interface LoginViewController : BaseViewController <UITableViewDataSource,UITableViewDelegate>
 

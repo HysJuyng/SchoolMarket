@@ -3,10 +3,10 @@
  */
 
 #import "ShoppingCartController.h"
-#import "ShoppingCart.h"
 #import "BottomTool.h"
+#import "ShoppingCart.h"
 
-@interface ShoppingCartController ()
+@interface ShoppingCartController () 
 
 /**  空购物车视图 */
 @property (nonatomic, weak) ShoppingCart *emptySC;
@@ -70,11 +70,13 @@
 {
     if (self.comms == nil) {
         UITableView *comms = [[UITableView alloc] initWithFrame:frame style:UITableViewStylePlain];
-        comms.backgroundColor = [UIColor yellowColor];
+//        comms.backgroundColor = [UIColor yellowColor];
         self.comms = comms;
         [view addSubview:self.comms];
     }
 }
+
+
 
 /**  初始化底部工具栏 */
 - (void)bottomToolWithView:(UIView *)view andFrame:(CGRect)frame

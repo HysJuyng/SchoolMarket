@@ -48,14 +48,16 @@
 
 #pragma mark POST
 //发送请求（登录注册）
-//- (void)postLogin:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull responseBlock)responseblock {
-//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    [manager POST:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        NSLog(@"%@",responseObject);   //获得数据
-//        
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        NSLog(@"%@",error);
-//    }];
-//}
+- (void)postLogin:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBack)postback {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager POST:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"%@",responseObject);   //获得数据
+        NSString *flag = (NSString *)responseObject;
+        postback(flag);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+    }];
+}
 
 @end

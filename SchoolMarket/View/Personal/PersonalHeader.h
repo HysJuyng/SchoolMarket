@@ -7,7 +7,6 @@
 
 //个人主页
 #import "PersonalCell.h"
-#import "PersonalHeaderView.h"
 #import "PersonalMsgCell.h"
 
 //账户信息

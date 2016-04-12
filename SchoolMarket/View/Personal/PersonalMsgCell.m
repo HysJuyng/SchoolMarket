@@ -19,25 +19,33 @@
         //头像
         UIImageView *tempimgv = [[UIImageView alloc] initWithFrame:CGRectMake(self.frame.size.width / 6, self.frame.size.height / 4, self.frame.size.height / 2, self.frame.size.height / 2)];
         self.userImgv = tempimgv;
-        self.userImgv.backgroundColor = [UIColor blueColor];
+        self.userImgv.layer.masksToBounds = YES; //设置圆角
+        self.userImgv.layer.cornerRadius = 36;
+        self.userImgv.image = [UIImage imageNamed:@"personal_default_head.png"];
         [self addSubview:self.userImgv];
         
         //用户名
-        UILabel *tempname = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width / 6 + self.frame.size.height / 2 + 5, self.frame.size.height / 4, self.frame.size.width / 3 * 2 - self.frame.size.height / 2 - 5 , self.frame.size.height / 6)];
+        UILabel *tempname = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width / 6 + self.frame.size.height / 2 + 5, self.frame.size.height / 4, self.frame.size.width / 3 * 2 - self.frame.size.height / 2 - 5 , self.frame.size.height / 5)];
         self.lbName = tempname;
         self.lbName.textAlignment = NSTextAlignmentLeft;
         self.lbName.text = @"请输入您的昵称";
         [self addSubview:self.lbName];
         
-        self.lbName.backgroundColor = [UIColor purpleColor];
+        //手机图标
+        UIImageView *tempphoneimgv = [[UIImageView alloc] initWithFrame:CGRectMake(self.frame.size.width / 6 + self.frame.size.height / 2 + 5, self.frame.size.height / 2, self.frame.size.height / 12, self.frame.size.height / 8)];
+        self.phoneImgv = tempphoneimgv;
+        self.phoneImgv.image = [UIImage imageNamed:@"personal_mobile"];
+        [self addSubview:self.phoneImgv];
         
         //手机号码
-        UILabel *tempphone = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width / 6 + self.frame.size.height / 2 + 5, self.frame.size.height / 12 * 5, self.frame.size.width / 3 * 2 - self.frame.size.height / 2 - 5 , self.frame.size.height / 6)];
+        UILabel *tempphone = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width / 6 + self.frame.size.height / 2 + self.frame.size.height / 12 + 10, self.frame.size.height / 2, self.frame.size.width / 3 * 2 - self.frame.size.height / 2  - self.frame.size.height / 8 - 10, self.frame.size.height / 8)];
         self.lbPhone = tempphone;
         self.lbPhone.textAlignment = NSTextAlignmentLeft;
+        //字体
+        self.lbPhone.font = [UIFont systemFontOfSize:self.frame.size.height / 12];
         [self addSubview:self.lbPhone];
         
-        self.lbPhone.backgroundColor = [UIColor grayColor];
+        
         
     }
     return self;

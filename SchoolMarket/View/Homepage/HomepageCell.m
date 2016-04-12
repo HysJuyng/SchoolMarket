@@ -16,7 +16,6 @@
         //头图片
         UIImageView *tempimgv = [[UIImageView alloc]initWithFrame:CGRectMake(5, 10, 15, 15)];
         self.imgvTitle = tempimgv;
-        self.imgvTitle.backgroundColor = [UIColor blueColor];
         [self addSubview:self.imgvTitle];
         
         //头标题

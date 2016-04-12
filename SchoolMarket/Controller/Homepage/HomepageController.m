@@ -21,18 +21,33 @@
     
     //导航栏按钮  左1：定位地区   右1：搜索 右2：消息
     //左1 定位地区
-    UIBarButtonItem *tempregion = [[UIBarButtonItem alloc] initWithImage:nil style:(UIBarButtonItemStylePlain) target:self action:@selector(regionClick)];
+    UIButton *reginbtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
+//    [reginbtn setImage:[UIImage imageNamed:@"home_down_arrow"] forState:(UIControlStateNormal)];
+    [reginbtn setTitle:@"五邑大学" forState:(UIControlStateNormal)];
+    reginbtn.frame = CGRectMake(0, 0, 60, 30);
+    [reginbtn addTarget:self action:@selector(regionClick) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    UIBarButtonItem *tempregion = [[UIBarButtonItem alloc] initWithCustomView:reginbtn];
     self.btnRegion = tempregion;
-    [self.btnRegion setTitle:@"地区"];
+    //添加左侧按钮
     self.navigationItem.leftBarButtonItem = self.btnRegion;
     //右1 搜索
-    UIBarButtonItem *tempsearch = [[UIBarButtonItem alloc] initWithImage:nil style:(UIBarButtonItemStylePlain) target:self action:@selector(searchClick)];
+    UIButton *searchbtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    [searchbtn setImage:[UIImage imageNamed:@"home_search"] forState:(UIControlStateNormal)];
+    searchbtn.frame = CGRectMake(0, 0, 30, 30);
+    [searchbtn addTarget:self action:@selector(searchClick) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    UIBarButtonItem *tempsearch = [[UIBarButtonItem alloc] initWithCustomView:searchbtn];
     self.btnSearch = tempsearch;
-    [self.btnSearch setTitle:@"搜索"];
     //右2 消息
-    UIBarButtonItem *tempmessage = [[UIBarButtonItem alloc] initWithImage:nil style:(UIBarButtonItemStylePlain) target:self action:@selector(messageClick)];
+    UIButton *messagebtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    [messagebtn setImage:[UIImage imageNamed:@"home_message"] forState:(UIControlStateNormal)];
+    messagebtn.frame = CGRectMake(0, 0, 30, 30);
+    [messagebtn addTarget:self action:@selector(messageClick) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    UIBarButtonItem *tempmessage = [[UIBarButtonItem alloc] initWithCustomView:messagebtn];
     self.btnMessage = tempmessage;
-    [self.btnMessage setTitle:@"消息"];
+    //添加右侧按钮
     self.navigationItem.rightBarButtonItems = [[NSArray alloc] initWithObjects:self.btnSearch,self.btnMessage,nil];
     
     //初始化tableview  样式为grouped
@@ -109,9 +124,11 @@
 }
 //tableview头视图
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    //第一区的头视图内有公告
     if (section == 0) {
         HCHeaderView *hcHeaderView = [[HCHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 148) andImgs:self.adverImgs];
-        hcHeaderView.lbTitle.text = @"title";
+        //设置公告
+        hcHeaderView.lbTitle.text = @"这里放的是公告";
         return hcHeaderView;
     }
     return nil;
@@ -157,7 +174,14 @@
         if (cell == nil) {
             cell = [[HomepageCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid andSuperVc:self andFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width + 15)];
         }
-        cell.lbTitle.text = [NSString stringWithFormat:@"title%ld",indexPath.section];
+        //设置每个cell的内容
+        if (indexPath.section == 1) {
+            cell.lbTitle.text = @"推荐";
+            cell.imgvTitle.image = [UIImage imageNamed:@"home_recommend"];
+        } else if(indexPath.section == 2) {
+            cell.lbTitle.text = @"热卖";
+            cell.imgvTitle.image = [UIImage imageNamed:@"home_hot"];
+        }
         
         //collectionview的实现
         cell.cvComm.dataSource = self;
@@ -205,8 +229,20 @@
     if (collectionView.tag == 101) {  //若collectionview为头部的collectionview
         NSString *cvcell = @"headercell";
         HCHeaderCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cvcell forIndexPath:indexPath];
-        cell.lbTitle.text = @"title";
-        cell.imgv.backgroundColor = [UIColor blueColor];
+        //设置每个单元格的内容
+        if (indexPath.row == 0) {   // 0:特价
+            cell.lbTitle.text = @"特价专区";
+            cell.imgv.image = [UIImage imageNamed:@"home_special"];
+        } else if (indexPath.row == 1) {   //1:签到
+            cell.lbTitle.text = @"每日签到";
+            cell.imgv.image = [UIImage imageNamed:@"home_qiandao"];
+        } else if (indexPath.row == 2) {   //2:优惠
+            cell.lbTitle.text = @"优惠";
+            cell.imgv.image = [UIImage imageNamed:@"home_youhui"];
+        } else if (indexPath.row == 3) {  //3:快递
+            cell.lbTitle.text = @"快递";
+            cell.imgv.image = [UIImage imageNamed:@"home_kuaidi"];
+        }
         
         return cell;
     }
@@ -253,6 +289,17 @@
     }
     //若collectionview为非头部的collectionview
     return UIEdgeInsetsMake(5, self.view.frame.size.width / 15, 5, 20);
+}
+//cv 选中事件
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+//    if (collectionView == self.comm) {
+        CommDetailViewController *commDetail = [CommDetailViewController alloc];
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:commDetail animated:YES];
+        self.hidesBottomBarWhenPushed = NO;
+//    }
 }
 
 //商品单元格 添加按钮事件 （重用bug）
