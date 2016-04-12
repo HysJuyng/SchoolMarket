@@ -24,6 +24,7 @@
 		3B8946861CAFBA4400959786 /* HCLastFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B8946851CAFBA4400959786 /* HCLastFootView.m */; };
 		3B89468C1CAFC84900959786 /* HCHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B89468B1CAFC84900959786 /* HCHeaderView.m */; };
 		3B89468F1CAFF03C00959786 /* HCHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B89468E1CAFF03C00959786 /* HCHeaderCell.m */; };
+		3B9E13661CBA29E2003BB0A5 /* AFRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9E13651CBA29E1003BB0A5 /* AFRequest.m */; };
 		3BBA9D851CAD13C100DF67B7 /* CommCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBA9D841CAD13C100DF67B7 /* CommCell.m */; };
 		3BC7F5AE1CB4AC88006A1754 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC7F5AD1CB4AC88006A1754 /* RegisterViewController.m */; };
 		3BD638911CB6293D0077D2A4 /* PersonalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD638901CB6293D0077D2A4 /* PersonalCell.m */; };
@@ -70,7 +71,6 @@
 
 /* Begin PBXFileReference section */
 		33A9D54A1CB4D71B0005F7BA /* AFRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFRequest.h; path = AFNetworking/AFRequest.h; sourceTree = "<group>"; };
-		33A9D54B1CB4D71B0005F7BA /* AFRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFRequest.m; path = AFNetworking/AFRequest.m; sourceTree = "<group>"; };
 		33A9D5641CB4D9310005F7BA /* SuperMarketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperMarketViewController.h; sourceTree = "<group>"; };
 		33A9D5651CB4D9310005F7BA /* SuperMarketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperMarketViewController.m; sourceTree = "<group>"; };
 		33A9D5791CB4D96F0005F7BA /* Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Categories.h; path = SuperMarket/Categories.h; sourceTree = "<group>"; };
@@ -95,6 +95,7 @@
 		3B89468B1CAFC84900959786 /* HCHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HCHeaderView.m; path = Homepage/HCHeaderView.m; sourceTree = "<group>"; };
 		3B89468D1CAFF03C00959786 /* HCHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HCHeaderCell.h; path = Homepage/HCHeaderCell.h; sourceTree = "<group>"; };
 		3B89468E1CAFF03C00959786 /* HCHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HCHeaderCell.m; path = Homepage/HCHeaderCell.m; sourceTree = "<group>"; };
+		3B9E13651CBA29E1003BB0A5 /* AFRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFRequest.m; path = AFNetworking/AFRequest.m; sourceTree = "<group>"; };
 		3BBA9D831CAD13C100DF67B7 /* CommCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommCell.h; path = Cell/CommCell.h; sourceTree = "<group>"; };
 		3BBA9D841CAD13C100DF67B7 /* CommCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommCell.m; path = Cell/CommCell.m; sourceTree = "<group>"; };
 		3BC7F5A81CB4AC44006A1754 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Login/LoginViewController.h; sourceTree = "<group>"; };
@@ -184,7 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				33A9D54A1CB4D71B0005F7BA /* AFRequest.h */,
-				33A9D54B1CB4D71B0005F7BA /* AFRequest.m */,
+				3B9E13651CBA29E1003BB0A5 /* AFRequest.m */,
 			);
 			name = AFNetworking;
 			sourceTree = "<group>";
@@ -677,6 +678,7 @@
 				3BF269CC1CACFA6700173221 /* RootTabBarController.m in Sources */,
 				3BF269C91CACF9D600173221 /* BaseViewController.m in Sources */,
 				3B89468F1CAFF03C00959786 /* HCHeaderCell.m in Sources */,
+				3B9E13661CBA29E2003BB0A5 /* AFRequest.m in Sources */,
 				33A9D56F1CB4D9450005F7BA /* (null) in Sources */,
 				3BD638A31CB65F6D0077D2A4 /* PersonalNameController.m in Sources */,
 				3B33A3821CB5FF7000506665 /* CategoriesCell.m in Sources */,

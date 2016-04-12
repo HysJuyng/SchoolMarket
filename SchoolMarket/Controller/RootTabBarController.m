@@ -44,6 +44,7 @@
     personalNavi.tabBarItem = personal;
     
 
+    NSLog(@"%@",NSHomeDirectory());
 }
 
 

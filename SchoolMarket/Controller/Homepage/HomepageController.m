@@ -42,12 +42,23 @@
     self.tableview.separatorStyle = NO;  //去掉分割线
     [self.view addSubview:self.tableview];
     
-    
+    AFRequest *request = [[AFRequest alloc] init];
+    //获取商品数据源
+    //-------推荐
+    NSString *recommendCommUrl = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllCommodity.jhtml";
+    NSDictionary *recommendParam = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"supermarketId", nil];
+    [request getComm:recommendCommUrl andParameter:recommendParam andCommBlock:^(NSMutableArray * _Nonnull comms) {
+        self.recommendComms = comms;  //获得推荐商品
+        //刷新推荐商品
+        NSIndexPath *recommendSection = [NSIndexPath indexPathForRow:0 inSection:1];
+        [self.tableview reloadRowsAtIndexPaths:[NSArray arrayWithObject:recommendSection] withRowAnimation:(UITableViewRowAnimationNone)];
+    }];
 //    AFRequest *request = [[AFRequest alloc] init];
 //    //获取商品数据源
 //    //-------推荐
-//    NSString *recommendCommUrl = @"";
-//    [request getComm:recommendCommUrl andParameter:nil andCommBlock:^(NSMutableArray * _Nonnull comms) {
+//    NSString *recommendCommUrl = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllCommodity.jhtml";
+//    NSDictionary *recommendParam = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"supermarketId", nil];
+//    [request getComm:recommendCommUrl andParameter:recommendParam andCommBlock:^(NSMutableArray * _Nonnull comms) {
 //        self.recommendComms = comms;  //获得推荐商品
 //        //刷新推荐商品
 //        NSIndexPath *recommendSection = [NSIndexPath indexPathForRow:0 inSection:1];
@@ -179,6 +190,11 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if (collectionView.tag == 101) {  //若collectionview为头部的collectionview
         return 4;
+    } else if (collectionView.tag == 102) {
+        if (self.recommendComms.count == 0) {
+            return 6;
+        }
+        return self.recommendComms.count;
     }
     //若collectionview为非头部的collectionview
     return 6;
@@ -198,9 +214,20 @@
     NSString *cvcell = @"commcell";
     CommCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cvcell forIndexPath:indexPath];
     if (collectionView.tag == 102) {
-        cell.lbName.text = @"comm";
-        cell.lbSpecification.text = @"500ml";
-        cell.lbPrice.text = @"羊2.50";
+        if (self.recommendComms.count != 0) {
+            cell.lbName.text = [((Commodity*)self.recommendComms[indexPath.row]) commName];
+            cell.lbSpecification.text = [(Commodity*)self.recommendComms[indexPath.row] specification];
+            cell.lbPrice.text = [NSString stringWithFormat:@"$%0.2f",[(Commodity*)self.recommendComms[indexPath.row] price]];
+            [cell.commImgv sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/uploadDir/%@",[(Commodity*)self.recommendComms[indexPath.row] picture]]] placeholderImage:[UIImage imageNamed:[(Commodity*)self.recommendComms[indexPath.row] picture]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                NSLog(@"%@",[(Commodity*)self.recommendComms[indexPath.row] picture]);
+                NSLog(@"success");
+            }];
+        } else {
+            cell.lbName.text = @"comm";
+            cell.lbSpecification.text = @"500ml";
+            cell.lbPrice.text = @"羊2.50";
+        }
+        
     } else if (collectionView.tag == 103) {
         cell.lbName.text = @"comm";
         cell.lbSpecification.text = @"500ml";

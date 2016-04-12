@@ -22,15 +22,15 @@
         [self addSubview:self.commImgv];
         
         //商品名称
-        UILabel *tempName = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height / 5 * 3, self.frame.size.width, self.frame.size.height / 20 * 3)];
+        UILabel *tempName = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height / 5 * 3, self.frame.size.width, self.frame.size.height / 20 * 2)];
         self.lbName = tempName;
         self.lbName.font = [UIFont systemFontOfSize:self.lbName.frame.size.height];
         [self addSubview:self.lbName];
         
         //商品规格
-        UILabel *tempSpecification = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height / 4 * 3, self.frame.size.width, self.frame.size.height / 20)];
+        UILabel *tempSpecification = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height / 10 * 7, self.frame.size.width, self.frame.size.height / 20 * 2)];
         self.lbSpecification = tempSpecification;
-        self.lbSpecification.font = [UIFont systemFontOfSize:self.lbSpecification.frame.size.height];
+        self.lbSpecification.font = [UIFont systemFontOfSize:self.lbSpecification.frame.size.height - 3];
         [self addSubview:self.lbSpecification];
         
         //加按钮

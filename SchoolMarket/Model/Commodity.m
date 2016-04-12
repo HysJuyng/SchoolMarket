@@ -29,8 +29,8 @@
     [comm setCommName:[commDic valueForKey:@"commName"]];
     [comm setPrice:[[commDic valueForKey:@"price"]floatValue]];
     [comm setSales:[[commDic valueForKey:@"sales"]intValue]];
-    [comm setSpecification:[commDic valueForKey:@"specification"]];
-    [comm setDescribe:[commDic valueForKey:@"describe"]];
+    [comm setSpecification:[commDic valueForKey:@"spercification"]];
+    [comm setDescribe:[commDic valueForKey:@"describes"]];
     [comm setStock:[[commDic valueForKey:@"stock"]intValue]];
     return comm;
 }
