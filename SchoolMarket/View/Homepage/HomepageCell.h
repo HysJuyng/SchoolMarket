@@ -23,6 +23,6 @@
 @property (weak,nonatomic) UICollectionView *cvComm;      //商品展示
 
 //初始化方法  视图控制器
-- (instancetype)initWithFrame:(CGRect)frame andSuperVC:(UIViewController*)superVC;
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier andSuperVc:(UIViewController*)supervc andFrame:(CGRect)frame;
 
 @end

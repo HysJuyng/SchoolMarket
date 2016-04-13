@@ -7,14 +7,14 @@
 #import "BaseViewController.h"
 #import "RegisterViewController.h"
 #import "LoginHeader.h"
+#import "AFRequest.h"
 
 @interface LoginViewController : BaseViewController <UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic,weak) UIButton *btnGetCode;   //获取验证码按钮
 @property (nonatomic,weak) UIBarButtonItem *btnRegister;  //注册按钮
 
 
-- (void)getIdentifyingCode;   //获取验证码
 - (void)registerClick;   //注册
 
+- (nonnull NSString*)textIsRequirements:(nonnull NSString*)phone andPasswork:(nonnull NSString*)passwork andCode:(nullable NSString*)code;    //检测输入的内容有没符合要求
 @end

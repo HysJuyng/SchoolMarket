@@ -4,12 +4,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Comm : NSObject
+@interface Commodity : NSObject
 {
     @private
-    int commId;    //商品id
-    int clasId;    //分类id
-    int supMarkId;  //超市id
+    int commodityId;    //商品id
+    int classId;    //分类id
+    int superMarketId;  //超市id
     NSString *picture;  //图片
     NSString *commName;  //商品名称
     float price;   //价格
@@ -19,9 +19,9 @@
     int stock;   //库存
 }
 
-@property (nonatomic,assign) int commId;
-@property (nonatomic,assign) int clasId;
-@property (nonatomic,assign) int supMarkId;
+@property (nonatomic,assign) int commodityId;
+@property (nonatomic,assign) int classId;
+@property (nonatomic,assign) int superMarketId;
 @property (nonatomic,copy) NSString *picture;
 @property (nonatomic,copy) NSString *commName;
 @property (nonatomic,assign) float price;
@@ -34,6 +34,6 @@
 
 
 //字典转换为对象
-- (Comm*)dicToObject:(NSDictionary*)commDic;
+- (Commodity*)dicToObject:(NSDictionary*)commDic;
 
 @end

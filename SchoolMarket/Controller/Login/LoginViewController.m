@@ -4,7 +4,7 @@
 
 #import "LoginViewController.h"
 
-@interface LoginViewController ()
+@interface LoginViewController () <LRFootViewDelegate>
 
 @property (nonatomic,strong) UITableView *loginTableview;
 @end
@@ -20,13 +20,6 @@
     UIBarButtonItem *tempregister = [[UIBarButtonItem alloc] initWithTitle:@"注册" style:(UIBarButtonItemStylePlain) target:self action:@selector(registerClick)];
     self.btnRegister = tempregister;
     self.navigationItem.rightBarButtonItem = self.btnRegister;
-    
-    
-    //获取验证码按钮   添加到手机号cell里面
-    UIButton *tempcode = [UIButton buttonWithType:(UIButtonTypeRoundedRect)];
-    self.btnGetCode = tempcode;
-    [self.btnGetCode setTitle:@"获取验证码" forState:(UIControlStateNormal)];
-    [self.btnGetCode addTarget:self action:@selector(getIdentifyingCode) forControlEvents:(UIControlEventTouchUpInside)];
     
     
     //tableview
@@ -64,9 +57,6 @@
     if (indexPath.row == 0) {
         //    cell.titleImgv.image = //设置图片
         cell.tfContent.placeholder = @"输入您的手机号码";  //设置提示文本
-        self.btnGetCode.frame = CGRectMake(self.view.frame.size.width / 4 * 3, 8, self.view.frame.size.width / 5, 30);
-        self.btnGetCode.titleLabel.adjustsFontSizeToFitWidth = true;
-        [cell addSubview:self.btnGetCode];
     } else if (indexPath.row == 1) {
         //    cell.titleImgv.image = //设置图片
         cell.tfContent.placeholder = @"输入您的密码";  //设置提示文本
@@ -76,9 +66,61 @@
     return cell;
 }
 
-//获取验证码
-- (void)getIdentifyingCode {
-    NSLog(@"getcode");
+
+
+//阅读并同意
+- (void)ReadAndAgreeClick {
+    NSLog(@"点击同意");
+}
+//登录或注册
+- (void)LoginOrRegClick {
+    NSLog(@"登录");
+    
+    //判断输入格式是否正确 (主要是字数)
+    //获取两个cell的文本
+    
+    //获取手机号码
+    NSIndexPath *phoneIndex = [NSIndexPath indexPathForRow:0 inSection:0];
+    NSString *phone = [NSString stringWithString:((LRTableviewCell*)[self.loginTableview cellForRowAtIndexPath:phoneIndex]).tfContent.text];
+    //获取密码
+    NSIndexPath *passwordIndex = [NSIndexPath indexPathForItem:1 inSection:0];
+    NSString *password = [NSString stringWithString:((LRTableviewCell*)[self.loginTableview cellForRowAtIndexPath:passwordIndex]).tfContent.text];
+    
+    NSLog(@"%@,%@",phone,password);
+    //检验输入是否符合要求
+    NSString *flag = [self textIsRequirements:phone andPasswork:password andCode:nil];
+    //根据返回的flag 推出alert
+    if (![flag  isEqual: @"success"]) {
+        UIAlertController *actionsheet = [UIAlertController alertControllerWithTitle:nil message:flag preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"ok" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            NSLog(@"ok");
+        }];
+        [actionsheet addAction:actionOk];
+        [self presentViewController:actionsheet animated:true completion:nil];
+    }else {   //检验成功 发送数据
+        NSLog(@"%@",flag);
+        [self login:phone andPasswork:password];
+    }
+    
+    
+}
+//打开用户服务协议
+- (void)UrSerAgreeClick {
+    NSLog(@"用户服务协议");
+}
+
+//检测输入的内容有没符合要求
+- (nonnull NSString*)textIsRequirements:(nonnull NSString*)phone andPasswork:(nonnull NSString*)passwork andCode:(nullable NSString*)code {
+    if (phone.length != 11) {
+        return @"手机号码长度为11位!";
+    }
+    if (passwork.length < 6 || passwork.length > 16) {
+        return @"密码长度为6到16位!";
+    }
+    if (code.length == 0 && code != nil) {
+        return @"请输入验证码!";
+    }
+    return @"success";
 }
 
 //注册  跳转注册页面
@@ -87,6 +129,32 @@
     [self.navigationController pushViewController:subvc animated:true];
 }
 
+//登录并验证
+- (void)login:(NSString*)name andPasswork:(NSString*)password {
+    AFRequest *post = [[AFRequest alloc] init];
+    NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/userLogin.jhtml";
+    NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+    [param setObject:name forKey:@"username"];
+    [param setObject:password forKey:@"password"];
+    [post postLogin:url andParameter:param andResponse:^(NSString * _Nonnull flag) {
+        NSString *messgae = [flag valueForKey:@"message"];
+        if ([messgae isEqualToString:@"success"]) {
+            //登录 成功 返回上级
+            [self.navigationController popViewControllerAnimated:true];
+        } else {
+            //登录 失败 提示失败信息
+            UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"error" message:messgae preferredStyle:(UIAlertControllerStyleAlert)];
+            //取消按钮
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
+                NSLog(@"取消");
+            }];
+            [alertC addAction:cancel];
+            
+            //推出alert
+            [self presentViewController:alertC animated:true completion:nil];
+        }
+    }];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

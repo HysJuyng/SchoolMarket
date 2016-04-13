@@ -16,42 +16,38 @@
         self->commNum = 0;
         
         //商品图片imageView
-        UIImageView *tempimgv = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height / 5 * 3)];
+        UIImageView *tempimgv = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, self.frame.size.width - 10, self.frame.size.height / 5 * 3 - 10)];
         self.commImgv = tempimgv;
-        self.commImgv.backgroundColor = [UIColor lightGrayColor];
+        self.commImgv.image = [UIImage imageNamed:@"default_img"];  //设置默认图片
         [self addSubview:self.commImgv];
         
         //商品名称
-        UILabel *tempName = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height / 5 * 3, self.frame.size.width, self.frame.size.height / 20 * 3)];
+        UILabel *tempName = [[UILabel alloc] initWithFrame:CGRectMake(5, self.frame.size.height / 5 * 3, self.frame.size.width, self.frame.size.height / 20 * 2)];
         self.lbName = tempName;
         self.lbName.font = [UIFont systemFontOfSize:self.lbName.frame.size.height];
         [self addSubview:self.lbName];
         
         //商品规格
-        UILabel *tempSpecification = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height / 4 * 3, self.frame.size.width, self.frame.size.height / 20)];
+        UILabel *tempSpecification = [[UILabel alloc] initWithFrame:CGRectMake(5, self.frame.size.height / 10 * 7, self.frame.size.width, self.frame.size.height / 20 * 2)];
         self.lbSpecification = tempSpecification;
-        self.lbSpecification.font = [UIFont systemFontOfSize:self.lbSpecification.frame.size.height];
+        self.lbSpecification.font = [UIFont systemFontOfSize:self.lbSpecification.frame.size.height - 3];
         [self addSubview:self.lbSpecification];
         
         //加按钮
         self.btnAdd = [UIButton buttonWithType:(UIButtonTypeSystem)];
         self.btnAdd.frame = CGRectMake(self.frame.size.width / 4 * 3, self.frame.size.height / 20 * 17, self.frame.size.width / 4, self.frame.size.width / 4);
-//        [self.btnAdd setImage:<#(nullable UIImage *)#> forState:(UIControlStateNormal)];
-        self.btnAdd.backgroundColor = [UIColor blueColor];
-        [self.btnAdd setTitle:@"+" forState:(UIControlStateNormal)];
+        [self.btnAdd setImage:[UIImage imageNamed:@"plus_circle_green"] forState:(UIControlStateNormal)];
         [self addSubview:self.btnAdd];
         
         //减按钮
         self.btnMinus = [UIButton buttonWithType:(UIButtonTypeSystem)];
         self.btnMinus.frame = CGRectMake(0, self.frame.size.height / 20 * 17, self.frame.size.width / 4, self.frame.size.width / 4);
-//        [self.btnMinus setImage:<#(nullable UIImage *)#> forState:(UIControlStateNormal)];
-        self.btnMinus.backgroundColor = [UIColor blueColor];
-        [self.btnMinus setTitle:@"-" forState:(UIControlStateNormal)];
+        [self.btnMinus setImage:[UIImage imageNamed:@"minus_circle_grey"] forState:(UIControlStateNormal)];
         self.btnMinus.hidden = true; //默认隐藏
         [self addSubview:self.btnMinus];
         
         //价格lable
-        UILabel *tempPrice = [[UILabel alloc]initWithFrame:CGRectMake(0, self.frame.size.height / 20 * 17, self.frame.size.width / 2, self.frame.size.width / 4)];
+        UILabel *tempPrice = [[UILabel alloc]initWithFrame:CGRectMake(5, self.frame.size.height / 20 * 17, self.frame.size.width / 2, self.frame.size.width / 4)];
         self.lbPrice = tempPrice;
         self.lbPrice.font = [UIFont systemFontOfSize:self.lbPrice.frame.size.height / 2];
         [self addSubview:self.lbPrice];

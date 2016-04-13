@@ -3,7 +3,6 @@
  */
 
 #import "ShoppingCartController.h"
-#import "ShoppingCart.h"
 #import "BottomTool.h"
 #import "SCCommCell.h"
 #import "CommDetailViewController.h"

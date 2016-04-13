@@ -42,7 +42,7 @@
         //头图片
         UIImageView *tempimgv = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, 10, 10)];
         self.imgvTitle = tempimgv;
-        self.imgvTitle.backgroundColor = [UIColor blueColor];
+        self.imgvTitle.image = [UIImage imageNamed:@"home_notice"];
         [self.titleView addSubview:self.imgvTitle];
 
         //头标题

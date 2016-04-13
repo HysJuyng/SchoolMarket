@@ -29,7 +29,7 @@
         [self.btnUrSerAgree setTitle:@"《用户服务协议》" forState:(UIControlStateNormal)];
         self.btnUrSerAgree.titleLabel.font = [UIFont systemFontOfSize:self.btnUrSerAgree.frame.size.height / 5 * 2]; //字体大小
         self.btnUrSerAgree.tintColor = [UIColor greenColor]; //字体颜色
-        [self.btnUrSerAgree addTarget:self action:@selector(UrSerAgreeClick) forControlEvents:(UIControlEventTouchUpInside)];  //点击事件
+        [self.btnUrSerAgree addTarget:supervc action:@selector(UrSerAgreeClick) forControlEvents:(UIControlEventTouchUpInside)];  //点击事件
         [self addSubview:self.btnUrSerAgree];
         
         //登录或注册按钮
@@ -38,12 +38,13 @@
         self.btnLoginOrReg.frame = CGRectMake(15, 50, supervc.view.frame.size.width - 30, 40);
         self.btnLoginOrReg.backgroundColor = [UIColor lightGrayColor];   //默认颜色 当输入完全时变绿色
         self.btnLoginOrReg.tintColor = [UIColor whiteColor];
-        [self.btnLoginOrReg addTarget:self action:@selector(LoginOrRegClick) forControlEvents:(UIControlEventTouchUpInside)];
+        [self.btnLoginOrReg addTarget:supervc action:@selector(LoginOrRegClick) forControlEvents:(UIControlEventTouchUpInside)];
         [self addSubview:self.btnLoginOrReg];
         
         
     }
     return self;
 }
+
 
 @end

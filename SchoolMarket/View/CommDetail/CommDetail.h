@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Comm.h"
+#import "Commodity.h"
 @class CommDetailViewController;
 
 @protocol CommDetailDelegate <NSObject>
@@ -45,7 +45,7 @@
 @property (nonatomic, weak) UIButton *shoppingCartBtn;
 
 /**  商品对象 */
-@property (nonatomic, strong) Comm *comm;
+@property (nonatomic, strong) Commodity *comm;
 
 /** 购买数量 */
 @property (nonatomic, assign) int shoppingCartNum;
