@@ -45,7 +45,7 @@
         [continueSelect setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
         
         // 监听方法，跳转到超市页面
-        [continueSelect addTarget:shoppingCartVC action:@selector(goToSuperMarket) forControlEvents:UIControlEventTouchUpInside];
+        [continueSelect addTarget:self.delegate action:@selector(goToSuperMarket) forControlEvents:UIControlEventTouchUpInside];
         
         [self addSubview:continueSelect];
         
@@ -73,5 +73,6 @@
     }
     return self;
 }
+
 
 @end

@@ -18,6 +18,7 @@ PODS:
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
+  - Reveal-iOS-SDK (1.6.2)
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
@@ -26,12 +27,14 @@ DEPENDENCIES:
   - AFNetworking (~> 3.0.4)
   - BmobSDK (~> 1.6.7)
   - FMDB (~> 2.6.2)
+  - Reveal-iOS-SDK
   - SDWebImage (~> 3.7.5)
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
   BmobSDK: ae6abd7f08a8150668687c880ac9ec93f1bf25b6
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
+  Reveal-iOS-SDK: e2250b3c155bcfac53ae223ddc1f76d08f206c33
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
 
 COCOAPODS: 0.39.0

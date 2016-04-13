@@ -5,8 +5,10 @@
 #import "ShoppingCartController.h"
 #import "ShoppingCart.h"
 #import "BottomTool.h"
+#import "SCCommCell.h"
+#import "CommDetailViewController.h"
 
-@interface ShoppingCartController ()
+@interface ShoppingCartController () <UITableViewDataSource, UITableViewDelegate, SCCommCellDelegate, BottomToolDelegate>
 
 /**  空购物车视图 */
 @property (nonatomic, weak) ShoppingCart *emptySC;
@@ -38,6 +40,7 @@
     CGFloat detailSCH = CGRectGetMinY(self.tabBarController.tabBar.frame) - detailSCY;
     
     [self detailShoppingCartWithFrame:CGRectMake(0, detailSCY, detailSCW, detailSCH)];
+    
 }
 
 #pragma mark - 购物车详情视图
@@ -48,34 +51,94 @@
         UIView *detailSC = [[UIView alloc] initWithFrame:frame];
         detailSC.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.06];
         
+        // 设置导航栏右侧Item
+        [self setupNavigationItem];
+
+        // 商品
+        self.automaticallyAdjustsScrollViewInsets = NO;
+        CGFloat commsW = frame.size.width;
+        CGFloat commsH = frame.size.height - self.tabBarController.tabBar.frame.size.height;
+        
+        [self commsWithView:detailSC andFrame:CGRectMake(0, 0, commsW, commsH)];
+        
         // 底部工具栏
         CGFloat bottomToolW = frame.size.width;
         CGFloat bottomToolH = self.tabBarController.tabBar.frame.size.height;
         CGFloat bottomToolY = frame.size.height - bottomToolH;
         
         [self bottomToolWithView:detailSC andFrame:CGRectMake(0, bottomToolY, bottomToolW, bottomToolH)];
-
-        // 商品
-        CGFloat commsW = frame.size.width;
-        CGFloat commsH = frame.size.height - bottomToolH;
-        
-        [self commsWithView:detailSC andFrame:CGRectMake(0, 0, commsW, commsH)];
         
         self.detailSC = detailSC;
         [self.view addSubview:self.detailSC];
     }
 }
 
+#pragma mark 导航栏Item
+/**  设置导航栏右侧Item */
+- (void)setupNavigationItem
+{
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStylePlain target:self action:@selector(editClick)];
+}
+
+/**  进入编辑模式 */
+- (void)editClick
+{
+    if ([self.navigationItem.rightBarButtonItem.title  isEqual: @"编辑"]) {
+        self.comms.editing = YES;
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(editClick)];
+    } else {
+        self.comms.editing = NO;
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStylePlain target:self action:@selector(editClick)];
+    }
+}
+
+#pragma mark 商品表格
+/**  初始化商品表格 */
 - (void)commsWithView:(UIView *)view andFrame:(CGRect)frame
 {
     if (self.comms == nil) {
         UITableView *comms = [[UITableView alloc] initWithFrame:frame style:UITableViewStylePlain];
-        comms.backgroundColor = [UIColor yellowColor];
+        comms.rowHeight = 80;
+        comms.dataSource = self;
+        comms.delegate = self;
         self.comms = comms;
         [view addSubview:self.comms];
     }
 }
 
+#pragma mark 数据源方法
+/**  返回Cell数量 */
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 20;
+}
+
+/**  设置Cell */
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    SCCommCell *cell = [SCCommCell cellWithTableView:tableView andFrame:self.view.bounds];
+    
+    return cell;
+}
+
+/**  实现拖拽删除 */
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
+#pragma mark 代理方法
+/**  Cell被选中 */
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CommDetailViewController *commDetail = [CommDetailViewController alloc];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:commDetail animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
+}
+
+#pragma mark 底部工具栏
 /**  初始化底部工具栏 */
 - (void)bottomToolWithView:(UIView *)view andFrame:(CGRect)frame
 {
@@ -98,7 +161,7 @@
     return self.emptySC;
 }
 
-#pragma mark 点击事件
+#pragma mark - 点击事件
 /** 跳转到超市页面 */
 - (void)goToSuperMarket
 {

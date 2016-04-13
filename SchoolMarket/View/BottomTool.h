@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ShoppingCartController;
 
 @protocol BottomToolDelegate <NSObject>
 
@@ -16,10 +15,8 @@
 @end
 
 @interface BottomTool : UIView
-{
-    ShoppingCartController *shoppingCartVC;
-}
 
+@property (nonatomic, weak) id<BottomToolDelegate> delegate;
 /**  总价Label */
 @property (nonatomic, weak) UILabel *sumPriceLbl;
 @end
