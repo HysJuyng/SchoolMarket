@@ -11,6 +11,7 @@
 		0CB25C1D4B758B58BD0B063C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77AEF81FB5932F3795664450 /* Pods.framework */; };
 		332A0BBE1CB9040A0047B26A /* BottomTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 332A0BBD1CB9040A0047B26A /* BottomTool.m */; };
 		3374A2E61CBA7D7B00865177 /* SCCommCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3374A2E41CBA7D7B00865177 /* SCCommCell.m */; };
+		3378E8F31CBE40B5004E7DFE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3378E8F21CBE40B5004E7DFE /* ViewController.m */; };
 		33A9D54C1CB4D71B0005F7BA /* AFRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 33A9D54B1CB4D71B0005F7BA /* AFRequest.m */; };
 		33A9D5581CB4D82D0005F7BA /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33A9D5551CB4D82D0005F7BA /* LoginViewController.m */; };
 		33A9D5591CB4D82D0005F7BA /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33A9D5571CB4D82D0005F7BA /* RegisterViewController.m */; };
@@ -68,6 +69,8 @@
 		332A0BBD1CB9040A0047B26A /* BottomTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomTool.m; sourceTree = "<group>"; };
 		3374A2E31CBA7D7B00865177 /* SCCommCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCommCell.h; sourceTree = "<group>"; };
 		3374A2E41CBA7D7B00865177 /* SCCommCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCommCell.m; sourceTree = "<group>"; };
+		3378E8F11CBE40B5004E7DFE /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		3378E8F21CBE40B5004E7DFE /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		33A9D54A1CB4D71B0005F7BA /* AFRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFRequest.h; path = AFNetworking/AFRequest.h; sourceTree = "<group>"; };
 		33A9D54B1CB4D71B0005F7BA /* AFRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFRequest.m; path = AFNetworking/AFRequest.m; sourceTree = "<group>"; };
 		33A9D5541CB4D82D0005F7BA /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Login/LoginViewController.h; sourceTree = "<group>"; };
@@ -406,6 +409,8 @@
 				3BFFAE5E1CACF7F40099D766 /* LaunchScreen.storyboard */,
 				3BFFAE5C1CACF7F40099D766 /* Assets.xcassets */,
 				3BFFAE501CACF7F30099D766 /* Supporting Files */,
+				3378E8F11CBE40B5004E7DFE /* ViewController.h */,
+				3378E8F21CBE40B5004E7DFE /* ViewController.m */,
 			);
 			path = SchoolMarket;
 			sourceTree = "<group>";
@@ -643,6 +648,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				33D532511CB52F430002C685 /* CommDetail.m in Sources */,
+				3378E8F31CBE40B5004E7DFE /* ViewController.m in Sources */,
 				33A9D5661CB4D9310005F7BA /* SuperMarketViewController.m in Sources */,
 				33D532561CB5301E0002C685 /* CommDetailViewController.m in Sources */,
 				33A9D5591CB4D82D0005F7BA /* RegisterViewController.m in Sources */,

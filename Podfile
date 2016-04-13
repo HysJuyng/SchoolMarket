@@ -7,4 +7,3 @@ pod 'FMDB', '~> 2.6.2'
 pod 'SDWebImage', '~> 3.7.5'
 pod 'BmobSDK', '~> 1.6.7'
 
-pod 'Reveal-iOS-SDK', :configurations => ['Debug']
