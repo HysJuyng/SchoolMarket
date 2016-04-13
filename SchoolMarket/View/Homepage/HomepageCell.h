@@ -25,4 +25,7 @@
 //初始化方法  视图控制器
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier andSuperVc:(UIViewController*)supervc andFrame:(CGRect)frame;
 
+
+//设置标题和图片
+- (void)setTitleAndImage:(NSString*)title andImage:(NSString*)image;
 @end

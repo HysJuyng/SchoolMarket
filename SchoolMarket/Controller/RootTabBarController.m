@@ -54,7 +54,12 @@
 }
 
 
-
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    if (tabBarController.selectedIndex == 3) {
+        return false;
+    }
+    return true;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

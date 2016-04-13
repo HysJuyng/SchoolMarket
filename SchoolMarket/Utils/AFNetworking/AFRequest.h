@@ -22,7 +22,6 @@ typedef void (^postBack)( NSString * _Nonnull flag);
 - (void)getImgs:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andImgsBlock:(nonnull responseBlock)imgsblock;
 
 //发送请求
-- (void)postMessage:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull responseBlock)responseblock;
 
 - (void)postLogin:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBack)postback;
 

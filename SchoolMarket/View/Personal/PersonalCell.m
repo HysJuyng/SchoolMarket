@@ -35,6 +35,12 @@
 }
 
 
+//设置标题和图片
+- (void)setTitleAndImage:(NSString*)title andImage:(NSString*)image {
+    self.lbTitle.text = title;
+    self.titleImgv.image = [UIImage imageNamed:image];
+}
+
 - (void)awakeFromNib {
     
 }

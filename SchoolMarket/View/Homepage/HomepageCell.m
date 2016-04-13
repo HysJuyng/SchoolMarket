@@ -43,6 +43,12 @@
     return self;
 }
 
+//设置标题和图片
+- (void)setTitleAndImage:(NSString*)title andImage:(NSString*)image {
+    self.lbTitle.text = title;
+    self.imgvTitle.image = [UIImage imageNamed:image];
+}
+
 - (void)awakeFromNib {
     
 }

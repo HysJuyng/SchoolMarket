@@ -68,24 +68,24 @@
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
     return UIEdgeInsetsMake(0.1, 20, 10, 15);
 }
-//点击事件 （重用bug）
-- (void)click:(UIButton *)button {
-    NSLog(@"%ld",(long)button.tag);
-    
-    //获取button所在的cell
-    CommCell *cell = (CommCell *)[button superview];
-    
-    //操作
-    [cell addNum];
-    int num = [cell commNum];
-    if (num > 0) {
-        cell.btnMinus.hidden = false;
-        cell.lbNum.hidden = false;
-        cell.lbNum.text = [NSString stringWithFormat:@"%d",num];
-        cell.lbPrice.hidden = true;
-    }
-    
-}
+////点击事件 （重用bug）
+//- (void)click:(UIButton *)button {
+//    NSLog(@"%ld",(long)button.tag);
+//    
+//    //获取button所在的cell
+//    CommCell *cell = (CommCell *)[button superview];
+//    
+//    //操作
+//    [cell addNum];
+//    int num = [cell commNum];
+//    if (num > 0) {
+//        cell.btnMinus.hidden = false;
+//        cell.lbNum.hidden = false;
+//        cell.lbNum.text = [NSString stringWithFormat:@"%d",num];
+//        cell.lbPrice.hidden = true;
+//    }
+//    
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

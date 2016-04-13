@@ -28,9 +28,9 @@
         [self addSubview:self.lbContent];
         
         //next图片
-        UIImageView *tempimgv = [[UIImageView alloc] initWithFrame:CGRectMake(self.frame.size.width - self.frame.size.height + 15, 10, self.frame.size.height - 20, self.frame.size.height - 20)];
+        UIImageView *tempimgv = [[UIImageView alloc] initWithFrame:CGRectMake(self.frame.size.width - self.frame.size.height + 20, 15, self.frame.size.height - 30, self.frame.size.height - 30)];
         self.nextImgv = tempimgv;
-        self.nextImgv.backgroundColor = [UIColor blueColor];
+        self.nextImgv.image = [UIImage imageNamed:@"personal_arrow_right"];
         [self addSubview:self.nextImgv];
     }
     return self;

@@ -13,6 +13,9 @@
 @property (weak,nonatomic) UIView *titleView;   //放头图片和头标题的view
 
 //初始化方法  附带图片数组
-- (instancetype)initWithFrame:(CGRect)frame andImgs:(nullable NSArray*)imgs;
+- (nonnull instancetype)initWithFrame:(CGRect)frame andImgs:(nullable NSArray*)imgs;
+
+//设置公告
+- (void)setTitle:(nonnull NSString*)guanggao;
 
 @end

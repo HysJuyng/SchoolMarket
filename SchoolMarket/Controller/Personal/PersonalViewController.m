@@ -33,15 +33,15 @@
     
 }
 
-
-//头视图高度
+#pragma mark tableview代理
+/** 头视图高度*/
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0) {
         return 0.01f;
     }
     return 10;
 }
-//脚视图高度
+/** 脚视图高度*/
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     if (section == 0) {
         return 0.01f;
@@ -49,11 +49,11 @@
     return 10;
 }
 
-//tableview区数
+/** tableview区数*/
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 3;
 }
-//cell个数   第一区为个人信息  第二区为5个选项  第三区为退出登录
+/** cell个数   第一区为个人信息  第二区为5个选项  第三区为退出登录*/
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
         return 1;
@@ -62,7 +62,7 @@
     }
     return 1;
 }
-//返回单元格
+/** 返回单元格*/
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *cellid = @"cellid";
     if (indexPath.section == 0) {   //第一区   个人信息
@@ -73,14 +73,15 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;  //单元格选取样式
         cell.lbName.text = @"godhandsome";
         cell.lbPhone.text = @"18814182438";
+        //***********这里应该使用set 通过model填写数据
         return cell;
     } else if (indexPath.section == 1) {   //第二区    一些操作
         PersonalCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
         if (cell == nil) {
             cell = [[PersonalCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid andSuperVc:self];
         }
-        cell.lbTitle.text = [NSString stringWithString:self.sectionTitle[indexPath.row]];
-        cell.titleImgv.image = [UIImage imageNamed:self.sectionImage[indexPath.row]];
+        //设置标题和图片
+        [cell setTitleAndImage:self.sectionTitle[indexPath.row] andImage:self.sectionImage[indexPath.row]];
         return cell;
     } else if (indexPath.section == 2) {   //第三区   退出登录
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
@@ -95,7 +96,7 @@
     return nil;
 }
 
-//单元格
+/** 单元格高度*/
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         return self.view.frame.size.height / 4;
@@ -103,7 +104,7 @@
     return 50;
 }
 
-//选中单元格
+/** 选中单元格*/
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         NSLog(@"进入个人信息");

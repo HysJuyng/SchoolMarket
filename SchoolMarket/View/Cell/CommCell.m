@@ -3,6 +3,11 @@
  */
 
 #import "CommCell.h"
+#import "SDWebImage-umbrella.h"
+
+#import "Commodity.h"
+
+//@class Commodity;
 
 @implementation CommCell
 
@@ -12,8 +17,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        //商品数量默认为0
-        self->commNum = 0;
         
         //商品图片imageView
         UIImageView *tempimgv = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, self.frame.size.width - 10, self.frame.size.height / 5 * 3 - 10)];
@@ -63,16 +66,21 @@
 }
 
 
-//getter setter
-@synthesize commNum;
-
-//增加商品数量
-- (void)addNum{
-    commNum++;
+//设置选择的商品数量
+- (void)setSelectedNum:(NSString*)num {
+    self.lbNum.text = num;
 }
-//减少商品数量
-- (void)minusNum {
-    commNum--;
+
+/** 通过model设置cell内容*/
+- (void)setCommCell:(Commodity*)commodity {
+    self.lbName.text = commodity.commName;
+    self.lbSpecification.text = commodity.specification;
+    self.lbPrice.text = [NSString stringWithFormat:@"$%@",commodity.price];
+    [self.commImgv sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/uploadDir/%@",commodity.picture]]
+                     placeholderImage:[UIImage imageNamed:commodity.picture]
+                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+         NSLog(@"%@",commodity.picture);
+     }];
 }
 
 @end

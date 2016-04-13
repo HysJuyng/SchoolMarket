@@ -29,23 +29,23 @@
 }
 
 #pragma mark 代理
-//单元格高度
+/** 单元格高度*/
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 50;
 }
-//头视图高度
+/** 头视图高度*/
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 0.01f;
 }
-//脚视图高度
+/** 脚视图高度*/
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 0.01f;
 }
-//单元格个数
+/** 单元格个数*/
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 3;
 }
-//获取单元格
+/** 获取单元格*/
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PersonMsgCell *cell = [tableView dequeueReusableCellWithIdentifier:self.msgs[indexPath.row]];
     if (cell == nil) {
@@ -54,10 +54,11 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;  //单元格选中样式
     cell.lbTitle.text = self.msgs[indexPath.row];
     cell.lbContent.text = @"Content";
+    //**********这里应该使用set 通过model填写数据
     return cell;
 }
 
-//选中单元格 头像：打开图库  姓名：跳转修改姓名  性别：actionsheet
+/** 选中单元格 头像：打开图库  姓名：跳转修改姓名  性别：actionsheet*/
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {  //头像
         NSLog(@"头像");
@@ -72,7 +73,7 @@
 }
 
 #pragma mark 自定义方法
-//打开图库
+/** 打开图库*/
 - (void)openGallery {
     if ([UIImagePickerController isSourceTypeAvailable:(UIImagePickerControllerSourceTypePhotoLibrary)]) {
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];
@@ -97,14 +98,14 @@
         [self presentViewController:cameraAlert animated:true completion:nil];
     }
 }
-//跳转修改姓名
+/** 跳转修改姓名*/
 - (void)goToChangeName {
     PersonalNameController *subvc = [[PersonalNameController alloc] init];
     //返回按钮
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:(UIBarButtonItemStylePlain) target:nil action:nil];
     [self.navigationController pushViewController:subvc animated:true];
 }
-//actionsheet打开性别选择
+/** actionsheet打开性别选择*/
 - (void)selectSex {
     UIAlertController *actionsheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:(UIAlertControllerStyleActionSheet)];
     //创建action
@@ -129,13 +130,6 @@
     
 }
 
-//返回上级
-- (void)doBack {
-    //隐藏
-//    [self.navigationController setNavigationBarHidden:true animated:false];
-    //返回
-    [self.navigationController popViewControllerAnimated:true];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

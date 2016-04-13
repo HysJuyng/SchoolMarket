@@ -26,4 +26,10 @@
     return self;
 }
 
+//设置标题和图片
+- (void)setTitleAndImage:(NSString*)title andImage:(NSString*)image {
+    self.lbTitle.text = title;
+    self.imgv.image = [UIImage imageNamed:image];
+}
+
 @end

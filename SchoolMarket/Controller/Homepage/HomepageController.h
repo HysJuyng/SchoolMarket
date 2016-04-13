@@ -8,6 +8,7 @@
 #import "HomepageView.h"
 #import "Model.h"
 #import "CommDetailViewController.h"
+#import "SpecialCommdityController.h"
 
 #import "AFRequest.h"
 
