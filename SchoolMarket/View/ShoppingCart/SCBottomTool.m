@@ -6,9 +6,9 @@
 //  Copyright © 2016年 linjy. All rights reserved.
 //
 
-#import "BottomTool.h"
+#import "SCBottomTool.h"
 
-@implementation BottomTool
+@implementation SCBottomTool
 
 /**  初始化底部工具栏 */
 - (instancetype)initWithFrame:(CGRect)frame

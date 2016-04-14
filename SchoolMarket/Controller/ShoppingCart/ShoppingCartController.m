@@ -3,19 +3,19 @@
  */
 
 #import "ShoppingCartController.h"
-#import "BottomTool.h"
+#import "SCBottomTool.h"
 #import "SCCommCell.h"
 #import "CommDetailViewController.h"
 #import "ShoppingCart.h"
 
-@interface ShoppingCartController () <UITableViewDataSource, UITableViewDelegate, SCCommCellDelegate, BottomToolDelegate>
+@interface ShoppingCartController () <UITableViewDataSource, UITableViewDelegate, SCCommCellDelegate, SCBottomToolDelegate>
 
 /**  空购物车视图 */
 @property (nonatomic, weak) ShoppingCart *emptySC;
 /**  购物车商品视图（非空） */
 @property (nonatomic, weak) UIView *detailSC;
 /**  底部工具栏 */
-@property (nonatomic, weak) BottomTool *bottomTool;
+@property (nonatomic, weak) SCBottomTool *bottomTool;
 /**  商品 */
 @property (nonatomic, weak) UITableView *comms;
 /**  总价 */
@@ -143,7 +143,7 @@
 - (void)bottomToolWithView:(UIView *)view andFrame:(CGRect)frame
 {
     if (self.bottomTool == nil) {
-        BottomTool *bottomTool = [[BottomTool alloc] initWithFrame:frame];
+        SCBottomTool *bottomTool = [[SCBottomTool alloc] initWithFrame:frame];
         self.bottomTool = bottomTool;
         [view addSubview:self.bottomTool];
     }

@@ -12,17 +12,18 @@
 		3378E8F31CBE40B5004E7DFE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3378E8F21CBE40B5004E7DFE /* ViewController.m */; };
 		33A9D5661CB4D9310005F7BA /* SuperMarketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33A9D5651CB4D9310005F7BA /* SuperMarketViewController.m */; };
 		33A9D57B1CB4D96F0005F7BA /* Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = 33A9D57A1CB4D96F0005F7BA /* Categories.m */; };
-		33D550671CBFB58A003E4EE3 /* BottomTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D550641CBFB58A003E4EE3 /* BottomTool.m */; };
-		33D550681CBFB58A003E4EE3 /* SCCommCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D550661CBFB58A003E4EE3 /* SCCommCell.m */; };
+		33D550671CBFB58A003E4EE3 /* SCBottomTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D550641CBFB58A003E4EE3 /* SCBottomTool.m */; };
 		33D5506D1CBFB5BD003E4EE3 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D5506A1CBFB5BD003E4EE3 /* LoginViewController.m */; };
 		33D5506E1CBFB5BD003E4EE3 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D5506C1CBFB5BD003E4EE3 /* RegisterViewController.m */; };
 		33D5506F1CBFB61D003E4EE3 /* SubCategoriesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B33A37F1CB5FF7000506665 /* SubCategoriesCell.m */; };
 		33D550701CBFB650003E4EE3 /* PersonalMsgController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD6389B1CB64AFF0077D2A4 /* PersonalMsgController.m */; };
+		33D550891CBFD4FD003E4EE3 /* SpecialCommCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B8311A11CBE197300D6FA69 /* SpecialCommCell.m */; };
+		33D5508C1CBFD678003E4EE3 /* CDBottomTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D5508B1CBFD678003E4EE3 /* CDBottomTool.m */; };
+		33D5A1171CBFE4E700E88EA8 /* SCCommCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D5A1161CBFE4E700E88EA8 /* SCCommCell.m */; };
 		33EE6DB01CB3B5DD00FA55FC /* categories.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33EE6DAF1CB3B5DD00FA55FC /* categories.plist */; };
 		3B33A3821CB5FF7000506665 /* CategoriesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B33A37B1CB5FF7000506665 /* CategoriesCell.m */; };
 		3B5889391CAFFDA400074B96 /* HCHeaderCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5889381CAFFDA400074B96 /* HCHeaderCollectionCell.m */; };
 		3B83119C1CBE15F200D6FA69 /* SpecialCommdityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B83119B1CBE15F200D6FA69 /* SpecialCommdityController.m */; };
-		3B8311A21CBE197300D6FA69 /* SpecialCommCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B8311A11CBE197300D6FA69 /* SpecialCommCell.m */; };
 		3B8311A51CBE9B8E00D6FA69 /* LbMiddleLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B8311A41CBE9B8E00D6FA69 /* LbMiddleLine.m */; };
 		3B84ED671CBF659200E16A6F /* SCCAddAndMinusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B84ED661CBF659200E16A6F /* SCCAddAndMinusView.m */; };
 		3B8946831CAF95A500959786 /* HomepageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B8946821CAF95A500959786 /* HomepageCell.m */; };
@@ -42,7 +43,6 @@
 		3BD8EF5E1CB4B8A600194F21 /* LRTableviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD8EF5D1CB4B8A600194F21 /* LRTableviewCell.m */; };
 		3BDEDD931CBCBE8900E67A3F /* CommDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDEDD921CBCBE8900E67A3F /* CommDetailViewController.m */; };
 		3BDEDD9A1CBCBECC00E67A3F /* ShoppingCart.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDEDD981CBCBECC00E67A3F /* ShoppingCart.m */; };
-		3BDEDD9E1CBCBEE200E67A3F /* CommDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDEDD9D1CBCBEE200E67A3F /* CommDetail.m */; };
 		3BE2AE181CB60E8000247429 /* Commodity.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE2AE171CB60E8000247429 /* Commodity.m */; };
 		3BF269C91CACF9D600173221 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF269C81CACF9D600173221 /* BaseViewController.m */; };
 		3BF269CC1CACFA6700173221 /* RootTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF269CB1CACFA6700173221 /* RootTabBarController.m */; };
@@ -81,14 +81,16 @@
 		33A9D5651CB4D9310005F7BA /* SuperMarketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperMarketViewController.m; sourceTree = "<group>"; };
 		33A9D5791CB4D96F0005F7BA /* Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Categories.h; path = SuperMarket/Categories.h; sourceTree = "<group>"; };
 		33A9D57A1CB4D96F0005F7BA /* Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Categories.m; path = SuperMarket/Categories.m; sourceTree = "<group>"; };
-		33D550631CBFB58A003E4EE3 /* BottomTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BottomTool.h; path = ShoppingCart/BottomTool.h; sourceTree = "<group>"; };
-		33D550641CBFB58A003E4EE3 /* BottomTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BottomTool.m; path = ShoppingCart/BottomTool.m; sourceTree = "<group>"; };
-		33D550651CBFB58A003E4EE3 /* SCCommCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCCommCell.h; path = ShoppingCart/SCCommCell.h; sourceTree = "<group>"; };
-		33D550661CBFB58A003E4EE3 /* SCCommCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCCommCell.m; path = ShoppingCart/SCCommCell.m; sourceTree = "<group>"; };
+		33D550631CBFB58A003E4EE3 /* SCBottomTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCBottomTool.h; path = ShoppingCart/SCBottomTool.h; sourceTree = "<group>"; };
+		33D550641CBFB58A003E4EE3 /* SCBottomTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCBottomTool.m; path = ShoppingCart/SCBottomTool.m; sourceTree = "<group>"; };
 		33D550691CBFB5BD003E4EE3 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Login/LoginViewController.h; sourceTree = "<group>"; };
 		33D5506A1CBFB5BD003E4EE3 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = Login/LoginViewController.m; sourceTree = "<group>"; };
 		33D5506B1CBFB5BD003E4EE3 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterViewController.h; path = Login/RegisterViewController.h; sourceTree = "<group>"; };
 		33D5506C1CBFB5BD003E4EE3 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegisterViewController.m; path = Login/RegisterViewController.m; sourceTree = "<group>"; };
+		33D5508A1CBFD678003E4EE3 /* CDBottomTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDBottomTool.h; path = CommDetail/CDBottomTool.h; sourceTree = "<group>"; };
+		33D5508B1CBFD678003E4EE3 /* CDBottomTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDBottomTool.m; path = CommDetail/CDBottomTool.m; sourceTree = "<group>"; };
+		33D5A1151CBFE4E700E88EA8 /* SCCommCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCCommCell.h; path = ShoppingCart/SCCommCell.h; sourceTree = "<group>"; };
+		33D5A1161CBFE4E700E88EA8 /* SCCommCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCCommCell.m; path = ShoppingCart/SCCommCell.m; sourceTree = "<group>"; };
 		33EE6DAF1CB3B5DD00FA55FC /* categories.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = categories.plist; sourceTree = "<group>"; };
 		3B33A37A1CB5FF7000506665 /* CategoriesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesCell.h; sourceTree = "<group>"; };
 		3B33A37B1CB5FF7000506665 /* CategoriesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesCell.m; sourceTree = "<group>"; };
@@ -140,8 +142,6 @@
 		3BDEDD921CBCBE8900E67A3F /* CommDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommDetailViewController.m; path = CommDetail/CommDetailViewController.m; sourceTree = "<group>"; };
 		3BDEDD971CBCBECC00E67A3F /* ShoppingCart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShoppingCart.h; path = ShoppingCart/ShoppingCart.h; sourceTree = "<group>"; };
 		3BDEDD981CBCBECC00E67A3F /* ShoppingCart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShoppingCart.m; path = ShoppingCart/ShoppingCart.m; sourceTree = "<group>"; };
-		3BDEDD9C1CBCBEE200E67A3F /* CommDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommDetail.h; path = CommDetail/CommDetail.h; sourceTree = "<group>"; };
-		3BDEDD9D1CBCBEE200E67A3F /* CommDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommDetail.m; path = CommDetail/CommDetail.m; sourceTree = "<group>"; };
 		3BE2AE161CB60E8000247429 /* Commodity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Commodity.h; sourceTree = "<group>"; };
 		3BE2AE171CB60E8000247429 /* Commodity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Commodity.m; sourceTree = "<group>"; };
 		3BF269C71CACF9D600173221 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
@@ -345,10 +345,10 @@
 		3BDEDD941CBCBEC100E67A3F /* ShoppingCart */ = {
 			isa = PBXGroup;
 			children = (
-				33D550631CBFB58A003E4EE3 /* BottomTool.h */,
-				33D550641CBFB58A003E4EE3 /* BottomTool.m */,
-				33D550651CBFB58A003E4EE3 /* SCCommCell.h */,
-				33D550661CBFB58A003E4EE3 /* SCCommCell.m */,
+				33D550631CBFB58A003E4EE3 /* SCBottomTool.h */,
+				33D550641CBFB58A003E4EE3 /* SCBottomTool.m */,
+				33D5A1151CBFE4E700E88EA8 /* SCCommCell.h */,
+				33D5A1161CBFE4E700E88EA8 /* SCCommCell.m */,
 				3BDEDD971CBCBECC00E67A3F /* ShoppingCart.h */,
 				3BDEDD981CBCBECC00E67A3F /* ShoppingCart.m */,
 			);
@@ -358,8 +358,8 @@
 		3BDEDD9B1CBCBED000E67A3F /* CommDetail */ = {
 			isa = PBXGroup;
 			children = (
-				3BDEDD9C1CBCBEE200E67A3F /* CommDetail.h */,
-				3BDEDD9D1CBCBEE200E67A3F /* CommDetail.m */,
+				33D5508A1CBFD678003E4EE3 /* CDBottomTool.h */,
+				33D5508B1CBFD678003E4EE3 /* CDBottomTool.m */,
 			);
 			name = CommDetail;
 			sourceTree = "<group>";
@@ -727,7 +727,9 @@
 				3BD8EF5E1CB4B8A600194F21 /* LRTableviewCell.m in Sources */,
 				3B84ED671CBF659200E16A6F /* SCCAddAndMinusView.m in Sources */,
 				3BD638911CB6293D0077D2A4 /* PersonalCell.m in Sources */,
+				33D5A1171CBFE4E700E88EA8 /* SCCommCell.m in Sources */,
 				3B8946831CAF95A500959786 /* HomepageCell.m in Sources */,
+				33D550891CBFD4FD003E4EE3 /* SpecialCommCell.m in Sources */,
 				3BD638991CB643CC0077D2A4 /* PersonalMsgCell.m in Sources */,
 				3B8946861CAFBA4400959786 /* HCLastFootView.m in Sources */,
 				3BDEDD931CBCBE8900E67A3F /* CommDetailViewController.m in Sources */,
@@ -739,13 +741,12 @@
 				3B83119C1CBE15F200D6FA69 /* SpecialCommdityController.m in Sources */,
 				3BD638A31CB65F6D0077D2A4 /* PersonalNameController.m in Sources */,
 				3BDEDD9A1CBCBECC00E67A3F /* ShoppingCart.m in Sources */,
+				33D5508C1CBFD678003E4EE3 /* CDBottomTool.m in Sources */,
 				3B33A3821CB5FF7000506665 /* CategoriesCell.m in Sources */,
-				33D550671CBFB58A003E4EE3 /* BottomTool.m in Sources */,
+				33D550671CBFB58A003E4EE3 /* SCBottomTool.m in Sources */,
 				3BFFAE551CACF7F40099D766 /* AppDelegate.m in Sources */,
-				3BDEDD9E1CBCBEE200E67A3F /* CommDetail.m in Sources */,
 				3BD638A01CB653480077D2A4 /* PersonMsgCell.m in Sources */,
 				33D5506E1CBFB5BD003E4EE3 /* RegisterViewController.m in Sources */,
-				33D550681CBFB58A003E4EE3 /* SCCommCell.m in Sources */,
 				33A9D57B1CB4D96F0005F7BA /* Categories.m in Sources */,
 				3BBA9D851CAD13C100DF67B7 /* CommCell.m in Sources */,
 				33D550701CBFB650003E4EE3 /* PersonalMsgController.m in Sources */,

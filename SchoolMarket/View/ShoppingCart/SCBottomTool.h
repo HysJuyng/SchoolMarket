@@ -8,15 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol BottomToolDelegate <NSObject>
+@protocol SCBottomToolDelegate <NSObject>
 
 - (void)goToSuperMarket;
 
 @end
 
-@interface BottomTool : UIView
+@interface SCBottomTool : UIView
 
-@property (nonatomic, weak) id<BottomToolDelegate> delegate;
+@property (nonatomic, weak) id<SCBottomToolDelegate> delegate;
 /**  总价Label */
 @property (nonatomic, weak) UILabel *sumPriceLbl;
 @end

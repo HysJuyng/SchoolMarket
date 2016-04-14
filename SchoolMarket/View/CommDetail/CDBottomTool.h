@@ -1,16 +1,15 @@
 //
-//  CommDetail.h
+//  CDBottomTool.h
 //  SchoolMarket
 //
-//  Created by tb on 16/4/6.
+//  Created by tb on 16/4/14.
 //  Copyright © 2016年 linjy. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "Commodity.h"
-@class CommDetailViewController;
 
-@protocol CommDetailDelegate <NSObject>
+@protocol CDBottomToolDelegate <NSObject>
 
 @required
 /**  数量变化 */
@@ -24,12 +23,9 @@
 
 @end
 
-@interface CommDetail : UIView <UITableViewDataSource, UITableViewDelegate>
-{
-    CommDetailViewController *commVC;
-}
-/**  商品详情（容器） */
-@property (nonatomic, weak) UITableView *detailTbl;
+@interface CDBottomTool : UIView
+
+@property (nonatomic, weak) id<CDBottomToolDelegate> delegate;
 
 /**  底部工具栏 */
 @property (nonatomic, weak) UIView *bottomToolView;
@@ -49,4 +45,5 @@
 
 /** 购买数量 */
 @property (nonatomic, assign) int shoppingCartNum;
+
 @end
