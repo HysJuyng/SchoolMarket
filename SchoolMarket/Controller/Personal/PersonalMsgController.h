@@ -15,8 +15,7 @@
 
 
 
-//返回上级
-- (void)doBack;
+
 //打开图库
 - (void)openGallery;
 //跳转修改姓名

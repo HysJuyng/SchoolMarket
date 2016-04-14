@@ -7,6 +7,8 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "LbMiddleLine.h"
+#import "SCCAddAndMinusView.h"
 
 @class Commodity;
 
@@ -15,8 +17,10 @@
 @property (nonatomic,weak) UIImageView *commImgv;          //图片
 @property (nonatomic,weak) UILabel *lbCommName;          //名字
 @property (nonatomic,weak) UILabel *lbSpecification;    //规格
-@property (nonatomic,weak) UILabel *lbPrice;           //原价
+@property (nonatomic,weak) LbMiddleLine *lbPrice;           //原价
 @property (nonatomic,weak) UILabel *lbSpecialPrice;  //特价
+
+@property (nonatomic,weak) SCCAddAndMinusView *addAndMinusView;
 
 //初始化
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier andFrame:(CGRect)frame;

@@ -38,6 +38,7 @@
         UILabel *tempspecification = [[UILabel alloc] initWithFrame:CGRectMake(self.lbCommName.frame.origin.x, self.frame.size.height / 6 + 15, 100, self.frame.size.height / 6)];
         self.lbSpecification = tempspecification;
         self.lbSpecification.textAlignment = NSTextAlignmentLeft;
+        self.lbSpecification.font = [UIFont systemFontOfSize:self.lbSpecification.frame.size.height /4 * 3];
         [self addSubview:self.lbSpecification];
         
         self.lbSpecification.backgroundColor = [UIColor purpleColor];
@@ -52,13 +53,19 @@
         self.lbSpecialPrice.backgroundColor = [UIColor yellowColor];
         
         //原价
-        UILabel *tempprice = [[UILabel alloc] initWithFrame:CGRectMake(self.lbCommName.frame.origin.x + 70, self.frame.size.height / 10 * 7, 40, self.frame.size.height / 20 * 3)];
+        LbMiddleLine *tempprice = [[LbMiddleLine alloc] initWithFrame:CGRectMake(self.lbCommName.frame.origin.x + 70, self.frame.size.height / 10 * 7, 40, self.frame.size.height / 20 * 3)];
         self.lbPrice = tempprice;
-        self.lbPrice.textAlignment = NSTextAlignmentLeft;
+        self.lbPrice.textAlignment = NSTextAlignmentCenter;
         self.lbPrice.font = [UIFont systemFontOfSize:self.lbPrice.frame.size.height];
         [self addSubview:self.lbPrice];
         
         self.lbPrice.backgroundColor = [UIColor grayColor];
+        
+        
+        //加减view
+        SCCAddAndMinusView *tempview = [[SCCAddAndMinusView alloc] initWithFrame:CGRectMake(self.frame.size.width - self.frame.size.height / 4 * 3 - 15, self.frame.size.height - self.frame.size.height / 4 - 10, self.frame.size.height / 4 * 3, self.frame.size.height / 4)];
+        self.addAndMinusView = tempview;
+        [self addSubview:self.addAndMinusView];
         
     }
     return self;
@@ -73,32 +80,6 @@
     //还要添加特价
 }
 
-//- (void)drawTextInRect:(CGRect)rect {
-//    
-//    //划线
-//    CGFloat x = 0;
-//    CGFloat y = rect.size.height / 2;
-//    CGFloat w = rect.size.width;
-//    CGFloat h = 1;
-//    UIRectFill(CGRectMake(x, y, w, h));
-//}
-//- (void)drawLine:(CGRect)rect
-//{
-//    CGContextRef ctx = UIGraphicsGetCurrentContext();
-//    
-//    // 1.起点
-//    CGFloat startX = 0;
-//    CGFloat startY = rect.size.height * 0.5;
-//    CGContextMoveToPoint(ctx, startX, startY);
-//    
-//    // 2.终点
-//    CGFloat endX = rect.size.width;
-//    CGFloat endY = startY;
-//    CGContextAddLineToPoint(ctx, endX, endY);
-//    
-//    // 3.绘图渲染
-//    CGContextStrokePath(ctx);
-//}
 
 - (void)awakeFromNib {
     

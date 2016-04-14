@@ -56,6 +56,10 @@
 //        [[self.tableview headerViewForSection:0] reloadInputViews];;  //测试 刷新头视图
 //    }];
 
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(goToShopcart) name:@"goToTabbar2" object:nil];
+    
 }
 
 #pragma mark 设置导航栏
@@ -285,10 +289,15 @@
         if (indexPath.row == 0) {
             subvc = [[SpecialCommdityController alloc] init];
         }
+        
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+        self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:subvc animated:true];
+        self.hidesBottomBarWhenPushed = NO;
+        
     } else if (collectionView.tag == 102 || collectionView.tag == 103) { //当section不在第一区的时候
         CommDetailViewController *commDetail = [CommDetailViewController alloc];
-        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:commDetail animated:YES];
         self.hidesBottomBarWhenPushed = NO;
@@ -296,8 +305,8 @@
 }
 
 #pragma mark 商品cell按钮事件
-///** 商品单元格 添加按钮事件*/                 //（重用bug）
-//- (void)commCellClickAdd:(UIButton *)button {
+/** 商品单元格 添加按钮事件*/                 //（重用bug）
+- (void)commCellClickAdd:(UIButton *)button {
 //    //获取button所在的cell
 //    CommCell *cell = (CommCell *)[button superview];
 //    
@@ -310,9 +319,9 @@
 //        cell.lbNum.text = [NSString stringWithFormat:@"%d",num];
 //        cell.lbPrice.hidden = true;
 //    }
-//}
-///** 商品单元格 减少按钮事件*/
-//- (void)commCellClickMinus:(UIButton *)button {
+}
+/** 商品单元格 减少按钮事件*/
+- (void)commCellClickMinus:(UIButton *)button {
 //    //获取button所在的cell
 //    CommCell *cell = (CommCell *)[button superview];
 //    
@@ -327,7 +336,7 @@
 //    } else {
 //        cell.lbNum.text = [NSString stringWithFormat:@"%d",num];
 //    }
-//}
+}
 
 #pragma mark 其它点击事件
 /** 跳转到超市*/
@@ -348,6 +357,11 @@
     NSLog(@"消息");
 }
 
+- (void)goToShopcart {
+    self.tabBarController.selectedIndex = 2;
+}
+
+#pragma mark -
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     

@@ -49,6 +49,7 @@
     shopcartNavi.tabBarItem = shopcart;
     personalNavi.tabBarItem = personal;
     
+    
 
     NSLog(@"%@",NSHomeDirectory());
 }
@@ -60,6 +61,8 @@
     }
     return true;
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

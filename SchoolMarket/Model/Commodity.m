@@ -13,6 +13,9 @@
 {
     self = [super init];
     if (self) {
+        
+        self.selectedNum = 0;
+        
         self.commodityId = [[commDic valueForKey:@"commodityId"]intValue];
         self.classId = [[commDic valueForKey:@"classId"]intValue];
         self.superMarketId = [[commDic valueForKey:@"superMarketId"]intValue];
