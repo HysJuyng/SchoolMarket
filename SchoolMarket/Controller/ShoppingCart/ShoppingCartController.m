@@ -6,6 +6,7 @@
 #import "BottomTool.h"
 #import "SCCommCell.h"
 #import "CommDetailViewController.h"
+#import "ShoppingCart.h"
 
 @interface ShoppingCartController () <UITableViewDataSource, UITableViewDelegate, SCCommCellDelegate, BottomToolDelegate>
 
