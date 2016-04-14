@@ -49,10 +49,18 @@
     shopcartNavi.tabBarItem = shopcart;
     personalNavi.tabBarItem = personal;
     
+    
 
     NSLog(@"%@",NSHomeDirectory());
 }
 
+
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    if (tabBarController.selectedIndex == 3) {
+        return false;
+    }
+    return true;
+}
 
 
 

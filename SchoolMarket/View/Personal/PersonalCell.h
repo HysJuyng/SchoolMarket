@@ -16,4 +16,6 @@
 //初始化
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier andSuperVc:(UIViewController*)supervc;
 
+//设置标题和图片
+- (void)setTitleAndImage:(NSString*)title andImage:(NSString*)image;
 @end

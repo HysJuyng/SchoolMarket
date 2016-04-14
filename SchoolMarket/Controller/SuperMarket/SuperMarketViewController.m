@@ -277,36 +277,36 @@
 
 /**  商品单元格 添加按钮事件 （重用bug） */
 - (void)commCellClickAdd:(UIButton *)button {
-    //获取button所在的cell
-    CommCell *cell = (CommCell *)[button superview];
-    
-    //操作
-    [cell addNum];
-    int num = [cell commNum];
-    if (num > 0) {
-        cell.btnMinus.hidden = false;
-        cell.lbNum.hidden = false;
-        cell.lbNum.text = [NSString stringWithFormat:@"%d",num];
-        cell.lbPrice.hidden = true;
-    }
+//    //获取button所在的cell
+//    CommCell *cell = (CommCell *)[button superview];
+//    
+//    //操作
+//    [cell addNum];
+//    int num = [cell commNum];
+//    if (num > 0) {
+//        cell.btnMinus.hidden = false;
+//        cell.lbNum.hidden = false;
+//        cell.lbNum.text = [NSString stringWithFormat:@"%d",num];
+//        cell.lbPrice.hidden = true;
+//    }
 }
 
 /**  商品单元格 减少按钮事件 */
 - (void)commCellClickMinus:(UIButton *)button {
-    //获取button所在的cell
-    CommCell *cell = (CommCell *)[button superview];
-    
-    //操作
-    [cell minusNum];
-    int num = [cell commNum];
-    if (num == 0) {
-        cell.btnMinus.hidden = true;
-        cell.lbNum.hidden = true;
-        cell.lbNum.text = @"";
-        cell.lbPrice.hidden = false;
-    } else {
-        cell.lbNum.text = [NSString stringWithFormat:@"%d",num];
-    }
+//    //获取button所在的cell
+//    CommCell *cell = (CommCell *)[button superview];
+//    
+//    //操作
+//    [cell minusNum];
+//    int num = [cell commNum];
+//    if (num == 0) {
+//        cell.btnMinus.hidden = true;
+//        cell.lbNum.hidden = true;
+//        cell.lbNum.text = @"";
+//        cell.lbPrice.hidden = false;
+//    } else {
+//        cell.lbNum.text = [NSString stringWithFormat:@"%d",num];
+//    }
 }
 
 #pragma mark 代理方法

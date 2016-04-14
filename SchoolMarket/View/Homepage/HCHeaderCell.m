@@ -6,6 +6,7 @@
 
 #import "HCHeaderCell.h"
 
+
 @implementation HCHeaderCell
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -23,6 +24,7 @@
     }
     return self;
 }
+
 
 - (void)awakeFromNib {
     

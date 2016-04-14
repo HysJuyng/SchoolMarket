@@ -6,7 +6,7 @@
 
 @implementation HCHeaderView
 
-- (instancetype)initWithFrame:(CGRect)frame andImgs:(nullable NSArray*)imgs
+- (nonnull instancetype)initWithFrame:(CGRect)frame andImgs:(nullable NSArray*)imgs
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -53,6 +53,11 @@
         [self.titleView addSubview:self.lbTitle];
     }
     return self;
+}
+
+//设置公告
+- (void)setTitle:(nonnull NSString*)guanggao {
+    self.lbTitle.text = guanggao;
 }
 
 @end

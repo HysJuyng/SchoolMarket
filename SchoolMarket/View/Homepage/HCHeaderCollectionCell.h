@@ -10,4 +10,8 @@
 @property (weak,nonatomic) UIImageView *imgv;
 @property (weak,nonatomic) UILabel *lbTitle;
 
+
+
+//设置标题和图片
+- (void)setTitleAndImage:(NSString*)title andImage:(NSString*)image;
 @end
