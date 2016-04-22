@@ -4,9 +4,12 @@
 
 #import "RegisterViewController.h"
 
-@interface RegisterViewController () <LRFootViewDelegate>
+#import "LoginHeader.h"
 
-@property (nonatomic,strong) UITableView *registerTableview;
+@interface RegisterViewController () <LRFootViewDelegate,UITableViewDataSource,UITableViewDelegate>
+
+@property (nonatomic,weak) UITableView *registerTableview;
+@property (nonatomic,strong) UIAlertController *alertController;
 @end
 
 @implementation RegisterViewController
@@ -17,7 +20,8 @@
     self.title = @"用户注册";
     
     //tableview
-    self.registerTableview = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStyleGrouped)];
+    UITableView *temptableview = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStyleGrouped)];
+    self.registerTableview = temptableview;
     self.registerTableview.delegate = self;
     self.registerTableview.dataSource = self;
     [self.registerTableview setSeparatorInset:UIEdgeInsetsMake(0, 30, 0, 30)];
@@ -99,12 +103,9 @@
     NSString *flag = [self textIsRequirements:phone andPasswork:passwork andCode:code];
     //根据返回的flag 推出alert
     if (![flag  isEqual: @"success"]) {
-        UIAlertController *actionsheet = [UIAlertController alertControllerWithTitle:nil message:flag preferredStyle:(UIAlertControllerStyleAlert)];
-        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"ok" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-            NSLog(@"ok");
-        }];
-        [actionsheet addAction:actionOk];
-        [self presentViewController:actionsheet animated:true completion:nil];
+        //推出alertview
+        self.alertController.message = flag;
+        [self presentViewController:self.alertController animated:true completion:nil];
     }else { //检验成功 发送数据
         NSLog(@"%@",flag);
     }
@@ -117,6 +118,23 @@
 //获取验证码
 - (void)getIdentifyingCode {
     NSLog(@"获取验证码");
+}
+
+
+/**
+ *  懒加载 alertController
+ */
+- (UIAlertController *)alertController {
+    if (! _alertController) {
+        _alertController = [UIAlertController alertControllerWithTitle:@"error" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+        //取消按钮
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
+            NSLog(@"取消");
+        }];
+        [_alertController addAction:cancel];
+    }
+    
+    return _alertController;
 }
 
 

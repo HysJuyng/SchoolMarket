@@ -12,6 +12,7 @@
 		33A9D5661CB4D9310005F7BA /* SuperMarketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33A9D5651CB4D9310005F7BA /* SuperMarketViewController.m */; };
 		33A9D57B1CB4D96F0005F7BA /* Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = 33A9D57A1CB4D96F0005F7BA /* Categories.m */; };
 		33EE6DB01CB3B5DD00FA55FC /* categories.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33EE6DAF1CB3B5DD00FA55FC /* categories.plist */; };
+		3B0A6D2C1CCA2C2D00C99CB7 /* FMDBsql.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0A6D2B1CCA2C2D00C99CB7 /* FMDBsql.m */; };
 		3B33A3821CB5FF7000506665 /* CategoriesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B33A37B1CB5FF7000506665 /* CategoriesCell.m */; };
 		3B33A3841CB5FF7000506665 /* SubCategoriesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B33A37F1CB5FF7000506665 /* SubCategoriesCell.m */; };
 		3B33A3871CB5FFAB00506665 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B33A3861CB5FFAB00506665 /* LoginViewController.m */; };
@@ -34,7 +35,6 @@
 		3BD638A31CB65F6D0077D2A4 /* PersonalNameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD638A21CB65F6D0077D2A4 /* PersonalNameController.m */; };
 		3BD86DC61CAEACE0004B651B /* ShoppingCartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD86DC51CAEACE0004B651B /* ShoppingCartController.m */; };
 		3BD86DCA1CAEAD36004B651B /* PersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD86DC91CAEAD36004B651B /* PersonalViewController.m */; };
-		3BD86DD01CAEB4D7004B651B /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 3BD86DCF1CAEB4D7004B651B /* data.json */; };
 		3BD8EF5B1CB4B37900194F21 /* LRFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD8EF5A1CB4B37900194F21 /* LRFootView.m */; };
 		3BD8EF5E1CB4B8A600194F21 /* LRTableviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD8EF5D1CB4B8A600194F21 /* LRTableviewCell.m */; };
 		3BDEDD931CBCBE8900E67A3F /* CommDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BDEDD921CBCBE8900E67A3F /* CommDetailViewController.m */; };
@@ -79,6 +79,8 @@
 		33A9D5791CB4D96F0005F7BA /* Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Categories.h; path = SuperMarket/Categories.h; sourceTree = "<group>"; };
 		33A9D57A1CB4D96F0005F7BA /* Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Categories.m; path = SuperMarket/Categories.m; sourceTree = "<group>"; };
 		33EE6DAF1CB3B5DD00FA55FC /* categories.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = categories.plist; sourceTree = "<group>"; };
+		3B0A6D2A1CCA2C2D00C99CB7 /* FMDBsql.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDBsql.h; path = FMDB/FMDBsql.h; sourceTree = "<group>"; };
+		3B0A6D2B1CCA2C2D00C99CB7 /* FMDBsql.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMDBsql.m; path = FMDB/FMDBsql.m; sourceTree = "<group>"; };
 		3B33A37A1CB5FF7000506665 /* CategoriesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesCell.h; sourceTree = "<group>"; };
 		3B33A37B1CB5FF7000506665 /* CategoriesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesCell.m; sourceTree = "<group>"; };
 		3B33A37E1CB5FF7000506665 /* SubCategoriesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubCategoriesCell.h; sourceTree = "<group>"; };
@@ -123,7 +125,6 @@
 		3BD86DC51CAEACE0004B651B /* ShoppingCartController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShoppingCartController.m; path = ShoppingCart/ShoppingCartController.m; sourceTree = "<group>"; };
 		3BD86DC81CAEAD36004B651B /* PersonalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalViewController.h; path = Personal/PersonalViewController.h; sourceTree = "<group>"; };
 		3BD86DC91CAEAD36004B651B /* PersonalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalViewController.m; path = Personal/PersonalViewController.m; sourceTree = "<group>"; };
-		3BD86DCF1CAEB4D7004B651B /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		3BD8EF591CB4B37900194F21 /* LRFootView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LRFootView.h; path = Login/LRFootView.h; sourceTree = "<group>"; };
 		3BD8EF5A1CB4B37900194F21 /* LRFootView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LRFootView.m; path = Login/LRFootView.m; sourceTree = "<group>"; };
 		3BD8EF5C1CB4B8A600194F21 /* LRTableviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LRTableviewCell.h; path = Login/LRTableviewCell.h; sourceTree = "<group>"; };
@@ -143,7 +144,6 @@
 		3BF269C81CACF9D600173221 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		3BF269CA1CACFA6700173221 /* RootTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootTabBarController.h; sourceTree = "<group>"; };
 		3BF269CB1CACFA6700173221 /* RootTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootTabBarController.m; sourceTree = "<group>"; };
-		3BF35CFA1CB410B800BDF195 /* Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
 		3BF35CFB1CB411B600BDF195 /* HomepageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomepageView.h; path = Homepage/HomepageView.h; sourceTree = "<group>"; };
 		3BF492571CAE68BB00FB8B10 /* HomepageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomepageController.h; path = Homepage/HomepageController.h; sourceTree = "<group>"; };
 		3BF492581CAE68BB00FB8B10 /* HomepageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomepageController.m; path = Homepage/HomepageController.m; sourceTree = "<group>"; };
@@ -210,6 +210,15 @@
 				33A9D57A1CB4D96F0005F7BA /* Categories.m */,
 			);
 			name = SuperMarket;
+			sourceTree = "<group>";
+		};
+		3B0A6D291CCA2BB900C99CB7 /* FMDB */ = {
+			isa = PBXGroup;
+			children = (
+				3B0A6D2A1CCA2C2D00C99CB7 /* FMDBsql.h */,
+				3B0A6D2B1CCA2C2D00C99CB7 /* FMDBsql.m */,
+			);
+			name = FMDB;
 			sourceTree = "<group>";
 		};
 		3B33A3791CB5FF7000506665 /* SuperMarket */ = {
@@ -321,15 +330,6 @@
 			name = Personal;
 			sourceTree = "<group>";
 		};
-		3BD86DCE1CAEB4D7004B651B /* json */ = {
-			isa = PBXGroup;
-			children = (
-				3BD86DCF1CAEB4D7004B651B /* data.json */,
-			);
-			name = json;
-			path = SchoolMarket/json;
-			sourceTree = "<group>";
-		};
 		3BDEDD901CBCBE7C00E67A3F /* CommDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -382,7 +382,6 @@
 				33A9D5631CB4D8BF0005F7BA /* SuperMarket */,
 				3BE2AE161CB60E8000247429 /* Commodity.h */,
 				3BE2AE171CB60E8000247429 /* Commodity.m */,
-				3BF35CFA1CB410B800BDF195 /* Model.h */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -390,6 +389,7 @@
 		3BF269C51CACF9B800173221 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				3B0A6D291CCA2BB900C99CB7 /* FMDB */,
 				33A9D5491CB4D70E0005F7BA /* AFNetworking */,
 			);
 			path = Utils;
@@ -442,7 +442,6 @@
 		3BFFAE441CACF7F30099D766 = {
 			isa = PBXGroup;
 			children = (
-				3BD86DCE1CAEB4D7004B651B /* json */,
 				3BFFAE4F1CACF7F30099D766 /* SchoolMarket */,
 				3BFFAE691CACF7F40099D766 /* SchoolMarketTests */,
 				3BFFAE741CACF7F40099D766 /* SchoolMarketUITests */,
@@ -639,7 +638,6 @@
 				0BE93E4F1CAFB4C6003558CA /* (null) in Resources */,
 				33EE6DB01CB3B5DD00FA55FC /* categories.plist in Resources */,
 				3BFFAE5D1CACF7F40099D766 /* Assets.xcassets in Resources */,
-				3BD86DD01CAEB4D7004B651B /* data.json in Resources */,
 				3BFFAE5B1CACF7F40099D766 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -720,6 +718,7 @@
 				3B33A3841CB5FF7000506665 /* SubCategoriesCell.m in Sources */,
 				3BF492591CAE68BB00FB8B10 /* HomepageController.m in Sources */,
 				3B8311A51CBE9B8E00D6FA69 /* LbMiddleLine.m in Sources */,
+				3B0A6D2C1CCA2C2D00C99CB7 /* FMDBsql.m in Sources */,
 				3BD8EF5B1CB4B37900194F21 /* LRFootView.m in Sources */,
 				3BD86DC61CAEACE0004B651B /* ShoppingCartController.m in Sources */,
 				3BD8EF5E1CB4B8A600194F21 /* LRTableviewCell.m in Sources */,

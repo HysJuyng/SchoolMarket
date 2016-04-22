@@ -5,11 +5,9 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "RegisterViewController.h"
-#import "LoginHeader.h"
-#import "AFRequest.h"
 
-@interface LoginViewController : BaseViewController <UITableViewDataSource,UITableViewDelegate>
+
+@interface LoginViewController : BaseViewController 
 
 @property (nonatomic,weak) UIBarButtonItem *btnRegister;  //注册按钮
 

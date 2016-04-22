@@ -8,7 +8,6 @@
 @implementation LbMiddleLine
 
 
-
 - (void)drawTextInRect:(CGRect)rect {
     [super drawTextInRect:rect];
     

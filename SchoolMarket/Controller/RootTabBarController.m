@@ -5,6 +5,12 @@
 
 #import "RootTabBarController.h"
 
+#import "HomepageController.h"
+#import "SuperMarketViewController.h"
+#import "ShoppingCartController.h"
+#import "PersonalViewController.h"
+
+
 
 @interface RootTabBarController ()
 
@@ -14,6 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     
     //初始化4个页面
     HomepageController *homeVC = [[HomepageController alloc] init];

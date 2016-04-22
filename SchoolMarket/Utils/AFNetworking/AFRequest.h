@@ -3,12 +3,13 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "AFNetworking.h"
-#import "Model.h"
 
 
+//闭包
+typedef void (^responseBlock)( NSMutableArray * _Nonnull comms);
 typedef void (^responseBlock)( NSMutableArray * _Nonnull responseArr);
 typedef void (^postBack)( NSString * _Nonnull flag);
+
 
 @interface AFRequest : NSObject
 
@@ -16,7 +17,7 @@ typedef void (^postBack)( NSString * _Nonnull flag);
 
 
 //获取商品信息
-- (void)getComm:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andCommBlock:(nonnull responseBlock)commblock;
++ (void)getComm:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andCommBlock:(nonnull responseBlock)commblock;
 
 //获取图片（数组）地址
 - (void)getImgs:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andImgsBlock:(nonnull responseBlock)imgsblock;

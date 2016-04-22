@@ -12,7 +12,17 @@
 
 @class Commodity;
 
+@protocol CommCellDelegate <NSObject>
+
+- (void)commCellClickAdd:(UIButton*)button;
+- (void)commCellClickMinus:(UIButton*)button;
+
+@end
+
 @interface CommCell : UICollectionViewCell
+
+@property (nonatomic,assign) id<CommCellDelegate> delegate;
+
 @property (weak,nonatomic) UIButton *btnAdd;     //加按钮
 @property (weak,nonatomic) UIButton *btnMinus;    //减按钮
 @property (weak,nonatomic) UIImageView *commImgv;   //商品图片

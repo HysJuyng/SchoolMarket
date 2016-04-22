@@ -42,12 +42,16 @@
         [self.btnAdd setImage:[UIImage imageNamed:@"plus_circle_green"] forState:(UIControlStateNormal)];
         [self addSubview:self.btnAdd];
         
+        [self.btnAdd addTarget:self.delegate action:@selector(commCellClickAdd:) forControlEvents:(UIControlEventTouchUpInside)];
+        
         //减按钮
         self.btnMinus = [UIButton buttonWithType:(UIButtonTypeSystem)];
         self.btnMinus.frame = CGRectMake(0, self.frame.size.height / 20 * 17, self.frame.size.width / 4, self.frame.size.width / 4);
         [self.btnMinus setImage:[UIImage imageNamed:@"minus_circle_grey"] forState:(UIControlStateNormal)];
         self.btnMinus.hidden = true; //默认隐藏
         [self addSubview:self.btnMinus];
+        
+        [self.btnMinus addTarget:self.delegate action:@selector(commCellClickMinus:) forControlEvents:(UIControlEventTouchUpInside)];
         
         //价格lable
         UILabel *tempPrice = [[UILabel alloc]initWithFrame:CGRectMake(5, self.frame.size.height / 20 * 17, self.frame.size.width / 2, self.frame.size.width / 4)];

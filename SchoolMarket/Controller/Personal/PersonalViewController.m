@@ -4,7 +4,11 @@
 
 #import "PersonalViewController.h"
 
-@interface PersonalViewController ()
+#import "PersonalHeader.h"
+#import "PersonalMsgController.h"
+#import "LoginViewController.h"
+
+@interface PersonalViewController () <UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong) UITableView *personalTableview;
 //tableview选项数组

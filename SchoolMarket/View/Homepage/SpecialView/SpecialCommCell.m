@@ -8,6 +8,9 @@
 
 #import "SpecialCommCell.h"
 #import "Commodity.h"
+#import "LbMiddleLine.h"
+#import "SCCAddAndMinusView.h"
+
 
 @implementation SpecialCommCell
 
@@ -59,6 +62,7 @@
         self.lbPrice.font = [UIFont systemFontOfSize:self.lbPrice.frame.size.height];
         [self addSubview:self.lbPrice];
         
+        self.lbPrice.text = @"12.0";
         self.lbPrice.backgroundColor = [UIColor grayColor];
         
         

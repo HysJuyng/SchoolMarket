@@ -5,12 +5,14 @@
 #import "SpecialCommdityController.h"
 #import "Commodity.h"
 #import "CommDetailViewController.h"
+#import "AFRequest.h"
+#import "SpecialCommCell.h"
+#import "SCCAddAndMinusView.h"
+#import "LbMiddleLine.h"
 
-
-@interface SpecialCommdityController ()
+@interface SpecialCommdityController () <UITableViewDataSource,UITableViewDelegate,SCCAddAndMinusViewDelegate>
 
 @property (nonatomic,weak) UITableView *specialTableview;
-@property (nonatomic,copy) NSArray *commDatasource;
 
 @property (nonatomic,copy) NSArray *specialComms;
 
@@ -37,7 +39,7 @@
     //获取特价商品
     NSString *url = @"";
     NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:@"value",@"key", nil];
-    [Commodity getComm:url andParameter:param andCommBlock:^(NSMutableArray * _Nonnull comms) {
+    [AFRequest getComm:url andParameter:param andCommBlock:^(NSMutableArray * _Nonnull comms) {
         //获得数据
         self.specialComms = comms;
         //reload tableview
@@ -93,7 +95,7 @@
     //cell选中样式
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     //设置内容
-    [cell setSpecialComm:(Commodity*)self.specialComms[indexPath.row]];
+//    [cell setSpecialComm:(Commodity*)self.specialComms[indexPath.row]];
     
     
     cell.lbCommName.text = @"name";
@@ -123,7 +125,7 @@
 /** 选中单元格*/
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    CommDetailViewController *subvc = [[CommDetailViewController alloc] init];
+    CommDetailViewController *subvc = [CommDetailViewController alloc];
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.hidesBottomBarWhenPushed = YES;
@@ -166,12 +168,18 @@
 /**  购物车 */
 - (void)shoppingCart
 {
-//    RootTabBarController *vc = [[RootTabBarController alloc] init];
-//    self.view.window.rootViewController = vc;
-//    vc.selectedIndex = 2;
-    [self.navigationController popViewControllerAnimated:true];
-//    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-//    [center postNotificationName:@"goToTabbar2" object:nil];
+    self.tabBarController.selectedIndex = 2;
+    [self.navigationController popToRootViewControllerAnimated:true];
+    [self removeFromParentViewController];
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    NSLog(@"hahaha");
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    NSLog(@"lilii");
 }
 
 #pragma mark -

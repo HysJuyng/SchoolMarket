@@ -86,8 +86,8 @@
 /**  购物车 */
 - (void)shoppingCart
 {
-    RootTabBarController *vc = [[RootTabBarController alloc] init];
-    self.view.window.rootViewController = vc;
-    vc.selectedIndex = 2;
+    self.tabBarController.selectedIndex = 2;
+    [self.navigationController popToRootViewControllerAnimated:true];
+    [self removeFromParentViewController];
 }
 @end
