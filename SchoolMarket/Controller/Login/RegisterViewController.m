@@ -5,6 +5,7 @@
 #import "RegisterViewController.h"
 
 #import "LoginHeader.h"
+#import "AFRequest.h"
 
 @interface RegisterViewController () <LRFootViewDelegate,UITableViewDataSource,UITableViewDelegate>
 
@@ -34,27 +35,27 @@
     [self.btnGetCode addTarget:self action:@selector(getIdentifyingCode) forControlEvents:(UIControlEventTouchUpInside)];
 }
 
-
-//头视图高度
+#pragma mark tableview代理方法
+/** 头视图高度*/
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 0.01f;
 }
-//脚视图
+/** 脚视图*/
 - (nullable UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     LRFootView *lrfootView = [[LRFootView alloc ]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100) andSuperVc:self];
     [lrfootView.btnLoginOrReg setTitle:@"注册" forState:(UIControlStateNormal)];
     return lrfootView;
 }
-//脚视图高度
+/** 脚视图高度*/
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 300;
 }
 
-//单元格个数
+/** 单元格个数*/
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 3;
 }
-//获取单元格
+/** 获取单元格*/
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LRTableviewCell *cell = [[LRTableviewCell alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
     cell.selectionStyle = UITableViewCellSelectionStyleNone; //cell选择样式
@@ -76,12 +77,16 @@
     return cell;
 }
 
-//阅读并同意
+#pragma mark 自定义方法
+/**
+ *  阅读并同意
+ */
 - (void)ReadAndAgreeClick {
     NSLog(@"点击同意");
 }
-
-//登录或注册
+/**
+ *  登录或注册
+ */
 - (void)LoginOrRegClick {
     NSLog(@"注册");
     
@@ -108,18 +113,74 @@
         [self presentViewController:self.alertController animated:true completion:nil];
     }else { //检验成功 发送数据
         NSLog(@"%@",flag);
+        [self doRegister:phone andPasswork:passwork andCode:code];
     }
 }
-//打开用户服务协议
+/**
+ *  打开用户服务协议
+ */
 - (void)UrSerAgreeClick {
     NSLog(@"用户服务协议");
 }
-
-//获取验证码
+/**
+ *  获取验证码
+ */
 - (void)getIdentifyingCode {
     NSLog(@"获取验证码");
 }
-
+/**
+ *  注册并验证
+ *
+ *  @param userphone 用户手机
+ *  @param password  密码
+ *  @param code      验证码
+ */
+- (void)doRegister:(NSString*)userphone andPasswork:(NSString*)password andCode:(NSString*)code {
+    //url
+    NSString *url = @"";
+    //参数
+    NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+    [param setObject:userphone forKey:@"username"];
+    [param setObject:password forKey:@"password"];
+    [param setObject:code forKey:@"code"];
+    //请求
+    [AFRequest postLogin:url andParameter:param andResponse:^(NSString * _Nonnull flag) {
+        NSString *messgae = [flag valueForKey:@"message"];
+        if ([messgae isEqualToString:@"success"]) {
+            //注册成功 修改userdefalut
+            NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
+            [userdef setObject:@"true" forKey:@"logined"];//登录状态
+            [userdef setObject:userphone forKey:@"userphone"];  //登录用户手机
+            //注册 成功 返回根视图
+            [self.navigationController popToRootViewControllerAnimated:true];
+        } else {
+            //注册 失败 提示失败信息
+            self.alertController.message = messgae;
+            [self presentViewController:self.alertController animated:true completion:nil];
+        }
+    }];
+}
+/**
+ *  检测输入的内容有没符合要求
+ *
+ *  @param phone    手机
+ *  @param passwork 密码
+ *  @param code     验证码
+ *
+ *  @return 返回信息
+ */
+- (nonnull NSString*)textIsRequirements:(nonnull NSString*)phone andPasswork:(nonnull NSString*)passwork andCode:(nullable NSString*)code {
+    if (phone.length != 11) {
+        return @"手机号码长度为11位!";
+    }
+    if (passwork.length < 6 || passwork.length > 16) {
+        return @"密码长度为6到16位!";
+    }
+    if (code.length == 0 && code != nil) {
+        return @"请输入验证码!";
+    }
+    return @"success";
+}
 
 /**
  *  懒加载 alertController
@@ -137,20 +198,6 @@
     return _alertController;
 }
 
-
-//检测输入的内容有没符合要求
-- (nonnull NSString*)textIsRequirements:(nonnull NSString*)phone andPasswork:(nonnull NSString*)passwork andCode:(nullable NSString*)code {
-    if (phone.length != 11) {
-        return @"手机号码长度为11位!";
-    }
-    if (passwork.length < 6 || passwork.length > 16) {
-        return @"密码长度为6到16位!";
-    }
-    if (code.length == 0 && code != nil) {
-        return @"请输入验证码!";
-    }
-    return @"success";
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -13,12 +13,4 @@
 @property (nonatomic,weak) UIBarButtonItem *btnBack;  //导航栏左侧返回按钮
 
 
-
-
-//打开图库
-- (void)openGallery;
-//跳转修改姓名
-- (void)goToChangeName;
-//选择性别
-- (void)selectSex;
 @end

@@ -6,7 +6,7 @@
 
 
 
-@interface Commodity : NSObject
+@interface Commodity : NSObject <NSSecureCoding>
 
 
 /**

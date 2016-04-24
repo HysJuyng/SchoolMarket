@@ -38,26 +38,26 @@
     
 }
 
-//头视图高度
+#pragma mark tableview代理方法
+/** 头视图高度*/
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 0.01f;
 }
-//脚视图
+/** 脚视图*/
 - (nullable UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     LRFootView *lrfootView = [[LRFootView alloc ]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100) andSuperVc:self];
     [lrfootView.btnLoginOrReg setTitle:@"登录" forState:(UIControlStateNormal)];
     return lrfootView;
 }
-//脚视图高度
+/** 脚视图高度*/
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 300;
 }
-
-//单元格个数
+/** 单元格个数*/
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 2;
 }
-//获取单元格
+/** 获取单元格*/
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LRTableviewCell *cell = [[LRTableviewCell alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
     cell.selectionStyle = UITableViewCellSelectionStyleNone; //cell选择样式
@@ -74,12 +74,37 @@
 }
 
 
-
-//阅读并同意
+#pragma mark 自定义方法
+/**
+ *  检测输入的内容有没符合要求
+ *
+ *  @param phone    用户电话
+ *  @param passwork 密码
+ *  @param code     验证码
+ *
+ *  @return 返回信息
+ */
+- (nonnull NSString*)textIsRequirements:(nonnull NSString*)phone andPasswork:(nonnull NSString*)passwork andCode:(nullable NSString*)code {
+    if (phone.length != 11) {
+        return @"手机号码长度为11位!";
+    }
+    if (passwork.length < 6 || passwork.length > 16) {
+        return @"密码长度为6到16位!";
+    }
+    if (code.length == 0 && code != nil) {
+        return @"请输入验证码!";
+    }
+    return @"success";
+}
+/**
+ *  阅读并同意
+ */
 - (void)ReadAndAgreeClick {
     NSLog(@"点击同意");
 }
-//登录或注册
+/**
+ *  登录或注册
+ */
 - (void)LoginOrRegClick {
     NSLog(@"登录");
     
@@ -105,44 +130,43 @@
         NSLog(@"%@",flag);
         [self login:phone andPasswork:password];
     }
-    
-    
 }
-//打开用户服务协议
+/**
+ *  打开用户服务协议
+ */
 - (void)UrSerAgreeClick {
     NSLog(@"用户服务协议");
 }
-
-//检测输入的内容有没符合要求
-- (nonnull NSString*)textIsRequirements:(nonnull NSString*)phone andPasswork:(nonnull NSString*)passwork andCode:(nullable NSString*)code {
-    if (phone.length != 11) {
-        return @"手机号码长度为11位!";
-    }
-    if (passwork.length < 6 || passwork.length > 16) {
-        return @"密码长度为6到16位!";
-    }
-    if (code.length == 0 && code != nil) {
-        return @"请输入验证码!";
-    }
-    return @"success";
-}
-
-//注册  跳转注册页面
+/**
+ *  注册  跳转注册页面
+ */
 - (void)registerClick {
     RegisterViewController *subvc = [[RegisterViewController alloc] init];
+    
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     [self.navigationController pushViewController:subvc animated:true];
 }
-
-//登录并验证
-- (void)login:(NSString*)name andPasswork:(NSString*)password {
-    AFRequest *post = [[AFRequest alloc] init];
+/**
+ *  登录并验证
+ *
+ *  @param userphone 用户手机
+ *  @param password  用户密码
+ */
+- (void)login:(NSString*)userphone andPasswork:(NSString*)password {
+    //url
     NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/userLogin.jhtml";
+    //参数
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
-    [param setObject:name forKey:@"username"];
+    [param setObject:userphone forKey:@"username"];
     [param setObject:password forKey:@"password"];
-    [post postLogin:url andParameter:param andResponse:^(NSString * _Nonnull flag) {
+    //请求
+    [AFRequest postLogin:url andParameter:param andResponse:^(NSString * _Nonnull flag) {
         NSString *messgae = [flag valueForKey:@"message"];
         if ([messgae isEqualToString:@"success"]) {
+            //登录成功 修改userdefalut
+            NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
+            [userdef setObject:@"true" forKey:@"logined"];//登录状态
+            [userdef setObject:userphone forKey:@"userphone"];  //登录用户手机
             //登录 成功 返回上级
             [self.navigationController popViewControllerAnimated:true];
         } else {

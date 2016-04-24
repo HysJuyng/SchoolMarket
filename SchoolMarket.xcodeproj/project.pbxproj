@@ -28,6 +28,7 @@
 		3B9E13661CBA29E2003BB0A5 /* AFRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9E13651CBA29E1003BB0A5 /* AFRequest.m */; };
 		3BBA9D851CAD13C100DF67B7 /* CommCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBA9D841CAD13C100DF67B7 /* CommCell.m */; };
 		3BBE3E901CCCB48A00E6180B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE3E8F1CCCB48A00E6180B /* User.m */; };
+		3BC22CF51CCD23B3000160A9 /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC22CF41CCD23B3000160A9 /* Address.m */; };
 		3BC7F5AE1CB4AC88006A1754 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC7F5AD1CB4AC88006A1754 /* RegisterViewController.m */; };
 		3BD638911CB6293D0077D2A4 /* PersonalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD638901CB6293D0077D2A4 /* PersonalCell.m */; };
 		3BD638991CB643CC0077D2A4 /* PersonalMsgCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD638981CB643CC0077D2A4 /* PersonalMsgCell.m */; };
@@ -110,6 +111,8 @@
 		3BBA9D841CAD13C100DF67B7 /* CommCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommCell.m; path = Cell/CommCell.m; sourceTree = "<group>"; };
 		3BBE3E8E1CCCB48A00E6180B /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		3BBE3E8F1CCCB48A00E6180B /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		3BC22CF31CCD23B3000160A9 /* Address.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Address.h; sourceTree = "<group>"; };
+		3BC22CF41CCD23B3000160A9 /* Address.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Address.m; sourceTree = "<group>"; };
 		3BC7F5A81CB4AC44006A1754 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Login/LoginViewController.h; sourceTree = "<group>"; };
 		3BC7F5AC1CB4AC88006A1754 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterViewController.h; path = Login/RegisterViewController.h; sourceTree = "<group>"; };
 		3BC7F5AD1CB4AC88006A1754 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegisterViewController.m; path = Login/RegisterViewController.m; sourceTree = "<group>"; };
@@ -387,6 +390,8 @@
 				3BE2AE171CB60E8000247429 /* Commodity.m */,
 				3BBE3E8E1CCCB48A00E6180B /* User.h */,
 				3BBE3E8F1CCCB48A00E6180B /* User.m */,
+				3BC22CF31CCD23B3000160A9 /* Address.h */,
+				3BC22CF41CCD23B3000160A9 /* Address.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -734,6 +739,7 @@
 				3B8946831CAF95A500959786 /* HomepageCell.m in Sources */,
 				3BD638991CB643CC0077D2A4 /* PersonalMsgCell.m in Sources */,
 				3B8946861CAFBA4400959786 /* HCLastFootView.m in Sources */,
+				3BC22CF51CCD23B3000160A9 /* Address.m in Sources */,
 				3BDEDD931CBCBE8900E67A3F /* CommDetailViewController.m in Sources */,
 				3BC7F5AE1CB4AC88006A1754 /* RegisterViewController.m in Sources */,
 				3B89468C1CAFC84900959786 /* HCHeaderView.m in Sources */,

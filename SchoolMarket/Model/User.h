@@ -4,7 +4,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface User : NSObject
+@interface User : NSObject  <NSSecureCoding>
 
 /**
  *  用户id

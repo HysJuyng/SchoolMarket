@@ -29,6 +29,7 @@
         self.type = commDic[@"type"];                                //商品类型
         self.discount = [commDic[@"discount"] floatValue];             //折扣
         self.specialTime = commDic[@"specialTime"];                   //折扣时间
+        
     }
     return self;
 }
