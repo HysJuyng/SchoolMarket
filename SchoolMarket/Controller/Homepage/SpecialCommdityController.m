@@ -12,9 +12,9 @@
 
 @interface SpecialCommdityController () <UITableViewDataSource,UITableViewDelegate,SCCAddAndMinusViewDelegate>
 
-@property (nonatomic,weak) UITableView *specialTableview;
+@property (nonatomic,strong) UITableView *specialTableview;
 
-@property (nonatomic,copy) NSArray *specialComms;
+@property (nonatomic,strong) NSMutableArray *specialComms;
 
 @end
 
@@ -37,15 +37,24 @@
     [self shoppingCartBtnWithFrame:CGRectMake(20, self.view.frame.size.height - 80, 60, 60)];
     
     //获取特价商品
-    NSString *url = @"";
-    NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:@"value",@"key", nil];
-    [AFRequest getComm:url andParameter:param andCommBlock:^(NSMutableArray * _Nonnull comms) {
-        //获得数据
-        self.specialComms = comms;
-        //reload tableview
-        [self.specialTableview reloadData];
-    }];
+//    NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllCommodity.jhtml";
+//    NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"supermarketId", nil];
+//    [AFRequest getComm:url andParameter:param andCommBlock:^(NSMutableArray * _Nonnull comms) {
+//        //获得数据
+//        self.specialComms = comms;
+//        //reload tableview
+//        [self.specialTableview reloadData];
+//        NSLog(@"123");
+//    }];
     
+    for (int i = 0; i < 6;  i++) {
+        Commodity *comm = [[Commodity alloc] init];
+        comm.commName = @"name";
+        comm.specification = @"10g";
+        comm.price = @"12";
+        
+        [self.specialComms addObject:comm];
+    }
 }
 
 #pragma mark 购物车按钮
@@ -79,34 +88,39 @@
 /** 单元格个数*/
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (self.specialComms.count != 0) {
-        return self.specialComms.count;
+//        return self.specialComms.count;
+        return 4;
     }
     return 6;
 }
 
 /** 获取单元格*/
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *cellid = [NSString stringWithFormat:@"cellid%ld",(long)indexPath.row];
-    SpecialCommCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+//    NSString *cellid = [NSString stringWithFormat:@"cellid%ld",(long)indexPath.row];
+    NSString *cellid = @"cellid";
+    SpecialCommCell *cell = (SpecialCommCell*)[tableView dequeueReusableCellWithIdentifier:cellid];
     if (cell == nil) {
         cell = [[SpecialCommCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid andFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width / 4)];
     }
     
+    
     //cell选中样式
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     //设置内容
-//    [cell setSpecialComm:(Commodity*)self.specialComms[indexPath.row]];
-    
-    
-    cell.lbCommName.text = @"name";
-    cell.lbSpecification.text = @"500ml";
-    cell.lbSpecialPrice.text = @"$12.8";
-    cell.lbPrice.text = @"15.0";
-    
-    //设置代理和tag
-    cell.addAndMinusView.delegate = self;
-    cell.addAndMinusView.btnAdd.tag = indexPath.row;
-    cell.addAndMinusView.btnMinus.tag = indexPath.row;
+    if (self.specialComms.count != 0) {
+        #pragma mark - BUG_刷新数据会崩溃  -
+//        [cell setSpecialComm:(Commodity*)self.specialComms[indexPath.row]];
+    } else {
+//        cell.lbCommName.text = @"name";
+//        cell.lbSpecification.text = @"500ml";
+//        cell.lbSpecialPrice.text = @"$12.8";
+//        cell.lbPrice.text = @"15.0";
+        [cell setSpecialComm:(Commodity*)self.specialComms[indexPath.row]];
+    }
+        //设置代理和tag
+        cell.addAndMinusView.delegate = self;
+        cell.addAndMinusView.btnAdd.tag = indexPath.row;
+        cell.addAndMinusView.btnMinus.tag = indexPath.row;
     
     return cell;
 }

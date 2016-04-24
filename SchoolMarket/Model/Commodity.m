@@ -23,7 +23,7 @@
         self.commName = commDic[@"commName"];                         //商品名称
         self.price = commDic[@"price"];                                //加个
         self.sales = commDic[@"sales"];                               //销量
-        self.specification = commDic[@"specification"];                //规格
+        self.specification = commDic[@"spercification"];                //规格
         self.describe = commDic[@"describe"];                          //描述
         self.stock = commDic[@"stock"];                            //库存
         self.type = commDic[@"type"];                                //商品类型

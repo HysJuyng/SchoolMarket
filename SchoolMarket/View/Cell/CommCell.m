@@ -7,7 +7,6 @@
 
 #import "Commodity.h"
 
-//@class Commodity;
 
 @implementation CommCell
 
@@ -79,7 +78,7 @@
 - (void)setCommCell:(Commodity*)commodity {
     self.lbName.text = commodity.commName;
     self.lbSpecification.text = commodity.specification;
-    self.lbPrice.text = [NSString stringWithFormat:@"$%@",commodity.price];
+    self.lbPrice.text = [NSString stringWithFormat:@"￥%@",commodity.price];
     [self.commImgv sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/uploadDir/%@",commodity.picture]]
                      placeholderImage:[UIImage imageNamed:commodity.picture]
                             completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {

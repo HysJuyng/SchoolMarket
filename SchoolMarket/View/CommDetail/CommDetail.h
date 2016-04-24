@@ -49,4 +49,5 @@
 
 /** 购买数量 */
 @property (nonatomic, assign) int shoppingCartNum;
+
 @end

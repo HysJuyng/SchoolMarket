@@ -238,4 +238,6 @@
     self.shoppingCartBtn = shoppingCartBtn;
     [view addSubview:self.shoppingCartBtn];
 }
+
+
 @end

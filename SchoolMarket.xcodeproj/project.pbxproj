@@ -27,6 +27,7 @@
 		3B89468F1CAFF03C00959786 /* HCHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B89468E1CAFF03C00959786 /* HCHeaderCell.m */; };
 		3B9E13661CBA29E2003BB0A5 /* AFRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9E13651CBA29E1003BB0A5 /* AFRequest.m */; };
 		3BBA9D851CAD13C100DF67B7 /* CommCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBA9D841CAD13C100DF67B7 /* CommCell.m */; };
+		3BBE3E901CCCB48A00E6180B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE3E8F1CCCB48A00E6180B /* User.m */; };
 		3BC7F5AE1CB4AC88006A1754 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC7F5AD1CB4AC88006A1754 /* RegisterViewController.m */; };
 		3BD638911CB6293D0077D2A4 /* PersonalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD638901CB6293D0077D2A4 /* PersonalCell.m */; };
 		3BD638991CB643CC0077D2A4 /* PersonalMsgCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD638981CB643CC0077D2A4 /* PersonalMsgCell.m */; };
@@ -107,6 +108,8 @@
 		3B9E13651CBA29E1003BB0A5 /* AFRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFRequest.m; path = AFNetworking/AFRequest.m; sourceTree = "<group>"; };
 		3BBA9D831CAD13C100DF67B7 /* CommCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommCell.h; path = Cell/CommCell.h; sourceTree = "<group>"; };
 		3BBA9D841CAD13C100DF67B7 /* CommCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommCell.m; path = Cell/CommCell.m; sourceTree = "<group>"; };
+		3BBE3E8E1CCCB48A00E6180B /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		3BBE3E8F1CCCB48A00E6180B /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		3BC7F5A81CB4AC44006A1754 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Login/LoginViewController.h; sourceTree = "<group>"; };
 		3BC7F5AC1CB4AC88006A1754 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterViewController.h; path = Login/RegisterViewController.h; sourceTree = "<group>"; };
 		3BC7F5AD1CB4AC88006A1754 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegisterViewController.m; path = Login/RegisterViewController.m; sourceTree = "<group>"; };
@@ -382,6 +385,8 @@
 				33A9D5631CB4D8BF0005F7BA /* SuperMarket */,
 				3BE2AE161CB60E8000247429 /* Commodity.h */,
 				3BE2AE171CB60E8000247429 /* Commodity.m */,
+				3BBE3E8E1CCCB48A00E6180B /* User.h */,
+				3BBE3E8F1CCCB48A00E6180B /* User.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -737,6 +742,7 @@
 				3B89468F1CAFF03C00959786 /* HCHeaderCell.m in Sources */,
 				3B9E13661CBA29E2003BB0A5 /* AFRequest.m in Sources */,
 				3B83119C1CBE15F200D6FA69 /* SpecialCommdityController.m in Sources */,
+				3BBE3E901CCCB48A00E6180B /* User.m in Sources */,
 				3BD638A31CB65F6D0077D2A4 /* PersonalNameController.m in Sources */,
 				3BDEDD9A1CBCBECC00E67A3F /* ShoppingCart.m in Sources */,
 				3B33A3821CB5FF7000506665 /* CategoriesCell.m in Sources */,

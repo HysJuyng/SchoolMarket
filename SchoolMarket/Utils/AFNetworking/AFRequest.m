@@ -21,7 +21,8 @@
         //处理数据
         NSDictionary *dic = responseObject;
         //提取数组
-        NSMutableArray *commsArr = [[NSMutableArray alloc] initWithObjects:dic, nil][0];
+        NSMutableArray *commsArr = dic[@"data"];
+//        NSMutableArray *commsArr = [[NSMutableArray alloc] initWithObjects:dic, nil][0];
         for (int i = 0; i < commsArr.count; i++) {  //遍历字典数组
             Commodity *comm = [[Commodity alloc] initWithCommDic:commsArr[i]];
             [comms addObject:comm];   //添加到结果集
