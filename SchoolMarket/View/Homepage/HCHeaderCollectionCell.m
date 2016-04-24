@@ -20,6 +20,7 @@
         //标题
         UILabel *tempTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, frame.size.height - 20, frame.size.width, 20)];
         self.lbTitle = tempTitle;
+        self.lbTitle.font = [UIFont systemFontOfSize:self.lbTitle.frame.size.height / 3 * 2];
         self.lbTitle.textAlignment = NSTextAlignmentCenter;
         [self addSubview:self.lbTitle];
     }

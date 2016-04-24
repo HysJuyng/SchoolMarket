@@ -5,10 +5,9 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "PersonalHeader.h"
-#import "PersonalNameController.h"
 
-@interface PersonalMsgController : UIViewController <UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+
+@interface PersonalMsgController : UIViewController 
 
 
 @property (nonatomic,weak) UIBarButtonItem *btnBack;  //导航栏左侧返回按钮

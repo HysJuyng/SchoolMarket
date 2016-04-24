@@ -8,6 +8,10 @@
 
 #import "SpecialCommCell.h"
 #import "Commodity.h"
+#import "LbMiddleLine.h"
+#import "SCCAddAndMinusView.h"
+#import "SDWebImage-umbrella.h"
+
 
 @implementation SpecialCommCell
 
@@ -59,6 +63,7 @@
         self.lbPrice.font = [UIFont systemFontOfSize:self.lbPrice.frame.size.height];
         [self addSubview:self.lbPrice];
         
+        self.lbPrice.text = @"12.0";
         self.lbPrice.backgroundColor = [UIColor grayColor];
         
         
@@ -73,11 +78,12 @@
 
 //设置内容
 - (void)setSpecialComm:(Commodity*)comm {
-    self.commImgv.image = [UIImage imageNamed:comm.picture];
+    [self.commImgv sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/uploadDir/%@",comm.picture]] placeholderImage:[UIImage imageNamed:comm.picture] completed:nil];
     self.lbCommName.text = comm.commName;
     self.lbSpecification.text = comm.specification;
     self.lbPrice.text = comm.price;
     //还要添加特价
+    self.lbSpecialPrice.text = [NSString stringWithFormat:@"%0.1f",[comm.price floatValue] * comm.discount];
 }
 
 

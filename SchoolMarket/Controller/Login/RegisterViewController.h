@@ -4,9 +4,9 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "LoginHeader.h"
 
-@interface RegisterViewController : BaseViewController <UITableViewDataSource,UITableViewDelegate>
+
+@interface RegisterViewController : BaseViewController 
 
 
 @property (nonatomic,weak) UIButton *btnGetCode;   //获取验证码按钮

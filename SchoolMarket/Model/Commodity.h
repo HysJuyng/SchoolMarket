@@ -4,22 +4,72 @@
 
 #import <Foundation/Foundation.h>
 
-//闭包
-typedef void (^responseBlock)( NSMutableArray * _Nonnull comms);
+
 
 @interface Commodity : NSObject
 
-@property (nonatomic,assign) int commodityId;
-@property (nonatomic,assign) int classId;
-@property (nonatomic,assign) int superMarketId;
-@property (nonatomic,copy,nullable) NSString *picture;
-@property (nonatomic,copy,nonnull) NSString *commName;
-@property (nonatomic,copy,nullable) NSString *price;
-@property (nonatomic,copy,nullable) NSString *sales;
-@property (nonatomic,copy,nullable) NSString *specification;
-@property (nonatomic,copy,nullable) NSString *describe;
-@property (nonatomic,copy,nullable) NSString *stock;
 
+/**
+ *  商品id
+ */
+@property (nonatomic,assign) int commodityId;
+/**
+ *  主分类id
+ */
+@property (nonatomic,assign) int mainclassId;
+/**
+ *  次分类id
+ */
+@property (nonatomic,assign) int subclassId;
+/**
+ *  超市id
+ */
+@property (nonatomic,assign) int superMarketId;
+/**
+ *  图片
+ */
+@property (nonatomic,copy,nullable) NSString *picture;
+/**
+ *  商品名称
+ */
+@property (nonatomic,copy,nonnull) NSString *commName;
+/**
+ *  价格
+ */
+@property (nonatomic,copy,nullable) NSString *price;
+/**
+ *  销量
+ */
+@property (nonatomic,copy,nullable) NSString *sales;
+/**
+ *  规格
+ */
+@property (nonatomic,copy,nullable) NSString *specification;
+/**
+ *  描述
+ */
+@property (nonatomic,copy,nullable) NSString *describe;
+/**
+ *  库存
+ */
+@property (nonatomic,copy,nullable) NSString *stock;
+/**
+ *  商品类型
+ */
+@property (nonatomic,copy,nullable) NSString *type;
+/**
+ *  折扣
+ */
+@property (nonatomic,assign) float discount;
+/**
+ *  折扣时间
+ */
+@property (nonatomic,copy,nullable) NSDate *specialTime;
+
+
+
+
+//选择的数量
 @property (nonatomic,assign) int selectedNum;
 
 //初始化
@@ -27,7 +77,5 @@ typedef void (^responseBlock)( NSMutableArray * _Nonnull comms);
 - (nonnull instancetype)initWithCommDic:(nonnull NSDictionary*)commDic;
 
 
-//获取商品信息
-+ (void)getComm:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andCommBlock:(nonnull responseBlock)commblock;
 
 @end

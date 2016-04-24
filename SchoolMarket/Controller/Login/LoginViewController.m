@@ -4,9 +4,15 @@
 
 #import "LoginViewController.h"
 
-@interface LoginViewController () <LRFootViewDelegate>
+#import "RegisterViewController.h"
+#import "LoginHeader.h"
+#import "AFRequest.h"
 
-@property (nonatomic,strong) UITableView *loginTableview;
+
+@interface LoginViewController () <LRFootViewDelegate,UITableViewDataSource,UITableViewDelegate>
+
+@property (nonatomic,weak) UITableView *loginTableview;
+@property (nonatomic,strong) UIAlertController *alertController;
 @end
 
 @implementation LoginViewController
@@ -23,7 +29,8 @@
     
     
     //tableview
-    self.loginTableview = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStyleGrouped)];
+    UITableView *temptableview = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStyleGrouped)];
+    self.loginTableview = temptableview;
     self.loginTableview.delegate = self;
     self.loginTableview.dataSource = self;
     [self.loginTableview setSeparatorInset:UIEdgeInsetsMake(0, 30, 0, 30)];
@@ -85,18 +92,15 @@
     //获取密码
     NSIndexPath *passwordIndex = [NSIndexPath indexPathForItem:1 inSection:0];
     NSString *password = [NSString stringWithString:((LRTableviewCell*)[self.loginTableview cellForRowAtIndexPath:passwordIndex]).tfContent.text];
-    
+
     NSLog(@"%@,%@",phone,password);
     //检验输入是否符合要求
     NSString *flag = [self textIsRequirements:phone andPasswork:password andCode:nil];
     //根据返回的flag 推出alert
     if (![flag  isEqual: @"success"]) {
-        UIAlertController *actionsheet = [UIAlertController alertControllerWithTitle:nil message:flag preferredStyle:(UIAlertControllerStyleAlert)];
-        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"ok" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-            NSLog(@"ok");
-        }];
-        [actionsheet addAction:actionOk];
-        [self presentViewController:actionsheet animated:true completion:nil];
+        //推出alertview
+        self.alertController.message = flag;
+        [self presentViewController:self.alertController animated:true completion:nil];
     }else {   //检验成功 发送数据
         NSLog(@"%@",flag);
         [self login:phone andPasswork:password];
@@ -143,17 +147,28 @@
             [self.navigationController popViewControllerAnimated:true];
         } else {
             //登录 失败 提示失败信息
-            UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"error" message:messgae preferredStyle:(UIAlertControllerStyleAlert)];
-            //取消按钮
-            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
-                NSLog(@"取消");
-            }];
-            [alertC addAction:cancel];
-            
-            //推出alert
-            [self presentViewController:alertC animated:true completion:nil];
+            self.alertController.message = messgae;
+            [self presentViewController:self.alertController animated:true completion:nil];
         }
     }];
+}
+
+/**
+ *  懒加载 alertController
+ */
+- (UIAlertController *)alertController {
+    if (! _alertController) {
+        
+        _alertController = [UIAlertController alertControllerWithTitle:@"error" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+        
+        //取消按钮
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
+            NSLog(@"取消");
+        }];
+        [_alertController addAction:cancel];
+    }
+
+    return _alertController;
 }
 
 - (void)didReceiveMemoryWarning {

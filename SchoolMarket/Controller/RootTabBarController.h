@@ -5,10 +5,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "HomepageController.h"
-#import "SuperMarketViewController.h"
-#import "ShoppingCartController.h"
-#import "PersonalViewController.h"
+
 
 
 @interface RootTabBarController : UITabBarController  

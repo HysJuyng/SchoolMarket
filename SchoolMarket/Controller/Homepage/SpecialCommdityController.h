@@ -3,7 +3,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "SpecialCommCell.h"
+
 
 @protocol SpecialCommdityControllerDelegate <NSObject>
 
@@ -12,7 +12,7 @@
 @end
 
 
-@interface SpecialCommdityController : UIViewController <UITableViewDataSource,UITableViewDelegate,SCCAddAndMinusViewDelegate>
+@interface SpecialCommdityController : UIViewController 
 
 
 @property (nonatomic,weak) UIButton *shoppingCartBtn;

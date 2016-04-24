@@ -6,7 +6,11 @@
 
 #import "PersonalMsgController.h"
 
-@interface PersonalMsgController ()
+#import "PersonalHeader.h"
+#import "PersonalNameController.h"
+
+
+@interface PersonalMsgController ()  <UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 @property (nonatomic,strong) UITableView *personalMsgTableview;
 @property (nonatomic,copy) NSArray *msgs;

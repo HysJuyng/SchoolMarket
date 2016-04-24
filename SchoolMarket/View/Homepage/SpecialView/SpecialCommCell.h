@@ -7,10 +7,10 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "LbMiddleLine.h"
-#import "SCCAddAndMinusView.h"
 
+@class LbMiddleLine;
 @class Commodity;
+@class SCCAddAndMinusView;
 
 @interface SpecialCommCell : UITableViewCell
 
