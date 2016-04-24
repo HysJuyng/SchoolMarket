@@ -11,6 +11,7 @@
 @protocol SCBottomToolDelegate <NSObject>
 
 - (void)goToSuperMarket;
+- (void)goToConfirmOrder;
 
 @end
 

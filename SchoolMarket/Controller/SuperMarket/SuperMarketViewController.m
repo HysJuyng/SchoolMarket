@@ -328,8 +328,8 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (collectionView == self.comm) {
-        CommDetailViewController *commDetail = [CommDetailViewController alloc];
-        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
+        CommDetailViewController *commDetail = [[CommDetailViewController alloc] init];
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:commDetail animated:YES];
         self.hidesBottomBarWhenPushed = NO;

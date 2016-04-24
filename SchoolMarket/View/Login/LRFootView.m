@@ -28,7 +28,7 @@
         self.btnUrSerAgree.frame = CGRectMake(supervc.view.frame.size.width / 4 + 20, 10, supervc.view.frame.size.width / 4, 25);
         [self.btnUrSerAgree setTitle:@"《用户服务协议》" forState:(UIControlStateNormal)];
         self.btnUrSerAgree.titleLabel.font = [UIFont systemFontOfSize:self.btnUrSerAgree.frame.size.height / 5 * 2]; //字体大小
-        self.btnUrSerAgree.tintColor = [UIColor greenColor]; //字体颜色
+        self.btnUrSerAgree.tintColor = [UIColor colorWithRed:10.0/255.0 green:200.0/255.0 blue:150.0/255.0 alpha:1.0]; //字体颜色
         [self.btnUrSerAgree addTarget:supervc action:@selector(UrSerAgreeClick) forControlEvents:(UIControlEventTouchUpInside)];  //点击事件
         [self addSubview:self.btnUrSerAgree];
         

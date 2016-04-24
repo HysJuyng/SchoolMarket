@@ -32,7 +32,7 @@
         self.lbCommName.textAlignment = NSTextAlignmentLeft;
         [self addSubview:self.lbCommName];
         
-        self.lbCommName.backgroundColor = [UIColor greenColor];
+        self.lbCommName.backgroundColor = [UIColor colorWithRed:10.0/255.0 green:200.0/255.0 blue:150.0/255.0 alpha:1.0];
         
         //规格
         UILabel *tempspecification = [[UILabel alloc] initWithFrame:CGRectMake(self.lbCommName.frame.origin.x, self.frame.size.height / 6 + 15, 100, self.frame.size.height / 6)];

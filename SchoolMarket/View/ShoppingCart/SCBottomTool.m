@@ -23,12 +23,12 @@
         CGFloat payX = frame.size.width - payW;
         
         UIButton *pay = [[UIButton alloc] initWithFrame:CGRectMake(payX, 0, payW, frame.size.height)];
-        pay.backgroundColor = [UIColor greenColor];
+        pay.backgroundColor = [UIColor colorWithRed:10.0/255.0 green:200.0/255.0 blue:150.0/255.0 alpha:1.0];
         
         [pay setTitle:@"结算" forState:UIControlStateNormal];
         
         // 监听方法，跳转到确认订单页面
-        //        [pay addTarget:shoppingCartVC action:<#(nonnull SEL)#> forControlEvents:UIControlEventTouchUpInside];
+        [pay addTarget:self.delegate action:@selector(goToConfirmOrder) forControlEvents:UIControlEventTouchUpInside];
         
         [self addSubview:pay];
         
@@ -42,7 +42,7 @@
         [continueSelect setTitle:@"继续选购" forState:UIControlStateNormal];
         continueSelect.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         continueSelect.titleLabel.font = [UIFont systemFontOfSize:14.0];
-        [continueSelect setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+        [continueSelect setTitleColor:[UIColor colorWithRed:10.0/255.0 green:200.0/255.0 blue:150.0/255.0 alpha:1.0] forState:UIControlStateNormal];
         
         // 监听方法，跳转到超市页面
         [continueSelect addTarget:self.delegate action:@selector(goToSuperMarket) forControlEvents:UIControlEventTouchUpInside];

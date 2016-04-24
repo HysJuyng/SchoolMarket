@@ -26,17 +26,15 @@
     [super viewDidLoad];
     self.title = @"商品详情";
     
+    CGFloat detailTblY = CGRectGetMaxY(self.navigationController.navigationBar.frame);
     CGFloat detailTblW = self.view.bounds.size.width;
-    CGFloat detailTblH = (self.view.bounds.size.height - CGRectGetMaxY(self.navigationController.navigationBar.frame)) * 0.9;
-    NSLog(@"%f", detailTblH);
-    [self detailTblWithFrame:CGRectMake(0, 0, detailTblW, detailTblH)];
+    CGFloat detailTblH = (self.view.bounds.size.height - detailTblY) * 0.9;
+    [self detailTblWithFrame:CGRectMake(0, detailTblY, detailTblW, detailTblH)];
     
     CGFloat bottomToolW = self.view.bounds.size.width;
-    CGFloat bottomToolH = self.view.bounds.size.height * 0.1;
-    CGFloat bottomToolY = detailTblH;
+    CGFloat bottomToolH = (self.view.bounds.size.height - detailTblY) * 0.1;
+    CGFloat bottomToolY = CGRectGetMaxY(self.detailTbl.frame);
     [self bottomToolWithFrame:CGRectMake(0, bottomToolY, bottomToolW, bottomToolH)];
-    
-    NSLog(@"%f, %f", self.view.bounds.size.height, CGRectGetMaxY(self.view.bounds));
     
     self.automaticallyAdjustsScrollViewInsets = NO;
 }
@@ -66,18 +64,6 @@
 }
 
 #pragma mark 数据源方法
-/**  设置头视图高度 */
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 0.1f;
-}
-
-/**  设置脚视图高度 */
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 4.0f;
-}
-
 /**  分组数量 */
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -124,6 +110,20 @@
     return cell;
 }
 
+#pragma mark 代理方法
+/**  设置头视图高度 */
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 2.0f;
+}
+
+/**  设置脚视图高度 */
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 4.0f;
+}
+
+/**  设置cell高度 */
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
@@ -180,6 +180,7 @@
 {
     if (self.tabBarController.selectedIndex != 2) {
         self.tabBarController.selectedIndex = 2;
+        [self.navigationController popToRootViewControllerAnimated:YES];
         [self removeFromParentViewController];
     } else {
         [self.navigationController popViewControllerAnimated:YES];

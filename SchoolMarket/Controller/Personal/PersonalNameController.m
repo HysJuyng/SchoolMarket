@@ -29,7 +29,7 @@
     self.btnChange.frame = CGRectMake(25, 140, self.view.frame.size.width - 50, 33);
     [self.btnChange setTitle:@"确定修改" forState:(UIControlStateNormal)];
     self.btnChange.tintColor = [UIColor whiteColor];
-    self.btnChange.backgroundColor = [UIColor greenColor];
+    self.btnChange.backgroundColor = [UIColor colorWithRed:10.0/255.0 green:200.0/255.0 blue:150.0/255.0 alpha:1.0];
     self.btnChange.titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:self.btnChange];
     

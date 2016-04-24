@@ -43,7 +43,7 @@
     [super setSelected:selected animated:animated];
 
     if (selected) {
-        self.textLabel.textColor = [UIColor greenColor];
+        self.textLabel.textColor = [UIColor colorWithRed:10.0/255.0 green:200.0/255.0 blue:150.0/255.0 alpha:1.0];
     } else {
         self.textLabel.textColor = [UIColor blackColor];
     }

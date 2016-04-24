@@ -39,7 +39,6 @@
     
     if (cell == nil) {
         cell = [[SCCommCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID andFrame:frame];
-        NSLog(@"%s", __func__);
     }
     return cell;
 }
@@ -75,7 +74,7 @@
         
         UIButton *num = [[UIButton alloc] initWithFrame:CGRectMake(frame.size.width - (90 + 10), CGRectGetMaxY(self.pictureImgView.frame) - 30, 90, 30)];
         [num setTitle:@"0" forState:UIControlStateNormal];
-        [num setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+        [num setTitleColor:[UIColor colorWithRed:10.0/255.0 green:200.0/255.0 blue:150.0/255.0 alpha:1.0] forState:UIControlStateNormal];
         num.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.1f];
         num.layer.cornerRadius = 10;
         self.numBtn = num;
@@ -83,7 +82,7 @@
         
         UIButton *increase = [[UIButton alloc] initWithFrame:CGRectMake(self.numBtn.frame.size.width - 30, 0, 30, 30)];
         [increase setTitle:@"+" forState:UIControlStateNormal];
-        [increase setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+        [increase setTitleColor:[UIColor colorWithRed:10.0/255.0 green:200.0/255.0 blue:150.0/255.0 alpha:1.0] forState:UIControlStateNormal];
         increase.titleLabel.font = [UIFont systemFontOfSize:20.0];
         
         self.increaseBtn = increase;
@@ -91,7 +90,7 @@
         
         UIButton *decrease = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
         [decrease setTitle:@"-" forState:UIControlStateNormal];
-        [decrease setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+        [decrease setTitleColor:[UIColor colorWithRed:10.0/255.0 green:200.0/255.0 blue:150.0/255.0 alpha:1.0] forState:UIControlStateNormal];
         decrease.titleLabel.font = [UIFont systemFontOfSize:20.0];
         self.decreaseBtn = decrease;
         [self.numBtn addSubview:self.decreaseBtn];

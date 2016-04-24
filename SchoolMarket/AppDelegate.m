@@ -9,8 +9,7 @@
 #import "AppDelegate.h"
 #import "RootTabBarController.h"
 
-#import "LoginViewController.h"
-#import "CommDetailViewController.h"
+#import "EditAddressController.h"
 
 @interface AppDelegate ()
 
@@ -21,11 +20,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-//    LoginViewController *vc = [[LoginViewController alloc]init];
-//    UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:vc];
-//    self.window.rootViewController = navi;
     
-//    CommDetailViewController *vc = [[CommDetailViewController alloc]init];
+//    EditAddressController *vc = [[EditAddressController alloc] init];
 //    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:vc];
 //    self.window.rootViewController = nav;
     

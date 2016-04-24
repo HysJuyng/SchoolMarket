@@ -7,6 +7,7 @@
 #import "SCCommCell.h"
 #import "CommDetailViewController.h"
 #import "ShoppingCart.h"
+#import "ConfirmOrderViewController.h"
 
 @interface ShoppingCartController () <UITableViewDataSource, UITableViewDelegate, SCCommCellDelegate, SCBottomToolDelegate>
 
@@ -45,16 +46,15 @@
 
 #pragma mark - 购物车详情视图
 /**  初始化购物车商品视图 */
-- (void)detailShoppingCartWithFrame:(CGRect)frame
+- (UIView *)detailShoppingCartWithFrame:(CGRect)frame
 {
     if (self.detailSC == nil) {
         UIView *detailSC = [[UIView alloc] initWithFrame:frame];
-        detailSC.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.06];
         
         // 设置导航栏右侧Item
         [self setupNavigationItem];
 
-        // 商品
+        // 商品条目
         self.automaticallyAdjustsScrollViewInsets = NO;
         CGFloat commsW = frame.size.width;
         CGFloat commsH = frame.size.height - self.tabBarController.tabBar.frame.size.height;
@@ -71,6 +71,7 @@
         self.detailSC = detailSC;
         [self.view addSubview:self.detailSC];
     }
+    return self.detailSC;
 }
 
 #pragma mark 导航栏Item
@@ -131,8 +132,8 @@
 /**  Cell被选中 */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CommDetailViewController *commDetail = [CommDetailViewController alloc];
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
+    CommDetailViewController *commDetail = [[CommDetailViewController alloc] init];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:commDetail animated:YES];
     self.hidesBottomBarWhenPushed = NO;
@@ -168,4 +169,13 @@
     self.tabBarController.selectedIndex = 1;
 }
 
+/**  跳转到确认订单页面 */
+- (void)goToConfirmOrder
+{
+    ConfirmOrderViewController *confirmOrder = [[ConfirmOrderViewController alloc] init];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:confirmOrder animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
+}
 @end

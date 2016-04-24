@@ -40,7 +40,7 @@
         // 设置标题属性
         [toSMBtn setTitle:@"去逛逛" forState:UIControlStateNormal];
         toSMBtn.titleLabel.font = tipLabel.font;
-        toSMBtn.backgroundColor = [UIColor greenColor];
+        toSMBtn.backgroundColor = [UIColor colorWithRed:10.0/255.0 green:200.0/255.0 blue:150.0/255.0 alpha:1.0];
         
         // 监听方法
         [toSMBtn addTarget:shoppingCartVC action:@selector(goToSuperMarket) forControlEvents:UIControlEventTouchUpInside];

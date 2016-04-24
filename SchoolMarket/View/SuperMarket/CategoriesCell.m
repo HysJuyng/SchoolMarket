@@ -37,7 +37,7 @@
         UIView *whiteSelectedBg = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
         whiteSelectedBg.backgroundColor = [UIColor whiteColor];
         UIView *greenSelectedBg = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, self.frame.size.height)];
-        greenSelectedBg.backgroundColor = [UIColor greenColor];
+        greenSelectedBg.backgroundColor = [UIColor colorWithRed:10.0/255.0 green:200.0/255.0 blue:150.0/255.0 alpha:1.0];
         [whiteSelectedBg addSubview:greenSelectedBg];
         [self.selectedBackgroundView addSubview:whiteSelectedBg];
     }
@@ -48,7 +48,7 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     if (selected) {
-        self.textLabel.textColor = [UIColor greenColor];
+        self.textLabel.textColor = [UIColor colorWithRed:10.0/255.0 green:200.0/255.0 blue:150.0/255.0 alpha:1.0];
     } else {
         self.textLabel.textColor = [UIColor blackColor];
     }

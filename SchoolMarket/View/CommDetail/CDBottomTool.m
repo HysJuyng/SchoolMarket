@@ -13,7 +13,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor greenColor];
+        self.backgroundColor = [UIColor colorWithRed:10.0/255.0 green:200.0/255.0 blue:150.0/255.0 alpha:1.0];
         
         // 初始化购买按钮和数量变化按钮
         CGFloat BtnW = frame.size.width * 0.4;
@@ -39,7 +39,7 @@
 {
     if (self.bottomToolView == nil) {
         UIView *bottomToolView = [[UIView alloc] initWithFrame:frame];
-        bottomToolView.backgroundColor = [UIColor greenColor];
+        bottomToolView.backgroundColor = [UIColor colorWithRed:10.0/255.0 green:200.0/255.0 blue:150.0/255.0 alpha:1.0];
         
         // 初始化购买按钮和数量变化按钮
         CGFloat BtnW = frame.size.width * 0.4;
@@ -89,7 +89,7 @@
             changeNumBtn.backgroundColor = [UIColor whiteColor];
             
             // 设置标题颜色，同时将按钮隐藏
-            [changeNumBtn setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+            [changeNumBtn setTitleColor:[UIColor colorWithRed:10.0/255.0 green:200.0/255.0 blue:150.0/255.0 alpha:1.0] forState:UIControlStateNormal];
             changeNumBtn.hidden = YES;
             
             // 监听方法
@@ -112,7 +112,7 @@
         if (self.increaseBtn == nil) {
             UIButton *increaseBtn = [[UIButton alloc] initWithFrame:CGRectMake(btnX, 0, btnW, btnH)];
             // 设置标题文字属性
-            [increaseBtn setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+            [increaseBtn setTitleColor:[UIColor colorWithRed:10.0/255.0 green:200.0/255.0 blue:150.0/255.0 alpha:1.0] forState:UIControlStateNormal];
             [increaseBtn setTitle:@"+" forState:UIControlStateNormal];
             
             // 监听方法
@@ -127,7 +127,7 @@
             UIButton *decreaseBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, btnW, btnH)];
             // 设置标题文字属性
             [decreaseBtn setTitle:@"-" forState:UIControlStateNormal];
-            [decreaseBtn setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+            [decreaseBtn setTitleColor:[UIColor colorWithRed:10.0/255.0 green:200.0/255.0 blue:150.0/255.0 alpha:1.0] forState:UIControlStateNormal];
             
             // 监听方法
             [decreaseBtn addTarget:self.delegate action:@selector(decrease) forControlEvents:UIControlEventTouchUpInside];

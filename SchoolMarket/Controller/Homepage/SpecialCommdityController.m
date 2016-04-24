@@ -169,7 +169,9 @@
 //    RootTabBarController *vc = [[RootTabBarController alloc] init];
 //    self.view.window.rootViewController = vc;
 //    vc.selectedIndex = 2;
-    [self.navigationController popViewControllerAnimated:true];
+    self.tabBarController.selectedIndex = 2;
+    [self.navigationController popToRootViewControllerAnimated:true];
+    [self removeFromParentViewController];
 //    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 //    [center postNotificationName:@"goToTabbar2" object:nil];
 }

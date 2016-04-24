@@ -13,7 +13,7 @@
     if (self) {
         
         self.frame = frame;
-        self.backgroundColor = [UIColor greenColor];
+        self.backgroundColor = [UIColor colorWithRed:10.0/255.0 green:200.0/255.0 blue:150.0/255.0 alpha:1.0];
         
         
         //头像
