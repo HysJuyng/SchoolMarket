@@ -11,7 +11,13 @@
 
 
 #pragma mark GET
-/** 获取商品信息*/
+/**
+ *  获取商品信息
+ *
+ *  @param url       请求地址
+ *  @param parameter 参数
+ *  @param commblock 闭包回调
+ */
 + (void)getComm:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andCommBlock:(nonnull responseBlock)commblock {
     //创建数组
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -22,7 +28,6 @@
         NSDictionary *dic = responseObject;
         //提取数组
         NSMutableArray *commsArr = dic[@"data"];
-//        NSMutableArray *commsArr = [[NSMutableArray alloc] initWithObjects:dic, nil][0];
         for (int i = 0; i < commsArr.count; i++) {  //遍历字典数组
             Commodity *comm = [[Commodity alloc] initWithCommDic:commsArr[i]];
             [comms addObject:comm];   //添加到结果集

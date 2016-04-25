@@ -13,7 +13,11 @@
     self = [super init];
     if (self) {
         
-        self.selectedNum = 0;
+        if (!commDic[@"selectedNum"]) {
+            self.selectedNum = 0;
+        } else {
+            self.selectedNum = [commDic[@"selectedNum"] intValue];
+        }
         
         self.commodityId = [commDic[@"commodityId"] intValue];    //商品id
         self.mainclassId = [commDic[@"mainclassId"] intValue];    //主分类id
@@ -34,6 +38,29 @@
     return self;
 }
 
+/** 模型转字典*/
+- (nonnull NSDictionary*)commToDictionary:(nonnull Commodity*)comm {
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    
+    [dic setObject:[NSString stringWithFormat:@"%d",self.commodityId] forKey:@"commodityId"];
+    [dic setObject:[NSString stringWithFormat:@"%d",self.mainclassId] forKey:@"mainclassId"];
+    [dic setObject:[NSString stringWithFormat:@"%d",self.subclassId] forKey:@"subclassId"];
+    [dic setObject:[NSString stringWithFormat:@"%d",self.superMarketId] forKey:@"superMarketId"];
+    [dic setObject:self.picture forKey:@"picture"];
+    [dic setObject:self.commName forKey:@"commName"];
+    [dic setObject:self.price forKey:@"price"];
+    [dic setObject:self.sales forKey:@"sales"];
+    [dic setObject:self.specification forKey:@"spercification"];
+//    [dic setObject:self.describe forKey:@"describe"];
+    [dic setObject:self.stock forKey:@"stock"];
+    [dic setObject:self.type forKey:@"type"];
+    [dic setObject:[NSString stringWithFormat:@"%0.1f",self.discount] forKey:@"discount"];
+    [dic setObject:self.specialTime forKey:@"specialTime"];
 
+    [dic setObject:[NSString stringWithFormat:@"%d",self.selectedNum] forKey:@"selectedNum"];
+    
+    return dic;
+    
+}
 
 @end

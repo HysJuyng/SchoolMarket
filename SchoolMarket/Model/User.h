@@ -4,7 +4,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface User : NSObject  <NSSecureCoding>
+@interface User : NSObject 
 
 /**
  *  用户id
@@ -36,5 +36,7 @@
  *  @param userDic 用户字典
  */
 - (instancetype)initWithUserDic:(NSDictionary*)userDic;
+/** 模型转字典*/
+- (NSDictionary*)userToDictionary:(User*)user;
 
 @end

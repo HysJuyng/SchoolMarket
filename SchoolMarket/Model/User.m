@@ -30,6 +30,17 @@
     }
     return self;
 }
-
+/** 模型转字典*/
+- (NSDictionary*)userToDictionary:(User*)user {
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    
+    [dic setObject:[NSString stringWithFormat:@"%d",self.userId] forKey:@"userId"];
+    [dic setObject:self.userName forKey:@"userName"];
+    [dic setObject:self.userPhone forKey:@"userPhone"];
+    [dic setObject:self.portrait forKey:@"portrait"];
+    [dic setObject:self.sex forKey:@"sex"];
+    
+    return dic;
+}
 
 @end

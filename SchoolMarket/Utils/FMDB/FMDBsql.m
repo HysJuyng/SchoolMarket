@@ -59,7 +59,10 @@ static FMDatabase *db;
     NSMutableArray *comms = [NSMutableArray array];
     while (rs.next) {
         NSData *commData = [rs objectForColumnName:@"shopcartComm"];
-        Commodity *comm = [NSKeyedUnarchiver unarchiveObjectWithData:commData];
+        //data转字典
+        NSDictionary *commdic = [NSKeyedUnarchiver unarchiveObjectWithData:commData];
+        //字典转模型
+        Commodity *comm = [[Commodity alloc] initWithCommDic:commdic];
         [comms addObject:comm];
     }
     return comms;
@@ -74,21 +77,23 @@ static FMDatabase *db;
 + (void)updateShopcartComm:(int)commid andSelectedNum:(int)selectedNum {
     if (selectedNum == 0) {
         //删除
-        [db executeUpdate:[NSString stringWithFormat:@"DELETE FROM t_shopcart WHERE commid = %d",commid]];
+        [db executeUpdate:[NSString stringWithFormat:@"DELETE FROM t_shopcart WHERE commid = %d;",commid]];
     } else {
         //修改  (先从数据库拿出商品data 还原成dic 再存入数据库)
         //结果集
-        FMResultSet *rs = [db executeQuery:[NSString stringWithFormat:@"SELECT * FROM t_shopcart WHERE commid = %d",commid]];
-        NSData *commData = [rs objectForColumnName:@"shopcartComm"];
-        //DATA转模型
-        Commodity *comm = [NSKeyedUnarchiver unarchiveObjectWithData:commData];
-        
+        FMResultSet *rs = [db executeQueryWithFormat:@"SELECT * FROM t_shopcart WHERE commid = %d",commid];
+        NSData *commData = [[NSData alloc] init];
+        if (rs.next) {
+            commData = [rs objectForColumnName:@"shopcartComm"];
+        }
+        //DATA转字典
+        NSDictionary *commdic = [NSKeyedUnarchiver unarchiveObjectWithData:commData];
         //修改数量
-        comm.selectedNum = selectedNum;
+        [commdic setValue:[NSString stringWithFormat:@"%d",selectedNum] forKey:@"selectedNum"];
         
-        //重新把模型转data并存进数据库
-        commData = [NSKeyedArchiver archivedDataWithRootObject:comm];
-        [db executeUpdateWithFormat:@"UPDATE t_shopcart SET shopcartComm = %@",commData];
+        //重新把字典转data并存进数据库
+        commData = [NSKeyedArchiver archivedDataWithRootObject:commdic];
+        [db executeUpdateWithFormat:@"UPDATE t_shopcart SET shopcartComm = %@;",commData];
         
     }
 }
@@ -99,10 +104,12 @@ static FMDatabase *db;
  */
 + (void)insertShopcartComm:(Commodity*)comm {
     
-    //模型转data
-    NSData *commData = [NSKeyedArchiver archivedDataWithRootObject:comm];
+    //模型转字典
+    NSDictionary *commdic = [comm commToDictionary:comm];
+    //字典转data
+    NSData *commData = [NSKeyedArchiver archivedDataWithRootObject:commdic];
     //插入数据库
-    [db executeUpdateWithFormat:@"INSTER INTO t_shopcart(shopcartComm,commid,mainclassid,subclassid,type) VALUES (%@,%d,%d,%d,%@)",commData,comm.commodityId,comm.mainclassId,comm.subclassId,comm.type];
+    [db executeUpdateWithFormat:@"INSERT INTO t_shopcart(shopcartComm,commid,mainclassid,subclassid,type) VALUES (%@,%d,%d,%d,%@);",commData,comm.commodityId,comm.mainclassId,comm.subclassId,comm.type];
 }
 
 #pragma mark 用户信息
@@ -112,10 +119,12 @@ static FMDatabase *db;
  *  @param user 用户信息
  */
 + (void)savePersonalMsg:(User*)user {
+    //模型转字典
+    NSDictionary *userdic = [user userToDictionary:user];
     //模型转data
-    NSData *userData = [NSKeyedArchiver archivedDataWithRootObject:user];
+    NSData *userData = [NSKeyedArchiver archivedDataWithRootObject:userdic];
     //插入数据库
-    [db executeUpdateWithFormat:@"INSERT INTO t_user(user,userid,userphone) VALUES (%@,%d,%@)",userData,user.userId,user.userPhone];
+    [db executeUpdateWithFormat:@"INSERT INTO t_user(user,userid,userphone) VALUES (%@,%d,%@);",userData,user.userId,user.userPhone];
 }
 /**
  *  获取用户信息
@@ -126,11 +135,14 @@ static FMDatabase *db;
  */
 + (User*)getUserMsg:(int)userid {
     //结果集
-    FMResultSet *rs = [db executeQueryWithFormat:@"SELECT * FROM t_user WHERE userid = %d",userid];
+    FMResultSet *rs = [db executeQueryWithFormat:@"SELECT * FROM t_user WHERE userid = %d;",userid];
     User *user = [[User alloc] init];
     while (rs.next) {
         NSData *userData = [rs objectForColumnName:@"user"];
-        user = (User*)[NSKeyedUnarchiver unarchiveObjectWithData:userData];
+        //data转字典
+        NSDictionary *userdic = [NSKeyedUnarchiver unarchiveObjectWithData:userData];
+        //字典转模型
+        user = [[User alloc] initWithUserDic:userdic];
     }
     return user;
 }
@@ -141,10 +153,12 @@ static FMDatabase *db;
  */
 + (void)updateUserMsg:(User*)user {
     //直接把新的用户数据 覆盖到原来的
-    //模型转data
-    NSData *userData = [NSKeyedArchiver archivedDataWithRootObject:user];
+    //模型转字典
+    NSDictionary *userdic = [user userToDictionary:user];
+    //字典转data
+    NSData *userData = [NSKeyedArchiver archivedDataWithRootObject:userdic];
     //修改数据库
-    [db executeUpdateWithFormat:@"UPDATE t_user SET user = %@ WHERE userid = %d",userData,user.userId];
+    [db executeUpdateWithFormat:@"UPDATE t_user SET user = %@ WHERE userid = %d;",userData,user.userId];
 }
 
 

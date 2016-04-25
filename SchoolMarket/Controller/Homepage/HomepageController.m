@@ -297,7 +297,7 @@
         self.hidesBottomBarWhenPushed = NO;
         
     } else if (collectionView.tag == 102 || collectionView.tag == 103) { //当section不在第一区的时候
-        CommDetailViewController *commDetail = [CommDetailViewController alloc];
+        CommDetailViewController *commDetail = [[CommDetailViewController alloc] init];
         
 //        //正向传值
 //        if (collectionView.tag == 102) {

@@ -4,7 +4,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Address : NSObject <NSSecureCoding>
+@interface Address : NSObject 
 
 
 /**
