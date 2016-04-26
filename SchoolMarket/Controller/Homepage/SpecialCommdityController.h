@@ -5,7 +5,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface SpecialCommdityController : UIViewController 
+@interface SpecialCommdityController : UIViewController
 
 
 @property (nonatomic,weak) UIButton *shoppingCartBtn;

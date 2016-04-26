@@ -93,7 +93,7 @@ static FMDatabase *db;
         
         //重新把字典转data并存进数据库
         commData = [NSKeyedArchiver archivedDataWithRootObject:commdic];
-        [db executeUpdateWithFormat:@"UPDATE t_shopcart SET shopcartComm = %@;",commData];
+        [db executeUpdateWithFormat:@"UPDATE t_shopcart SET shopcartComm = %@ WHERE commid = %d",commData,commid];
         
     }
 }
@@ -110,6 +110,54 @@ static FMDatabase *db;
     NSData *commData = [NSKeyedArchiver archivedDataWithRootObject:commdic];
     //插入数据库
     [db executeUpdateWithFormat:@"INSERT INTO t_shopcart(shopcartComm,commid,mainclassid,subclassid,type) VALUES (%@,%d,%d,%d,%@);",commData,comm.commodityId,comm.mainclassId,comm.subclassId,comm.type];
+}
+/**
+ *  获取购物车中已选的商品数量总和
+ *
+ *  @return 数量总和
+ */
++ (int)getShopcartAllSelectedNum {
+    //总和
+    int sum = 0;
+    //结果集
+    FMResultSet *rs = [db executeQuery:@"SELECT * FROM t_shopcart;"];
+    while (rs.next) {
+        NSData *commdata = [rs objectForColumnName:@"shopcartComm"];
+        //data转字典
+        NSDictionary *commdic = [NSKeyedUnarchiver unarchiveObjectWithData:commdata];
+        
+        //把改商品的选择的数量加在总和上
+        sum += [commdic[@"selectedNum"] intValue];
+    }
+    return sum;
+}
++ (void)contrastShopcartAndModels:(NSArray *)comms {
+    //结果集
+    FMResultSet *rs = [db executeQuery:@"SELECT * FROM t_shopcart;"];
+    //结果集数组
+    NSMutableArray *commArr = [[NSMutableArray alloc] init];
+    NSMutableArray *commidArr = [[NSMutableArray alloc] init];
+    while (rs.next) {
+        
+        [commidArr addObject:[rs objectForColumnName:@"commid"]];
+        [commArr addObject:[rs objectForColumnName:@"shopcartComm"]];
+    }
+    for (Commodity *comm in comms) {
+        //遍历数据库 查找存在的id
+        for (int i = 0; i < commidArr.count; i++) {
+            NSString* str = commidArr[i];
+            if (comm.commodityId == [str intValue]) {
+                //提取商品模型字典
+                NSDictionary *commdic = [NSKeyedUnarchiver unarchiveObjectWithData:commArr[i]];
+                //修改商品模型的数量
+                comm.selectedNum = [commdic[@"selectedNum"] intValue];
+                //把该结果移除
+                [commArr removeObjectAtIndex:i];
+                [commidArr removeObjectAtIndex:i];
+            }
+        }
+    }
+//    spcpmplete(comms);
 }
 
 #pragma mark 用户信息

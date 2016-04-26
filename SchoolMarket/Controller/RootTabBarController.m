@@ -83,6 +83,7 @@
             return true;
         } else {  //没有登录
             LoginViewController *loginvc = [[LoginViewController alloc] init];
+            
             //隐藏tabbar
             self.hidesBottomBarWhenPushed = YES;
 
