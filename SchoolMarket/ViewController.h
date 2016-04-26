@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FMDB.h"
+#import "AFNetworking.h"
+#import "SDWebImage-umbrella.h"
 
 @interface ViewController : UIViewController
 

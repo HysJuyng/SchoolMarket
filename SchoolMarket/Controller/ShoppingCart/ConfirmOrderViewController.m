@@ -8,6 +8,8 @@
 
 #import "ConfirmOrderViewController.h"
 #import "ConfirmOrderCell.h"
+#import "AddressCell.h"
+#import "AddressController.h"
 
 @interface ConfirmOrderViewController () <UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
@@ -87,7 +89,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 4;
+        return 1;
     } else if (section == 1) {
         return 2;
     } else {
@@ -98,61 +100,42 @@
 /**  cell的明细 */
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ConfirmOrderCell *cell = [[ConfirmOrderCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    UITableViewCell *cell = nil;
     if (indexPath.section == 0) {
-        UITextField *info = [[UITextField alloc] initWithFrame:CGRectMake(15, 0, self.view.bounds.size.width - 30, cell.frame.size.height)];
-        if (indexPath.row == 0) {
-            if (self.nameTF == nil) {
-                info.text = @"小峰";
-                self.nameTF = info;
-                [cell addSubview:self.nameTF];
+        cell = [AddressCell cellWithTableView:tableView];
+        cell.textLabel.text = @"姓名 手机号码";
+        cell.textLabel.font = [UIFont systemFontOfSize:18.0];
+        cell.detailTextLabel.text = @"详细地址";
+        cell.detailTextLabel.font = [UIFont systemFontOfSize:17.0];
+    } else {
+        cell = [[ConfirmOrderCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+        if (indexPath.section == 1) {
+            if (indexPath.row == 0) {
+                cell.textLabel.text = @"备注";
+                if (self.commentTF == nil) {
+                    CGFloat commentTFX = self.view.bounds.size.width * 0.3;
+                    CGFloat commentTFW = self.view.bounds.size.width - commentTFX - 15;
+                    UITextField *commentTF = [[UITextField alloc] initWithFrame:CGRectMake(commentTFX, 0, commentTFW, cell.frame.size.height)];
+                    commentTF.placeholder = @"可选";
+                    commentTF.textAlignment = UIControlContentHorizontalAlignmentRight;
+                    self.commentTF = commentTF;
+                    [cell addSubview:self.commentTF];
+                }
+            } else {
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.textLabel.text = @"送达时间";
+                cell.detailTextLabel.text = @"尽快送到";
+                
+                [self createTimePicker:cell];
             }
-        } else if (indexPath.row == 1) {
-            if (self.phoneNumTF == nil) {
-                info.text = @"18814182437";
-                self.phoneNumTF = info;
-                [cell addSubview:self.phoneNumTF];
+        } else if(indexPath.section == 2) {
+            if (indexPath.row == 0) {
+                cell.textLabel.text = @"商品";
+                cell.detailTextLabel.text = @"￥50";
+            } else {
+                cell.textLabel.text = @"运费";
+                cell.detailTextLabel.text = @"￥3";
             }
-        } else if (indexPath.row == 2) {
-            if (self.addressTF == nil) {
-                info.text = @"江门市蓬江区五邑大学";
-                self.addressTF = info;
-                [cell addSubview:self.addressTF];
-            }
-        } else {
-            if (self.detailAddressTF == nil) {
-                info.text = @"17602";
-                self.detailAddressTF = info;
-                [cell addSubview:self.detailAddressTF];
-            }
-        }
-    } else if (indexPath.section == 1) {
-        if (indexPath.row == 0) {
-            cell.textLabel.text = @"备注";
-            if (self.commentTF == nil) {
-                CGFloat commentTFX = self.view.bounds.size.width * 0.3;
-                CGFloat commentTFW = self.view.bounds.size.width - commentTFX - 15;
-                UITextField *commentTF = [[UITextField alloc] initWithFrame:CGRectMake(commentTFX, 0, commentTFW, cell.frame.size.height)];
-                commentTF.placeholder = @"可选";
-                commentTF.textAlignment = UIControlContentHorizontalAlignmentRight;
-                self.commentTF = commentTF;
-                [cell addSubview:self.commentTF];
-            }
-        } else {
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            cell.textLabel.text = @"送达时间";
-            cell.detailTextLabel.text = @"尽快送到";
-            
-            [self createTimePicker:cell];
-        }
-    } else if(indexPath.section == 2) {
-        if (indexPath.row == 0) {
-            cell.textLabel.text = @"商品";
-            cell.detailTextLabel.text = @"￥50";
-        } else {
-            cell.textLabel.text = @"运费";
-            cell.detailTextLabel.text = @"￥3";
         }
     }
     
@@ -171,12 +154,24 @@
 {
     return 8.0f;
 }
+/**  设置cell的高度  */
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        return self.view.bounds.size.width * 0.2;
+    } else
+        return tableView.rowHeight;
+}
 
 /**  cell被选中时执行此方法 */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        NSLog(@"收货地址");
+        //选中收件人信息的cell时跳到收件人信息列表视图
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
+        AddressController *addressController = [[AddressController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:addressController animated:YES];
     } else if (indexPath.section == 1 && indexPath.row == 1){
         // 设置cell为第一响应者
         ConfirmOrderCell *cell = [tableView cellForRowAtIndexPath:indexPath];
@@ -239,7 +234,7 @@
 {
     // 取消cell的第一响应
     NSIndexPath *cellIndexPath = [NSIndexPath indexPathForRow:1 inSection:1];
-    ConfirmOrderCell *cell = [self.detailOrderTbl cellForRowAtIndexPath:cellIndexPath];
+    UITableViewCell *cell = [self.detailOrderTbl cellForRowAtIndexPath:cellIndexPath];
     [cell resignFirstResponder];
     // 如果点击完成按钮则将cell的detailTextLabel改为对应的时间
     if ([btnItem.title isEqualToString:@"完成"]) {
@@ -267,7 +262,6 @@
 {
     return self.pickerData[row];
 }
-
 
 
 #pragma mark - 底部工具栏

@@ -17,7 +17,7 @@
 
 @property (strong,nonatomic) UITableView *tableview;
 
-@property (nonatomic,weak) NSMutableArray *hotComms;
+@property (nonatomic,strong) NSMutableArray *hotComms;
 @property (nonatomic,strong) NSMutableArray *recommendComms;
 @property (nonatomic,weak) NSMutableArray *adverImgs;
 @end
@@ -300,16 +300,15 @@
         self.hidesBottomBarWhenPushed = NO;
         
     } else if (collectionView.tag == 102 || collectionView.tag == 103) { //当section不在第一区的时候
-        CommDetailViewController *commDetail = [CommDetailViewController alloc];
-        
-//        //正向传值
-//        if (collectionView.tag == 102) {
-//            commDetail.comm = self.recommendComms[indexPath.row];
-//        } else {
-//            commDetail.comm = self.hotComms[indexPath.row];
-//        }
+        CommDetailViewController *commDetail = [[CommDetailViewController alloc] init];
         
         
+        //正向传值
+        if (collectionView.tag == 102) {
+            commDetail.comm = self.recommendComms[indexPath.row];
+        } else {
+            commDetail.comm = self.hotComms[indexPath.row];
+        }
         
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
         self.hidesBottomBarWhenPushed = YES;

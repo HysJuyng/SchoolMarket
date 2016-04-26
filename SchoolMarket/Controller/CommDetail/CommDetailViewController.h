@@ -6,7 +6,11 @@
 //
 
 #import "ViewController.h"
+@class Commodity;
 
 @interface CommDetailViewController : ViewController
+
+/**  商品模型 */
+@property (nonatomic, strong) Commodity *comm;
 
 @end

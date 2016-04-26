@@ -7,6 +7,7 @@
 #import "PersonalHeader.h"
 #import "PersonalMsgController.h"
 #import "LoginViewController.h"
+#import "AddressController.h"
 
 @interface PersonalViewController () <UITableViewDelegate,UITableViewDataSource>
 
@@ -121,6 +122,13 @@
         [self.navigationController pushViewController:subvc animated:true];
     } else if (indexPath.section == 1) {
         NSLog(@"%@",self.sectionTitle[indexPath.row]);
+        if (indexPath.row == 1) {
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
+            AddressController *address = [[AddressController alloc] init];
+            self.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:address  animated:YES];
+            self.hidesBottomBarWhenPushed = NO;
+        }
     } else if (indexPath.section == 2) {
         NSLog(@"退出登录");
     }

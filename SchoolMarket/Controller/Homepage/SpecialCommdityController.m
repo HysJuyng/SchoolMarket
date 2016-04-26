@@ -139,7 +139,7 @@
 /** 选中单元格*/
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    CommDetailViewController *subvc = [CommDetailViewController alloc];
+    CommDetailViewController *subvc = [[CommDetailViewController alloc] init];
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.hidesBottomBarWhenPushed = YES;

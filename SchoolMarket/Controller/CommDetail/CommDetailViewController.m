@@ -88,22 +88,22 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (indexPath.section == 0) {
         UIImageView *pic = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.width)];
-        pic.backgroundColor = [UIColor purpleColor];
+        [pic sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/uploadDir/%@", self.comm.picture]] placeholderImage:[UIImage imageNamed:@"default_img_failed"]];
         [cell addSubview:pic];
     } else if (indexPath.section == 1) {
-        cell.textLabel.text = @"comm";
-        cell.textLabel.font = [UIFont systemFontOfSize:30.0f];
-        cell.detailTextLabel.text = @"price";
-        cell.detailTextLabel.font = [UIFont systemFontOfSize:25.0f];
+        cell.textLabel.text = self.comm.commName;
+        cell.textLabel.font = [UIFont systemFontOfSize:20.0f];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"￥%@", self.comm.price];
+        cell.detailTextLabel.font = [UIFont systemFontOfSize:18.0f];
         cell.detailTextLabel.textColor = [UIColor redColor];
     } else if (indexPath.section == 2) {
         if (indexPath.row == 0) {
-            cell.textLabel.text = @"specification";
-            cell.textLabel.font = [UIFont systemFontOfSize:20.0f];
+            cell.textLabel.text = [NSString stringWithFormat:@"规格：%@", self.comm.specification];
+        cell.textLabel.font = [UIFont systemFontOfSize:15.0f];
             cell.textLabel.textColor = [UIColor grayColor];
         } else {
-            cell.textLabel.text = @"stock";
-            cell.textLabel.font = [UIFont systemFontOfSize:20.0f];
+            cell.textLabel.text = [NSString stringWithFormat:@"库存：%@", self.comm.stock];
+            cell.textLabel.font = [UIFont systemFontOfSize:15.0f];
             cell.textLabel.textColor = [UIColor grayColor];
         }
     }
@@ -130,7 +130,8 @@
         return self.view.bounds.size.width;
     } else if (indexPath.section == 1) {
         return self.view.bounds.size.width * 0.2;
-    } else return tableView.rowHeight;
+    } else
+        return tableView.rowHeight;
 }
 
 

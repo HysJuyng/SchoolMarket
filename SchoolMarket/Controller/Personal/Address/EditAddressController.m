@@ -34,6 +34,7 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
+/**  创建容器 */
 - (UITableView *)createContainerTbl
 {
     if (self.containerTbl == nil) {
@@ -46,16 +47,19 @@
 }
 
 #pragma mark 数据源方法
+/**  设置分组数量 */
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
 
+/**  设置每个分组的cell数量 */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 3;
 }
 
+/**  设置cell的明细 */
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
@@ -75,6 +79,7 @@
     return cell;
 }
 
+/**  设置UITextField */
 - (UITextField *)createTextFieldWithCell:(UITableViewCell *)cell andTextField:(UITextField *)textField andText:(NSString *)text
 {
     if (textField == nil) {

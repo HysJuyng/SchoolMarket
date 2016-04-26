@@ -9,6 +9,7 @@
 #import "Commodity.h"
 #import "CommCell.h"
 #import "CommDetailViewController.h"
+#import "AFRequest.h"
 
 @interface SuperMarketViewController () <UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 /**  营业时间试图 */
@@ -18,7 +19,7 @@
 /**  小分类 */
 @property (nonatomic, weak) UITableView *subCategory;
 /**  商品展示 */
-@property (nonatomic, weak) UICollectionView *comm;
+@property (nonatomic, weak) UICollectionView *commCV;
 
 /**  分类对象数组 */
 @property (nonatomic, strong) NSArray *categoriesList;
@@ -32,6 +33,9 @@
 /**  被选择的商品 */
 @property (nonatomic, strong) Commodity *selectedComm;
 
+/**  商品模型数组 */
+@property (nonatomic, strong) NSMutableArray *comms;
+
 @end
 
 @implementation SuperMarketViewController
@@ -42,6 +46,26 @@
         _categoriesList = [Categories categoriesList];
     }
     return _categoriesList;
+}
+
+/**
+ *  获取商品信息
+ *
+ *  @param url       请求地址
+ *  @param parameter 参数
+ *  @param commblock 闭包回调
+ */
+- (NSMutableArray *)comms
+{
+    if (_comms == nil) {
+        NSString *commUrl = [NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/findAllCommodity.jhtml"];
+        NSDictionary *commParameter = [[NSDictionary alloc] initWithObjectsAndKeys:@"1", @"supermarketId", nil];
+        [AFRequest getComm:commUrl andParameter:commParameter andCommBlock:^(NSMutableArray * _Nonnull commArr) {
+            _comms = commArr;
+            [self.commCV reloadData];
+        }];
+    }
+    return _comms;
 }
 
 - (void)viewDidLoad {
@@ -62,8 +86,10 @@
     [self commCollectionViewWithFrame:frame];
     
     [self setSelectedIndexPath:self.category];
+    
     // 被点击的分类
     self.selectedCategory = self.categoriesList[0];
+    
     // 刷新子分类数据
     [self.subCategory reloadData];
     [self setSelectedIndexPath:self.subCategory];
@@ -97,7 +123,7 @@
 
 #pragma mark - 添加控件
 
-#pragma mark 营业时间
+#pragma mark - 营业时间
 /**  创建营业时间 */
 - (UIButton *)openTimeViewWithFrame:(CGRect)frame
 {
@@ -113,7 +139,7 @@
         [openTimeView setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         openTimeView.titleLabel.font = [UIFont systemFontOfSize:14.0];
         // 设置文字偏移量
-        openTimeView.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 80);
+        openTimeView.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 40);
         
         // 设置按钮不可用
         openTimeView.enabled = NO;
@@ -216,6 +242,7 @@
     if (tableView == self.category) {
         // 被点击的分类
         self.selectedCategory = self.categoriesList[indexPath.row];
+
         // 刷新子分类数据
         [self.subCategory reloadData];
         [self setSelectedIndexPath:self.subCategory];
@@ -231,33 +258,33 @@
 }
 
 #pragma mark - 商品展示
-/**  创建商品展示comm */
+/**  创建商品展示commCV */
 - (UICollectionView *)commCollectionViewWithFrame:(CGRect)frame
 {
-    if (self.comm == nil) {
-        CGFloat commX = self.subCategory.frame.origin.x;
-        CGFloat commY = CGRectGetMaxY(self.subCategory.frame);
-        CGFloat commW = frame.size.width - self.category.frame.size.width;
-        CGFloat commH = frame.size.height - commY;
+    if (self.commCV == nil) {
+        CGFloat commCVX = self.subCategory.frame.origin.x;
+        CGFloat commCVY = CGRectGetMaxY(self.subCategory.frame);
+        CGFloat commCVW = frame.size.width - self.category.frame.size.width;
+        CGFloat commCVH = frame.size.height - commCVY;
         
         UICollectionViewLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-        UICollectionView *comm = [[UICollectionView alloc] initWithFrame:CGRectMake(commX, commY, commW, commH) collectionViewLayout:layout];
-        comm.backgroundColor = [UIColor whiteColor];
-        comm.dataSource = self;
-        comm.delegate = self;
-        self.margin = comm.frame.size.width * 0.05;
+        UICollectionView *commCV = [[UICollectionView alloc] initWithFrame:CGRectMake(commCVX, commCVY, commCVW, commCVH) collectionViewLayout:layout];
+        commCV.backgroundColor = [UIColor whiteColor];
+        commCV.dataSource = self;
+        commCV.delegate = self;
+        self.margin = commCV.frame.size.width * 0.05;
         
-        [self.view addSubview:(self.comm = comm)];
-        [self.comm registerClass:[CommCell class] forCellWithReuseIdentifier:@"commcell"];
+        [self.view addSubview:(self.commCV = commCV)];
+        [self.commCV registerClass:[CommCell class] forCellWithReuseIdentifier:@"commcell"];
     }
-    return self.comm;
+    return self.commCV;
 }
 
 #pragma mark 数据源方法
 /**  返回collectionViewCell数量 */
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 10;
+    return self.comms.count;
 }
 
 /**  设置cell单元格 */
@@ -265,9 +292,9 @@
 {
     NSString *ID = @"commcell";
     CommCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ID forIndexPath:indexPath];
-    cell.lbName.text = @"comm";
-    cell.lbSpecification.text = @"500ml";
-    cell.lbPrice.text = @"羊2.50";
+
+    Commodity *comm = self.comms[indexPath.row];
+    [cell setCommCell:comm];
     
     // 添加监听方法
     [cell.btnAdd addTarget:self action:@selector(commCellClickAdd:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -325,10 +352,13 @@
     return CGSizeMake(cellW, cellH);
 }
 
+/**  商品cell被选中时执行此方法 */
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (collectionView == self.comm) {
+    if (collectionView == self.commCV) {
         CommDetailViewController *commDetail = [[CommDetailViewController alloc] init];
+        Commodity *comm = self.comms[indexPath.row];
+        commDetail.comm = comm;
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:commDetail animated:YES];
