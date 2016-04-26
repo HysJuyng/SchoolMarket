@@ -6,7 +6,7 @@
 
 
 
-@interface Commodity : NSObject
+@interface Commodity : NSObject 
 
 
 /**
@@ -75,7 +75,8 @@
 //初始化
 //通过字典初始化模型
 - (nonnull instancetype)initWithCommDic:(nonnull NSDictionary*)commDic;
-
+// 模型转字典
+- (nonnull NSDictionary*)commToDictionary:(nonnull Commodity*)comm;
 
 
 @end

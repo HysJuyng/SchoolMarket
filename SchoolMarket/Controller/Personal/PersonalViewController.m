@@ -15,6 +15,7 @@
 //tableview选项数组
 @property (nonatomic,copy) NSArray *sectionTitle;
 @property (nonatomic,copy) NSArray *sectionImage;
+//@property (nonatomic,strong) User *userMsg;
 @end
 
 @implementation PersonalViewController
@@ -38,7 +39,7 @@
     
 }
 
-#pragma mark tableview代理
+#pragma mark tableview代理方法
 /** 头视图高度*/
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0) {
@@ -93,6 +94,9 @@
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
         }
+        //点击风格
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
         cell.textLabel.text = @"退出登录";
         cell.textLabel.textAlignment = NSTextAlignmentCenter;
         cell.textLabel.textColor = [UIColor redColor];
@@ -113,8 +117,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         NSLog(@"进入个人信息");
-//        //隐藏和显示
-//        [self.navigationController setNavigationBarHidden:false];
         //推出个人信息页面
         PersonalMsgController *subvc = [[PersonalMsgController alloc] init];
         //返回按钮
@@ -131,7 +133,21 @@
         }
     } else if (indexPath.section == 2) {
         NSLog(@"退出登录");
+        [self signOut];
     }
+}
+
+#pragma mark 自定义方法
+/**
+ *  退出登录
+ */
+- (void)signOut {
+    //修改userdefault
+    NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
+    [userdef setValue:@"false" forKey:@"logined"];  //取消登录状态
+    
+    //返回主页
+    self.tabBarController.selectedIndex = 0;
 }
 
 - (void)didReceiveMemoryWarning {

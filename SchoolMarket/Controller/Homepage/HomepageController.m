@@ -42,7 +42,6 @@
     NSString *recommendCommUrl = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllCommodity.jhtml";
     NSDictionary *recommendParam = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"supermarketId", nil];
     [AFRequest getComm:recommendCommUrl andParameter:recommendParam andCommBlock:^(NSMutableArray * _Nonnull comms) {
-        
         self.recommendComms = comms;  //获得推荐商品
         //填充推荐商品数据
 //        [self setCommCellWithCommdatas:self.recommendComms andTableview:self.tableview andSection:1];
@@ -51,13 +50,14 @@
     }];
 
 //    //-------热卖
-//    NSString *hotCommUrl = @"";
-//    [request getComm:hotCommUrl andParameter:nil andCommBlock:^(NSMutableArray * _Nonnull comms) {
-//        self.hotComms = comms;  //获得热卖商品
-//        //刷新热卖section
-//        NSIndexPath *hotSection = [NSIndexPath indexPathForRow:0 inSection:2];
-//        [self.tableview reloadRowsAtIndexPaths:[NSArray arrayWithObject:hotSection] withRowAnimation:(UITableViewRowAnimationNone)];
-//    }];
+    NSString *hotCommUrl = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllCommodity.jhtml";
+    NSDictionary *hotParam = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"supermarketId", nil];
+    [AFRequest getComm:hotCommUrl andParameter:hotParam andCommBlock:^(NSMutableArray * _Nonnull comms) {
+        self.hotComms = comms;  //获得热卖商品
+        //刷新热卖section
+        NSIndexPath *hotSection = [NSIndexPath indexPathForRow:0 inSection:2];
+        [self.tableview reloadRowsAtIndexPaths:[NSArray arrayWithObject:hotSection] withRowAnimation:(UITableViewRowAnimationNone)];
+    }];
 //    //------广告
 //    self.adverImgs = [[NSMutableArray alloc] init];
 //    NSString *adverUrl = @"";
@@ -67,9 +67,6 @@
 //        [[self.tableview headerViewForSection:0] reloadInputViews];;  //测试 刷新头视图
 //    }];
 
-    
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(goToShopcart) name:@"goToTabbar2" object:nil];
     
 }
 
@@ -110,7 +107,7 @@
     
 }
 
-#pragma mark tableview设置
+#pragma mark tableview设置方法
 /** tableview分区区数 （1：头（广告、特价等按钮）  2：推荐   3:热卖  ）*/
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView; {
     return 3;
@@ -212,7 +209,7 @@
     return self.view.frame.size.width / 6 * 5 + 50;
 }
 
-#pragma mark collectionview设置
+#pragma mark collectionview设置方法
 /** cv cell个数*/
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if (collectionView.tag == 101) {  //若collectionview为头部的collectionview
@@ -257,7 +254,7 @@
         
     } else if (collectionView.tag == 103) {
         if (self.hotComms.count != 0) {
-            [cell setCommCell:((Commodity*)self.hotComms[indexPath.row])];
+            [cell setCommCell:((Commodity*)self.hotComms[indexPath.row + 6])];
         } else {
             cell.lbName.text = @"加载中...";
             cell.lbSpecification.text = @"加载中...";
@@ -317,30 +314,7 @@
     }
 }
 
-
-#pragma mark 填充商品cell数据
-/** 获取到数据后填充商品cell数据*/
-- (void)setCommCellWithCommdatas:(NSMutableArray*)comms andTableview:(UITableView*)tableview andSection:(NSInteger)section {
-    //遍历数组
-    for (int i = 0 ;i < 6 ; i++) {
-        
-        Commodity* comm = (Commodity*)comms[i];
-        
-        NSIndexPath *recommendSection = [NSIndexPath indexPathForRow:0 inSection:section];
-        HomepageCell *tablecell = (HomepageCell*)[tableview cellForRowAtIndexPath:recommendSection];;
-        NSIndexPath *commindexpath = [NSIndexPath indexPathForRow:i inSection:0];
-        CommCell *cell = (CommCell*)[tablecell.cvComm cellForItemAtIndexPath:commindexpath];
-        
-        cell.lbName.text = comm.commName;
-        cell.lbPrice.text = comm.price;
-        cell.lbSpecification.text = comm.specification;
-        [cell.commImgv sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/uploadDir/%@",comm.picture]] placeholderImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@",comm.picture]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-            NSLog(@"success");
-        }];
-    }
-}
-
-#pragma mark 商品cell按钮事件
+#pragma mark 商品cell代理方法
 /** 商品单元格 添加按钮事件*/                 //（重用bug）
 - (void)commCellClickAdd:(UIButton *)button {
     
@@ -406,7 +380,42 @@
     [FMDBsql updateShopcartComm:comm.commodityId andSelectedNum:comm.selectedNum];
     
 }
-/** 获得选中cell的商品model*/
+
+
+#pragma mark 自定义方法
+/**
+ *  获取到数据后填充商品cell数据
+ *
+ *  @param comms     商品数组
+ *  @param tableview 所在tableview
+ *  @param section   所在区
+ */
+- (void)setCommCellWithCommdatas:(NSMutableArray*)comms andTableview:(UITableView*)tableview andSection:(NSInteger)section {
+    //遍历数组
+    for (int i = 0 ;i < 6 ; i++) {
+        
+        Commodity* comm = (Commodity*)comms[i];
+        
+        NSIndexPath *recommendSection = [NSIndexPath indexPathForRow:0 inSection:section];
+        HomepageCell *tablecell = (HomepageCell*)[tableview cellForRowAtIndexPath:recommendSection];;
+        NSIndexPath *commindexpath = [NSIndexPath indexPathForRow:i inSection:0];
+        CommCell *cell = (CommCell*)[tablecell.cvComm cellForItemAtIndexPath:commindexpath];
+        
+        cell.lbName.text = comm.commName;
+        cell.lbPrice.text = comm.price;
+        cell.lbSpecification.text = comm.specification;
+        [cell.commImgv sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/uploadDir/%@",comm.picture]] placeholderImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@",comm.picture]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            NSLog(@"success");
+        }];
+    }
+}
+/**
+ *  获得选中cell的商品model
+ *
+ *  @param cell 商品cell
+ *
+ *  @return 返回cell的model
+ */
 - (Commodity*)selectedComm:(CommCell*)cell {
     //commcell所在的collectionview
     UICollectionView *collectionview = (UICollectionView*)cell.superview;
@@ -421,7 +430,11 @@
     }
     return nil;
 }
-/** 错误信息提示*/
+/**
+ *  错误信息提示
+ *
+ *  @param message 错误信息
+ */
 - (void)showErrorMessage:(NSString*)message {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:(UIAlertControllerStyleAlert)];
     //action
@@ -433,28 +446,32 @@
     [self presentViewController:alert animated:true completion:nil];
 }
 
-#pragma mark 其它点击事件
-/** 跳转到超市*/
+/**
+ *  跳转到超市
+ */
 - (void)goSuperMarket {
     self.tabBarController.selectedIndex = 1;   //通过tabbar直接跳转
 }
 
-/** 定位地区*/
+/**
+ *  定位地区
+ */
 - (void)regionClick {
     NSLog(@"定位");
 }
-/** 搜索*/
+/**
+ *  搜索
+ */
 - (void)searchClick {
     NSLog(@"搜索");
 }
-/** 消息*/
+/**
+ *  消息
+ */
 - (void)messageClick {
     NSLog(@"消息");
 }
 
-- (void)goToShopcart {
-    self.tabBarController.selectedIndex = 2;
-}
 
 #pragma mark -
 - (void)didReceiveMemoryWarning {

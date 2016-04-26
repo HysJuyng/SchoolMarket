@@ -777,6 +777,7 @@
 				33D550891CBFD4FD003E4EE3 /* SpecialCommCell.m in Sources */,
 				3BD638991CB643CC0077D2A4 /* PersonalMsgCell.m in Sources */,
 				3B8946861CAFBA4400959786 /* HCLastFootView.m in Sources */,
+				3BC22CF51CCD23B3000160A9 /* Address.m in Sources */,
 				3BDEDD931CBCBE8900E67A3F /* CommDetailViewController.m in Sources */,
 				33357FD51CC907E2008C22A5 /* ConfirmOrderViewController.m in Sources */,
 				3B89468C1CAFC84900959786 /* HCHeaderView.m in Sources */,

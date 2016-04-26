@@ -24,6 +24,6 @@ typedef void (^postBack)( NSString * _Nonnull flag);
 
 //发送请求
 
-- (void)postLogin:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBack)postback;
++ (void)postLogin:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBack)postback;
 
 @end

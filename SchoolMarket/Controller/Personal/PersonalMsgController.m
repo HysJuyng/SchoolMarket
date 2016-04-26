@@ -32,7 +32,7 @@
     self.msgs = [[NSArray alloc] initWithObjects:@"头像",@"姓名",@"性别", nil];
 }
 
-#pragma mark 代理
+#pragma mark tableview代理方法
 /** 单元格高度*/
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 50;
@@ -77,7 +77,9 @@
 }
 
 #pragma mark 自定义方法
-/** 打开图库*/
+/**
+ *  打开图库
+ */
 - (void)openGallery {
     if ([UIImagePickerController isSourceTypeAvailable:(UIImagePickerControllerSourceTypePhotoLibrary)]) {
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];
@@ -102,14 +104,18 @@
         [self presentViewController:cameraAlert animated:true completion:nil];
     }
 }
-/** 跳转修改姓名*/
+/**
+ *  跳转修改姓名
+ */
 - (void)goToChangeName {
     PersonalNameController *subvc = [[PersonalNameController alloc] init];
     //返回按钮
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:(UIBarButtonItemStylePlain) target:nil action:nil];
     [self.navigationController pushViewController:subvc animated:true];
 }
-/** actionsheet打开性别选择*/
+/**
+ *  actionsheet打开性别选择
+ */
 - (void)selectSex {
     UIAlertController *actionsheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:(UIAlertControllerStyleActionSheet)];
     //创建action

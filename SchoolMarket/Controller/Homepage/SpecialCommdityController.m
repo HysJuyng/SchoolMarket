@@ -37,16 +37,20 @@
     [self shoppingCartBtnWithFrame:CGRectMake(20, self.view.frame.size.height - 80, 60, 60)];
     
     //获取特价商品
-//    NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllCommodity.jhtml";
-//    NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"supermarketId", nil];
-//    [AFRequest getComm:url andParameter:param andCommBlock:^(NSMutableArray * _Nonnull comms) {
-//        //获得数据
-//        self.specialComms = comms;
-//        //reload tableview
-//        [self.specialTableview reloadData];
-//        NSLog(@"123");
-//    }];
+    NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllCommodity.jhtml";
+    NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"supermarketId", nil];
+    [AFRequest getComm:url andParameter:param andCommBlock:^(NSMutableArray * _Nonnull comms) {
+        //获得数据
+        self.specialComms = comms;
+        //reload tableview
+        [self.specialTableview reloadData];
+        NSLog(@"123");
+    }];
     
+    
+    //测试 过后删
+    //===============
+    self.specialComms = [[NSMutableArray alloc] init];
     for (int i = 0; i < 6;  i++) {
         Commodity *comm = [[Commodity alloc] init];
         comm.commName = @"name";
@@ -55,6 +59,8 @@
         
         [self.specialComms addObject:comm];
     }
+    //===============
+    
 }
 
 #pragma mark 购物车按钮
@@ -84,7 +90,7 @@
     [self.view addSubview:self.shoppingCartBtn];
 }
 
-#pragma mark tableview代理
+#pragma mark tableview代理方法
 /** 单元格个数*/
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (self.specialComms.count != 0) {
@@ -109,7 +115,8 @@
     //设置内容
     if (self.specialComms.count != 0) {
         #pragma mark - BUG_刷新数据会崩溃  -
-//        [cell setSpecialComm:(Commodity*)self.specialComms[indexPath.row]];
+        [cell setSpecialComm:(Commodity*)self.specialComms[indexPath.row]];
+        
     } else {
 //        cell.lbCommName.text = @"name";
 //        cell.lbSpecification.text = @"500ml";
@@ -146,7 +153,8 @@
     [self.navigationController pushViewController:subvc animated:true];
 }
 
-#pragma mark 其它自定义方法
+
+#pragma mark 特价商品cell代理方法
 /** 商品加*/
 - (void)addNum:(UIButton*)button {
     NSLog(@"add");
@@ -179,7 +187,11 @@
     //更新文本
     ((SCCAddAndMinusView*)button.superview).selectedNum.text = [NSString stringWithFormat:@"%d",((Commodity*)self.specialComms[button.tag]).selectedNum];
 }
-/**  购物车 */
+
+#pragma mark 其它自定义方法
+/**
+ *  跳转购物车
+ */
 - (void)shoppingCart
 {
 //    RootTabBarController *vc = [[RootTabBarController alloc] init];
