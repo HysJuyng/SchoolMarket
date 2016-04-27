@@ -48,6 +48,10 @@
         [AFRequest getComm:url andParameter:param andCommBlock:^(NSMutableArray * _Nonnull comms) {
             //获得数据
             self.specialComms = comms;
+            
+            //对比购物车数据库
+            [FMDBsql contrastShopcartAndModels:self.specialComms];
+            
             //reload tableview
             [self.specialTableview reloadData];
             NSLog(@"123");
@@ -180,6 +184,13 @@
         [FMDBsql updateShopcartComm:((Commodity*)self.specialComms[button.tag]).commodityId andSelectedNum:((Commodity*)self.specialComms[button.tag]).selectedNum];
     }
     
+    //更新购物车状态 跳转购物车页面的时候需要验证
+    NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
+    [userdef setValue:@"true" forKey:@"shopcartIsUpdate"];
+    
+    //发送修改通知
+    [self updateSelectedNumNotification:((Commodity*)self.specialComms[button.tag])];
+    
 }
 /** 商品减*/
 - (void)minusNum:(UIButton*)button  {
@@ -211,6 +222,24 @@
     
     //操作数据库 从1到0 则删除数据库 否则修改数据库
     [FMDBsql updateShopcartComm:((Commodity*)self.specialComms[button.tag]).commodityId andSelectedNum:((Commodity*)self.specialComms[button.tag]).selectedNum];
+    
+    //更新购物车状态 跳转购物车页面的时候需要验证
+    NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
+    [userdef setValue:@"true" forKey:@"shopcartIsUpdate"];
+    
+    //发送修改通知
+    [self updateSelectedNumNotification:((Commodity*)self.specialComms[button.tag])];
+}
+/** 发送修改数量通知*/
+- (void)updateSelectedNumNotification:(Commodity*)comm {
+    //发送修改通知
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    //通知参数 参数为commid selectedNum  type
+    NSMutableDictionary *notificationDic = [[NSMutableDictionary alloc] init];
+    [notificationDic setObject:[NSString stringWithFormat:@"%d",comm.commodityId] forKey:@"commid"];
+    [notificationDic setObject:[NSString stringWithFormat:@"%d",comm.selectedNum] forKey:@"selectedNum"];
+    [notificationDic setObject:comm.type forKey:@"type"];
+    [center postNotificationName:@"updateSelectedNum" object:self userInfo:notificationDic];
 }
 
 #pragma mark 其它自定义方法
@@ -234,6 +263,17 @@
  */
 - (void)shoppingCart
 {
+    
+    //判断购物车数据是否有更新
+    NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
+    if ([[userdef objectForKey:@"shopcartIsUpdate"] isEqualToString:@"true"]) {
+        //数据库 有修改 则提示购物车controller进行reload
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        //发送购物车数据库已更新 消息
+        [center postNotificationName:@"shopcartIsUpdate" object:self];
+        
+    }
+    
     self.tabBarController.selectedIndex = 2;
     [self.navigationController popToRootViewControllerAnimated:true];
     [self removeFromParentViewController];

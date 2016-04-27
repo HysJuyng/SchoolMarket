@@ -131,6 +131,11 @@ static FMDatabase *db;
     }
     return sum;
 }
+/**
+ *  对比 数据库中已存在的购物车商品 设置其数量
+ *
+ *  @param comms 需要对比的商品模型数组
+ */
 + (void)contrastShopcartAndModels:(NSArray *)comms {
     //结果集
     FMResultSet *rs = [db executeQuery:@"SELECT * FROM t_shopcart;"];
@@ -156,8 +161,11 @@ static FMDatabase *db;
                 [commidArr removeObjectAtIndex:i];
             }
         }
+        //若商品id数组为空 则退出循环
+        if (!commidArr.count) {
+            break;
+        }
     }
-//    spcpmplete(comms);
 }
 
 #pragma mark 用户信息

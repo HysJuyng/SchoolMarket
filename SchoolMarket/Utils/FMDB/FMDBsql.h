@@ -38,6 +38,11 @@ typedef void(^spComplete)(NSArray* comms);
  *  @return 数量总和
  */
 + (int)getShopcartAllSelectedNum;
+/**
+ *  对比 数据库中已存在的购物车商品 设置其数量
+ *
+ *  @param comms 需要对比的商品模型数组
+ */
 + (void)contrastShopcartAndModels:(NSArray*)comms;
 
 

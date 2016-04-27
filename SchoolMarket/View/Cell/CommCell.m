@@ -50,7 +50,6 @@
         [self.btnMinus setTitle:@"-" forState:(UIControlStateNormal)];
         self.btnMinus.titleLabel.font = [UIFont systemFontOfSize:self.btnMinus.frame.size.width * 1.5];
         [self.btnMinus setTitleColor:[UIColor colorWithRed:0.840 green:0.816 blue:1.000 alpha:1.000] forState:(UIControlStateNormal)];
-        self.btnMinus.hidden = true; //默认隐藏
         [self addSubview:self.btnMinus];
         
         [self.btnMinus addTarget:self.delegate action:@selector(commCellClickMinus:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -65,7 +64,6 @@
         UILabel *tempNum = [[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width / 4, self.frame.size.height / 20 * 17, self.frame.size.width / 2, self.frame.size.width / 4)];
         self.lbNum = tempNum;
         self.lbNum.textAlignment = NSTextAlignmentCenter;
-        self.lbNum.hidden = true;  //默认隐藏
         [self addSubview:self.lbNum];
     }
     return self;
@@ -104,15 +102,39 @@
         //如果数量不为0 设置选择数量 并显示
         if (commodity.selectedNum != 0) {
             self.lbNum.text = [NSString stringWithFormat:@"%d",commodity.selectedNum];
-            //隐藏价格按钮 显示减按钮
+            //隐藏价格 显示减按钮 数量文本
             self.lbNum.hidden = false;
             self.btnMinus.hidden = false;
             self.lbPrice.hidden = true;
-            
-            
+        } else {
+            //设置文本
+            self.lbNum.text = @"";
+            //显示价格  隐藏减按钮 数量文本
+            self.lbNum.hidden = true;
+            self.btnMinus.hidden = true;
+            self.lbPrice.hidden = false;
         }
-        //显示按钮
+        
+        //显示加按钮
         self.btnAdd.hidden = false;
+    }
+}
+/** 设置cell的数量*/
+- (void)setCommcellOfSelectedNum:(NSString*)selectedNum {
+    //如果数量为0
+    if ([selectedNum isEqualToString:@"0"]) {
+        //设置文本
+        self.lbNum.text = @"";
+        //显示价格  隐藏减按钮 数量文本
+        self.lbNum.hidden = true;
+        self.btnMinus.hidden = true;
+        self.lbPrice.hidden = false;
+    } else {  //如果数量不为0
+        self.lbNum.text = selectedNum;
+        //隐藏价格 显示减按钮 数量文本
+        self.lbNum.hidden = false;
+        self.btnMinus.hidden = false;
+        self.lbPrice.hidden = true;
     }
 }
 

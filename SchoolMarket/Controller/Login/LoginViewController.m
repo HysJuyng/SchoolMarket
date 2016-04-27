@@ -36,6 +36,7 @@
     [self.loginTableview setSeparatorInset:UIEdgeInsetsMake(0, 30, 0, 30)];
     [self.view addSubview:self.loginTableview];
     
+    
 }
 
 #pragma mark tableview代理方法
@@ -46,6 +47,7 @@
 /** 脚视图*/
 - (nullable UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     LRFootView *lrfootView = [[LRFootView alloc ]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100) andSuperVc:self];
+    lrfootView.delegate = self;
     [lrfootView.btnLoginOrReg setTitle:@"登录" forState:(UIControlStateNormal)];
     return lrfootView;
 }
@@ -79,16 +81,16 @@
  *  检测输入的内容有没符合要求
  *
  *  @param phone    用户电话
- *  @param passwork 密码
+ *  @param password 密码
  *  @param code     验证码
  *
  *  @return 返回信息
  */
-- (nonnull NSString*)textIsRequirements:(nonnull NSString*)phone andPasswork:(nonnull NSString*)passwork andCode:(nullable NSString*)code {
+- (nonnull NSString*)textIsRequirements:(nonnull NSString*)phone andPassword:(nonnull NSString*)password andCode:(nullable NSString*)code {
     if (phone.length != 11) {
         return @"手机号码长度为11位!";
     }
-    if (passwork.length < 6 || passwork.length > 16) {
+    if (password.length < 6 || password.length > 16) {
         return @"密码长度为6到16位!";
     }
     if (code.length == 0 && code != nil) {
@@ -120,7 +122,7 @@
 
     NSLog(@"%@,%@",phone,password);
     //检验输入是否符合要求
-    NSString *flag = [self textIsRequirements:phone andPasswork:password andCode:nil];
+    NSString *flag = [self textIsRequirements:phone andPassword:password andCode:nil];
     //根据返回的flag 推出alert
     if (![flag  isEqual: @"success"]) {
         //推出alertview
@@ -128,7 +130,7 @@
         [self presentViewController:self.alertController animated:true completion:nil];
     }else {   //检验成功 发送数据
         NSLog(@"%@",flag);
-        [self login:phone andPasswork:password];
+        [self login:phone andpassword:password];
     }
 }
 /**
@@ -152,7 +154,7 @@
  *  @param userphone 用户手机
  *  @param password  用户密码
  */
-- (void)login:(NSString*)userphone andPasswork:(NSString*)password {
+- (void)login:(NSString*)userphone andpassword:(NSString*)password {
     //url
     NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/userLogin.jhtml";
     //参数
@@ -183,7 +185,7 @@
 - (UIAlertController *)alertController {
     if (! _alertController) {
         
-        _alertController = [UIAlertController alertControllerWithTitle:@"error" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+        _alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:(UIAlertControllerStyleAlert)];
         
         //取消按钮
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {

@@ -66,9 +66,6 @@
         SCCAddAndMinusView *tempview = [[SCCAddAndMinusView alloc] initWithFrame:CGRectMake(self.frame.size.width - self.frame.size.height / 4 * 3 - 15, self.frame.size.height - self.frame.size.height / 4 - 10, self.frame.size.height / 4 * 3, self.frame.size.height / 4)];
         self.addAndMinusView = tempview;
         [self addSubview:self.addAndMinusView];
-        //隐藏减按钮和数量
-        self.addAndMinusView.btnMinus.hidden = true;
-        self.addAndMinusView.selectedNum.hidden = true;
         
     }
     return self;
@@ -87,6 +84,21 @@
     self.lbPrice.text = [NSString stringWithFormat:@"%@",comm.price];;
     //特价
     self.lbSpecialPrice.text = [NSString stringWithFormat:@"%0.2f",[comm.price floatValue] * comm.discount];
+    
+    //判断数量
+    if (comm.selectedNum != 0) {
+        //显示减按钮和数量文本
+        self.addAndMinusView.btnMinus.hidden = false;
+        self.addAndMinusView.selectedNum.hidden = false;
+        //设置文本
+        self.addAndMinusView.selectedNum.text = [NSString stringWithFormat:@"%d",comm.selectedNum];
+    } else {
+        //设置文本
+        self.addAndMinusView.selectedNum.text = @"0";
+        //隐藏减按钮和数量文本
+        self.addAndMinusView.btnMinus.hidden = true;
+        self.addAndMinusView.selectedNum.hidden = true;
+    }
 }
 
 

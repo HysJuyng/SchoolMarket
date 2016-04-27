@@ -46,7 +46,16 @@
 //        [[self.tableview headerViewForSection:0] reloadInputViews];;  //测试 刷新头视图
 //    }];
 
-    
+    //设置通知
+    [self setNotification];
+}
+
+/** 设置通知*/
+- (void)setNotification {
+    //通知
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    //商品数量改变通知
+    [center addObserver:self selector:@selector(updateSelectedNum:) name:@"updateSelectedNum" object:nil];
 }
 
 #pragma mark 设置导航栏
@@ -172,7 +181,7 @@
                 [AFRequest getComm:recommendCommUrl andParameter:recommendParam andCommBlock:^(NSMutableArray * _Nonnull comms) {
                     self.recommendComms = comms;  //获得推荐商品
                     
-                    //数据库
+                    //对比购物车数据库
                     [FMDBsql contrastShopcartAndModels:self.recommendComms];
                     
                     //刷新热卖collectionview
@@ -192,6 +201,10 @@
                 NSDictionary *hotParam = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"supermarketId", nil];
                 [AFRequest getComm:hotCommUrl andParameter:hotParam andCommBlock:^(NSMutableArray * _Nonnull comms) {
                     self.hotComms = comms;  //获得热卖商品
+                    
+                    //对比购物车数据库
+                    [FMDBsql contrastShopcartAndModels:self.hotComms];
+                    
                     //刷新热卖collectionview
                     [cell.cvComm reloadData];
                 }];
@@ -256,7 +269,7 @@
     if (collectionView.tag == 102) {
         [cell setCommCell:((Commodity*)self.recommendComms[indexPath.row])];
     } else if (collectionView.tag == 103) {
-        [cell setCommCell:((Commodity*)self.hotComms[indexPath.row + 6])];
+        [cell setCommCell:((Commodity*)self.hotComms[indexPath.row])];
     }
 
     return cell;
@@ -301,7 +314,7 @@
         if (collectionView.tag == 102) {
             commDetail.comm = self.recommendComms[indexPath.row];
         } else {
-            commDetail.comm = self.hotComms[indexPath.row + 6];
+            commDetail.comm = self.hotComms[indexPath.row];
         }
         
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
@@ -350,6 +363,10 @@
         [FMDBsql updateShopcartComm:comm.commodityId andSelectedNum:comm.selectedNum];
     }
     
+    //更新购物车状态 跳转购物车页面的时候需要验证
+    NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
+    [userdef setValue:@"true" forKey:@"shopcartIsUpdate"];
+    
 }
 /** 商品单元格 减少按钮事件*/
 - (void)commCellClickMinus:(UIButton *)button {
@@ -376,8 +393,48 @@
     //操作数据库 从1到0 则删除数据库 否则修改数据库
     [FMDBsql updateShopcartComm:comm.commodityId andSelectedNum:comm.selectedNum];
     
+    //更新购物车状态 跳转购物车页面的时候需要验证
+    NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
+    [userdef setValue:@"true" forKey:@"shopcartIsUpdate"];
+    
 }
 
+#pragma mark 通知方法
+/**
+ *  修改商品数量
+ *
+ *  @param notification 接收到的通知内容
+ */
+- (void)updateSelectedNum:(NSNotification *)notification {
+    int commid = [notification.userInfo[@"commid"] intValue];
+    NSString *type = notification.userInfo[@"type"];
+    NSIndexPath *tableviewIndexpath;    //tableview indexpath
+    NSIndexPath *collectionviewIndexpath;  //collectionview indexpath
+    if ([type isEqualToString:@"推荐商品"]) {   //如果商品类型为推荐商品
+        tableviewIndexpath = [NSIndexPath indexPathForItem:0 inSection:1];  //tableview 推荐indexpath
+        //遍历推荐商品
+        for (int i = 0; i < self.recommendComms.count; i++) {
+            if (commid == ((Commodity*)self.hotComms[i]).commodityId ) {
+                collectionviewIndexpath = [NSIndexPath indexPathForItem:i inSection:0];   //推荐商品的indexpath
+            }
+        }
+    } else {    //如果商品类型非推荐商品 则在热卖区遍历
+        tableviewIndexpath = [NSIndexPath indexPathForItem:0 inSection:2];   //tableview 热卖indexpath
+        //遍历热卖商品
+        for (int i = 0; i < self.hotComms.count ; i ++) {
+            if (commid == ((Commodity*)self.hotComms[i]).commodityId ) {
+                collectionviewIndexpath = [NSIndexPath indexPathForItem:i inSection:0];   //热卖商品的indexpath
+            }
+        }
+    }
+    
+    //获取tableviewcell
+    HomepageCell *Htableviewcell = [self.tableview cellForRowAtIndexPath:tableviewIndexpath];
+    //获取商品cell
+    CommCell *commcell = [Htableviewcell.cvComm cellForItemAtIndexPath:collectionviewIndexpath];
+    [commcell setCommcellOfSelectedNum:notification.userInfo[@"selectedNum"]];
+    
+}
 
 #pragma mark 自定义方法
 /**
@@ -397,7 +454,7 @@
     if (collectionview.tag == 102) {   //推荐collection
         return self.recommendComms[indexpath.row];
     } else if (collectionview.tag == 103) {    //热卖collection
-        return self.hotComms[indexpath.row + 6];
+        return self.hotComms[indexpath.row];
     }
     return nil;
 }

@@ -38,4 +38,7 @@
 //设置商品内容
 - (void)setCommCell:(Commodity*)commodity;
 
+/** 设置cell的数量*/
+- (void)setCommcellOfSelectedNum:(NSString*)selectedNum;
+
 @end
