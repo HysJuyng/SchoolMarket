@@ -16,6 +16,8 @@
 
 @interface LRFootView : UIView
 
+@property (nonatomic,weak) id<LRFootViewDelegate> delegate;
+
 @property (nonatomic,weak) UIButton *btnLoginOrReg;   //登录或注册按钮
 @property (nonatomic,weak) UIButton *btnReadAndAgree;        //阅读并同意
 @property (nonatomic,weak) UIButton *btnUrSerAgree;  //用户服务协议 user service agreement

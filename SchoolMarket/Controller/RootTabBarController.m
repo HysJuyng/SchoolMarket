@@ -83,12 +83,23 @@
             return true;
         } else {  //没有登录
             LoginViewController *loginvc = [[LoginViewController alloc] init];
+            
             //隐藏tabbar
             self.hidesBottomBarWhenPushed = YES;
 
             [self.selectedViewController pushViewController:loginvc animated:true];
             return false;
         }
+    } else if ([viewController.tabBarItem.title isEqualToString:@"购物车"]) {  //判断是否选择购物车
+        //判断购物车数据库是否有更新
+        NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
+        if ([[userdef objectForKey:@"shopcartIsUpdate"] isEqualToString:@"true"]) {
+            //数据库 有修改 则提示购物车controller进行reload
+            NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+            //发送购物车数据库已更新 消息
+            [center postNotificationName:@"shopcartIsUpdate" object:self.selectedViewController];
+        }
+        return true;
     }
     return true;
 }

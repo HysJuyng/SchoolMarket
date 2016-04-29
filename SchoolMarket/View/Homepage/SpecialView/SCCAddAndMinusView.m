@@ -17,7 +17,9 @@
         self.btnAdd = tempadd;
         self.btnAdd.frame = CGRectMake(self.frame.size.width / 3 * 2 , 0, self.frame.size.height , self.frame.size.height );
         [self.btnAdd setImageEdgeInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
-        [self.btnAdd setImage:[[UIImage imageNamed:@"plus_circle_green"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] forState:(UIControlStateNormal)];
+        [self.btnAdd setTitle:@"+" forState:(UIControlStateNormal)];
+        self.btnAdd.titleLabel.font = [UIFont systemFontOfSize:self.btnAdd.frame.size.width * 1.2];
+        [self.btnAdd setTitleColor:[UIColor colorWithRed:0.317 green:1.000 blue:0.444 alpha:1.000] forState:(UIControlStateNormal)];
         [self addSubview:self.btnAdd];
         
         [self.btnAdd addTarget:self.delegate action:@selector(addNum:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -27,7 +29,9 @@
         self.btnMinus = tempminus;
         self.btnMinus.frame = CGRectMake(0, 0, self.frame.size.height , self.frame.size.height );
         [self.btnMinus setImageEdgeInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
-        [self.btnMinus setImage:[[UIImage imageNamed:@"minus_circle_grey"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] forState:(UIControlStateNormal)];
+        [self.btnMinus setTitle:@"-" forState:(UIControlStateNormal)];
+        self.btnMinus.titleLabel.font = [UIFont systemFontOfSize:self.btnMinus.frame.size.width * 1.5];
+        [self.btnMinus setTitleColor:[UIColor colorWithRed:0.840 green:0.816 blue:1.000 alpha:1.000] forState:(UIControlStateNormal)];
         [self addSubview:self.btnMinus];
         
         [self.btnMinus addTarget:self.delegate action:@selector(minusNum:) forControlEvents:(UIControlEventTouchUpInside)];

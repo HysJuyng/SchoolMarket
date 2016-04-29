@@ -7,6 +7,8 @@
 @class Commodity;
 @class User;
 
+typedef void(^spComplete)(NSArray* comms);
+
 @interface FMDBsql : NSObject
 
 
@@ -30,6 +32,18 @@
  *  @param comm 商品内容
  */
 + (void)insertShopcartComm:(Commodity*)comm;
+/**
+ *  获取购物车中已选的商品数量总和
+ *
+ *  @return 数量总和
+ */
++ (int)getShopcartAllSelectedNum;
+/**
+ *  对比 数据库中已存在的购物车商品 设置其数量
+ *
+ *  @param comms 需要对比的商品模型数组
+ */
++ (void)contrastShopcartAndModels:(NSArray*)comms;
 
 
 

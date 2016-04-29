@@ -42,7 +42,22 @@
     
     [self detailShoppingCartWithFrame:CGRectMake(0, detailSCY, detailSCW, detailSCH)];
     
+    
+    //接受数据库更新消息
+    //=================
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(updateShopcart) name:@"shopcartIsUpdate" object:nil];
+    //=================
+    
 }
+
+//接受到消息
+//=================
+- (void)updateShopcart {
+    NSLog(@"reload购物车");
+}
+//=================
+
 
 #pragma mark - 购物车详情视图
 /**  初始化购物车商品视图 */

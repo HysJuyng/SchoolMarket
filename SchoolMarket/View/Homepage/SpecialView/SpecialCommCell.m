@@ -28,7 +28,6 @@
         self.commImgv = tempimgv;
         [self addSubview:self.commImgv];
         
-        self.commImgv.backgroundColor = [UIColor blueColor];
         
         //名字
         UILabel *tempname = [[UILabel alloc] initWithFrame:CGRectMake(self.commImgv.frame.size.width + 20, 10, self.frame.size.width - self.commImgv.frame.size.width - 30, self.frame.size.height / 5)];
@@ -36,7 +35,6 @@
         self.lbCommName.textAlignment = NSTextAlignmentLeft;
         [self addSubview:self.lbCommName];
         
-        self.lbCommName.backgroundColor = [UIColor colorWithRed:10.0/255.0 green:200.0/255.0 blue:150.0/255.0 alpha:1.0];
         
         //规格
         UILabel *tempspecification = [[UILabel alloc] initWithFrame:CGRectMake(self.lbCommName.frame.origin.x, self.frame.size.height / 6 + 15, 100, self.frame.size.height / 6)];
@@ -45,7 +43,6 @@
         self.lbSpecification.font = [UIFont systemFontOfSize:self.lbSpecification.frame.size.height /4 * 3];
         [self addSubview:self.lbSpecification];
         
-        self.lbSpecification.backgroundColor = [UIColor purpleColor];
         
         //特价
         UILabel *tempspecial = [[UILabel alloc] initWithFrame:CGRectMake(self.lbCommName.frame.origin.x, self.frame.size.height / 5 * 3, 60, self.frame.size.height / 4 )];
@@ -54,7 +51,6 @@
         self.lbSpecialPrice.font = [UIFont systemFontOfSize:self.lbSpecialPrice.frame.size.height - 3];
         [self addSubview:self.lbSpecialPrice];
         
-        self.lbSpecialPrice.backgroundColor = [UIColor yellowColor];
         
         //原价
         LbMiddleLine *tempprice = [[LbMiddleLine alloc] initWithFrame:CGRectMake(self.lbCommName.frame.origin.x + 70, self.frame.size.height / 10 * 7, 40, self.frame.size.height / 20 * 3)];
@@ -64,7 +60,6 @@
         [self addSubview:self.lbPrice];
         
         self.lbPrice.text = @"12.0";
-        self.lbPrice.backgroundColor = [UIColor grayColor];
         
         
         //加减view
@@ -78,12 +73,32 @@
 
 //设置内容
 - (void)setSpecialComm:(Commodity*)comm {
-    [self.commImgv sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/uploadDir/%@",comm.picture]] placeholderImage:[UIImage imageNamed:comm.picture] completed:nil];
+    [self.commImgv sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/uploadDir/%@",comm.picture]] placeholderImage:[UIImage imageNamed:@"default_img"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        if (error) {
+            self.commImgv.image = [UIImage imageNamed:@"default_img_failed"];
+            NSLog(@"%@",comm.picture);
+        }
+    }];
     self.lbCommName.text = comm.commName;
     self.lbSpecification.text = comm.specification;
-    self.lbPrice.text = comm.price;
-    //还要添加特价
-    self.lbSpecialPrice.text = [NSString stringWithFormat:@"%0.1f",[comm.price floatValue] * comm.discount];
+    self.lbPrice.text = [NSString stringWithFormat:@"%@",comm.price];;
+    //特价
+    self.lbSpecialPrice.text = [NSString stringWithFormat:@"%0.2f",[comm.price floatValue] * comm.discount];
+    
+    //判断数量
+    if (comm.selectedNum != 0) {
+        //显示减按钮和数量文本
+        self.addAndMinusView.btnMinus.hidden = false;
+        self.addAndMinusView.selectedNum.hidden = false;
+        //设置文本
+        self.addAndMinusView.selectedNum.text = [NSString stringWithFormat:@"%d",comm.selectedNum];
+    } else {
+        //设置文本
+        self.addAndMinusView.selectedNum.text = @"0";
+        //隐藏减按钮和数量文本
+        self.addAndMinusView.btnMinus.hidden = true;
+        self.addAndMinusView.selectedNum.hidden = true;
+    }
 }
 
 

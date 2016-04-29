@@ -37,27 +37,6 @@
     self.tableview.separatorStyle = NO;  //去掉分割线
     [self.view addSubview:self.tableview];
     
-    //获取商品数据源
-    //-------推荐
-    NSString *recommendCommUrl = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllCommodity.jhtml";
-    NSDictionary *recommendParam = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"supermarketId", nil];
-    [AFRequest getComm:recommendCommUrl andParameter:recommendParam andCommBlock:^(NSMutableArray * _Nonnull comms) {
-        self.recommendComms = comms;  //获得推荐商品
-        //填充推荐商品数据
-//        [self setCommCellWithCommdatas:self.recommendComms andTableview:self.tableview andSection:1];
-        NSIndexPath *recommendSection = [NSIndexPath indexPathForRow:0 inSection:1];
-        [self.tableview reloadRowsAtIndexPaths:[NSArray arrayWithObject:recommendSection] withRowAnimation:(UITableViewRowAnimationNone)];
-    }];
-
-//    //-------热卖
-    NSString *hotCommUrl = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllCommodity.jhtml";
-    NSDictionary *hotParam = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"supermarketId", nil];
-    [AFRequest getComm:hotCommUrl andParameter:hotParam andCommBlock:^(NSMutableArray * _Nonnull comms) {
-        self.hotComms = comms;  //获得热卖商品
-        //刷新热卖section
-        NSIndexPath *hotSection = [NSIndexPath indexPathForRow:0 inSection:2];
-        [self.tableview reloadRowsAtIndexPaths:[NSArray arrayWithObject:hotSection] withRowAnimation:(UITableViewRowAnimationNone)];
-    }];
 //    //------广告
 //    self.adverImgs = [[NSMutableArray alloc] init];
 //    NSString *adverUrl = @"";
@@ -67,7 +46,16 @@
 //        [[self.tableview headerViewForSection:0] reloadInputViews];;  //测试 刷新头视图
 //    }];
 
-    
+    //设置通知
+    [self setNotification];
+}
+
+/** 设置通知*/
+- (void)setNotification {
+    //通知
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    //商品数量改变通知
+    [center addObserver:self selector:@selector(updateSelectedNum:) name:@"updateSelectedNum" object:nil];
 }
 
 #pragma mark 设置导航栏
@@ -184,9 +172,44 @@
         if (indexPath.section == 1) {
             [cell setTitleAndImage:@"推荐" andImage:@"home_recommend"];
             cell.cvComm.tag = 102;   //推荐
+            
+            //当数据源为空时 则进行请求
+            if (!self.recommendComms) {
+                //-------获取推荐商品
+                NSString *recommendCommUrl = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllCommodity.jhtml";
+                NSDictionary *recommendParam = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"supermarketId", nil];
+                [AFRequest getComm:recommendCommUrl andParameter:recommendParam andCommBlock:^(NSMutableArray * _Nonnull comms) {
+                    self.recommendComms = comms;  //获得推荐商品
+                    
+                    //对比购物车数据库
+                    [FMDBsql contrastShopcartAndModels:self.recommendComms];
+                    
+                    //刷新热卖collectionview
+                    [cell.cvComm reloadData];
+                }];
+            }
+            
+            
         } else if(indexPath.section == 2) {
             [cell setTitleAndImage:@"热卖" andImage:@"home_hot"];
             cell.cvComm.tag = 103;    //热卖
+            
+            //当数据源为空时 则进行请求
+            if (!self.hotComms) {
+                //-------获取热卖商品
+                NSString *hotCommUrl = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllCommodity.jhtml";
+                NSDictionary *hotParam = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"supermarketId", nil];
+                [AFRequest getComm:hotCommUrl andParameter:hotParam andCommBlock:^(NSMutableArray * _Nonnull comms) {
+                    self.hotComms = comms;  //获得热卖商品
+                    
+                    //对比购物车数据库
+                    [FMDBsql contrastShopcartAndModels:self.hotComms];
+                    
+                    //刷新热卖collectionview
+                    [cell.cvComm reloadData];
+                }];
+            }
+            
         }
         
         //collectionview的实现
@@ -244,22 +267,9 @@
     CommCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cvcell forIndexPath:indexPath];
     cell.delegate =self;
     if (collectionView.tag == 102) {
-        if (self.recommendComms.count != 0) {
-            [cell setCommCell:((Commodity*)self.recommendComms[indexPath.row])];
-        } else {
-            cell.lbName.text = @"加载中...";
-            cell.lbSpecification.text = @"加载中...";
-            cell.lbPrice.text = @"加载中...";
-        }
-        
+        [cell setCommCell:((Commodity*)self.recommendComms[indexPath.row])];
     } else if (collectionView.tag == 103) {
-        if (self.hotComms.count != 0) {
-            [cell setCommCell:((Commodity*)self.hotComms[indexPath.row + 6])];
-        } else {
-            cell.lbName.text = @"加载中...";
-            cell.lbSpecification.text = @"加载中...";
-            cell.lbPrice.text = @"加载中...";
-        }
+        [cell setCommCell:((Commodity*)self.hotComms[indexPath.row])];
     }
 
     return cell;
@@ -315,7 +325,7 @@
 }
 
 #pragma mark 商品cell代理方法
-/** 商品单元格 添加按钮事件*/                 //（重用bug）
+/** 商品单元格 添加按钮事件*/
 - (void)commCellClickAdd:(UIButton *)button {
     
     NSLog(@"aadd");
@@ -353,6 +363,10 @@
         [FMDBsql updateShopcartComm:comm.commodityId andSelectedNum:comm.selectedNum];
     }
     
+    //更新购物车状态 跳转购物车页面的时候需要验证
+    NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
+    [userdef setValue:@"true" forKey:@"shopcartIsUpdate"];
+    
 }
 /** 商品单元格 减少按钮事件*/
 - (void)commCellClickMinus:(UIButton *)button {
@@ -379,36 +393,50 @@
     //操作数据库 从1到0 则删除数据库 否则修改数据库
     [FMDBsql updateShopcartComm:comm.commodityId andSelectedNum:comm.selectedNum];
     
+    //更新购物车状态 跳转购物车页面的时候需要验证
+    NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
+    [userdef setValue:@"true" forKey:@"shopcartIsUpdate"];
+    
 }
 
+#pragma mark 通知方法
+/**
+ *  修改商品数量
+ *
+ *  @param notification 接收到的通知内容
+ */
+- (void)updateSelectedNum:(NSNotification *)notification {
+    int commid = [notification.userInfo[@"commid"] intValue];
+    NSString *type = notification.userInfo[@"type"];
+    NSIndexPath *tableviewIndexpath;    //tableview indexpath
+    NSIndexPath *collectionviewIndexpath;  //collectionview indexpath
+    if ([type isEqualToString:@"推荐商品"]) {   //如果商品类型为推荐商品
+        tableviewIndexpath = [NSIndexPath indexPathForItem:0 inSection:1];  //tableview 推荐indexpath
+        //遍历推荐商品
+        for (int i = 0; i < self.recommendComms.count; i++) {
+            if (commid == ((Commodity*)self.hotComms[i]).commodityId ) {
+                collectionviewIndexpath = [NSIndexPath indexPathForItem:i inSection:0];   //推荐商品的indexpath
+            }
+        }
+    } else {    //如果商品类型非推荐商品 则在热卖区遍历
+        tableviewIndexpath = [NSIndexPath indexPathForItem:0 inSection:2];   //tableview 热卖indexpath
+        //遍历热卖商品
+        for (int i = 0; i < self.hotComms.count ; i ++) {
+            if (commid == ((Commodity*)self.hotComms[i]).commodityId ) {
+                collectionviewIndexpath = [NSIndexPath indexPathForItem:i inSection:0];   //热卖商品的indexpath
+            }
+        }
+    }
+    
+    //获取tableviewcell
+    HomepageCell *Htableviewcell = [self.tableview cellForRowAtIndexPath:tableviewIndexpath];
+    //获取商品cell
+    CommCell *commcell = [Htableviewcell.cvComm cellForItemAtIndexPath:collectionviewIndexpath];
+    [commcell setCommcellOfSelectedNum:notification.userInfo[@"selectedNum"]];
+    
+}
 
 #pragma mark 自定义方法
-/**
- *  获取到数据后填充商品cell数据
- *
- *  @param comms     商品数组
- *  @param tableview 所在tableview
- *  @param section   所在区
- */
-- (void)setCommCellWithCommdatas:(NSMutableArray*)comms andTableview:(UITableView*)tableview andSection:(NSInteger)section {
-    //遍历数组
-    for (int i = 0 ;i < 6 ; i++) {
-        
-        Commodity* comm = (Commodity*)comms[i];
-        
-        NSIndexPath *recommendSection = [NSIndexPath indexPathForRow:0 inSection:section];
-        HomepageCell *tablecell = (HomepageCell*)[tableview cellForRowAtIndexPath:recommendSection];;
-        NSIndexPath *commindexpath = [NSIndexPath indexPathForRow:i inSection:0];
-        CommCell *cell = (CommCell*)[tablecell.cvComm cellForItemAtIndexPath:commindexpath];
-        
-        cell.lbName.text = comm.commName;
-        cell.lbPrice.text = comm.price;
-        cell.lbSpecification.text = comm.specification;
-        [cell.commImgv sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/uploadDir/%@",comm.picture]] placeholderImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@",comm.picture]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-            NSLog(@"success");
-        }];
-    }
-}
 /**
  *  获得选中cell的商品model
  *
