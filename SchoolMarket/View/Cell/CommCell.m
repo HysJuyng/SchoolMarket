@@ -39,7 +39,7 @@
         self.btnAdd.frame = CGRectMake(self.frame.size.width / 4 * 3, self.frame.size.height / 20 * 17, self.frame.size.width / 4, self.frame.size.width / 4);
         [self.btnAdd setTitle:@"+" forState:(UIControlStateNormal)];
         self.btnAdd.titleLabel.font = [UIFont systemFontOfSize:self.btnAdd.frame.size.width * 1.2];
-        [self.btnAdd setTitleColor:[UIColor colorWithRed:0.317 green:1.000 blue:0.444 alpha:1.000] forState:(UIControlStateNormal)];
+        [self.btnAdd setTitleColor:[UIColor colorWithRed:10.0/255.0 green:200.0/255.0 blue:150.0/255.0 alpha:1.0] forState:(UIControlStateNormal)];
         [self addSubview:self.btnAdd];
         
         [self.btnAdd addTarget:self.delegate action:@selector(commCellClickAdd:) forControlEvents:(UIControlEventTouchUpInside)];

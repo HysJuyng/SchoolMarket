@@ -226,18 +226,15 @@
 }
 
 #pragma mark 数据源方法
+/**  返回cell的数量 */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (self.categories.count == 0) {
-        return 1;
+    if (tableView == self.category) {
+        // 如果是主分类TableView，则返回主分类的数量
+        return self.categories.count;
     } else {
-        if (tableView == self.category) {
-            // 如果是主分类TableView，则返回主分类的数量
-            return self.categories.count;
-        } else {
-            // 如果是子分类TableView，则返回子分类的数量
-            return self.selectedCategory.subClass.count;
-        }
+        // 如果是子分类TableView，则返回子分类的数量
+        return self.selectedCategory.subClass.count;
     }
 }
 
@@ -317,14 +314,15 @@
             self.selectedCategoryComms = tempArray;
         }
     }
-    if (self.selectedCategoryComms.count != 0) {
-//        self.commCV sele
-    }
     // 刷新UICollectionView
     [self.commCV reloadData];
+    if (self.selectedCategoryComms.count != 0) {
+        NSIndexPath *commIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.commCV selectItemAtIndexPath:commIndexPath animated:YES scrollPosition:UICollectionViewScrollPositionTop];
+    }
 }
 
-// 设置UITableView默认选中第一个cell
+/**  设置UITableView默认选中第一个cell */
 - (void)setSelectedIndexPath:(UITableView *)tableView
 {
     NSInteger selectedIndex = 0;
