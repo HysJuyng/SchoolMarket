@@ -79,11 +79,15 @@
     self.lbName.text = commodity.commName;
     self.lbSpecification.text = commodity.specification;
     self.lbPrice.text = [NSString stringWithFormat:@"￥%@",commodity.price];
-    [self.commImgv sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/uploadDir/%@",commodity.picture]]
-                     placeholderImage:[UIImage imageNamed:commodity.picture]
-                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-         NSLog(@"%@",commodity.picture);
-     }];
+    NSLog(@"%@",commodity.picture);
+    if ([commodity.picture isEqual:[NSNull null]]) {
+        [self.commImgv setImage:[UIImage imageNamed:@"default_img_failed"]];
+    } else {
+        [self.commImgv sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/uploadDir/%@",commodity.picture]]
+                         placeholderImage:[UIImage imageNamed:commodity.picture]
+                                completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                }];
+    }
 }
 
 @end

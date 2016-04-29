@@ -7,6 +7,7 @@
 
 #import "CommDetailViewController.h"
 #import "CDBottomTool.h"
+#import "Commodity.h"
 
 @interface CommDetailViewController () <UITableViewDataSource, UITableViewDelegate, CDBottomToolDelegate>
 

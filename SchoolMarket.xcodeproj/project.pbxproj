@@ -17,6 +17,7 @@
 		338AE9DD1CCCB9C600488029 /* AddressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 338AE9DC1CCCB9C600488029 /* AddressController.m */; };
 		33A9D5661CB4D9310005F7BA /* SuperMarketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33A9D5651CB4D9310005F7BA /* SuperMarketViewController.m */; };
 		33A9D57B1CB4D96F0005F7BA /* Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = 33A9D57A1CB4D96F0005F7BA /* Categories.m */; };
+		33CCD3F61CD1B5E600324729 /* SubCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = 33CCD3F51CD1B5E600324729 /* SubCategories.m */; };
 		33D550671CBFB58A003E4EE3 /* SCBottomTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D550641CBFB58A003E4EE3 /* SCBottomTool.m */; };
 		33D5506D1CBFB5BD003E4EE3 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D5506A1CBFB5BD003E4EE3 /* LoginViewController.m */; };
 		33D5506E1CBFB5BD003E4EE3 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D5506C1CBFB5BD003E4EE3 /* RegisterViewController.m */; };
@@ -97,6 +98,8 @@
 		33A9D5651CB4D9310005F7BA /* SuperMarketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperMarketViewController.m; sourceTree = "<group>"; };
 		33A9D5791CB4D96F0005F7BA /* Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Categories.h; path = SuperMarket/Categories.h; sourceTree = "<group>"; };
 		33A9D57A1CB4D96F0005F7BA /* Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Categories.m; path = SuperMarket/Categories.m; sourceTree = "<group>"; };
+		33CCD3F41CD1B5E600324729 /* SubCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SubCategories.h; path = SuperMarket/SubCategories.h; sourceTree = "<group>"; };
+		33CCD3F51CD1B5E600324729 /* SubCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SubCategories.m; path = SuperMarket/SubCategories.m; sourceTree = "<group>"; };
 		33D550631CBFB58A003E4EE3 /* SCBottomTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCBottomTool.h; path = ShoppingCart/SCBottomTool.h; sourceTree = "<group>"; };
 		33D550641CBFB58A003E4EE3 /* SCBottomTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCBottomTool.m; path = ShoppingCart/SCBottomTool.m; sourceTree = "<group>"; };
 		33D550691CBFB5BD003E4EE3 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Login/LoginViewController.h; sourceTree = "<group>"; };
@@ -249,6 +252,8 @@
 			children = (
 				33A9D5791CB4D96F0005F7BA /* Categories.h */,
 				33A9D57A1CB4D96F0005F7BA /* Categories.m */,
+				33CCD3F41CD1B5E600324729 /* SubCategories.h */,
+				33CCD3F51CD1B5E600324729 /* SubCategories.m */,
 			);
 			name = SuperMarket;
 			sourceTree = "<group>";
@@ -777,7 +782,6 @@
 				33D550891CBFD4FD003E4EE3 /* SpecialCommCell.m in Sources */,
 				3BD638991CB643CC0077D2A4 /* PersonalMsgCell.m in Sources */,
 				3B8946861CAFBA4400959786 /* HCLastFootView.m in Sources */,
-				3BC22CF51CCD23B3000160A9 /* Address.m in Sources */,
 				3BDEDD931CBCBE8900E67A3F /* CommDetailViewController.m in Sources */,
 				33357FD51CC907E2008C22A5 /* ConfirmOrderViewController.m in Sources */,
 				3B89468C1CAFC84900959786 /* HCHeaderView.m in Sources */,
@@ -789,6 +793,7 @@
 				3B83119C1CBE15F200D6FA69 /* SpecialCommdityController.m in Sources */,
 				338AE9DD1CCCB9C600488029 /* AddressController.m in Sources */,
 				3BD638A31CB65F6D0077D2A4 /* PersonalNameController.m in Sources */,
+				33CCD3F61CD1B5E600324729 /* SubCategories.m in Sources */,
 				3BDEDD9A1CBCBECC00E67A3F /* ShoppingCart.m in Sources */,
 				33D5508C1CBFD678003E4EE3 /* CDBottomTool.m in Sources */,
 				3B33A3821CB5FF7000506665 /* CategoriesCell.m in Sources */,
