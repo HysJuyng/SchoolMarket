@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Commodity.h"
+@class Commodity;
 
 @protocol CDBottomToolDelegate <NSObject>
 

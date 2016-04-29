@@ -10,18 +10,16 @@
 #import <UIKit/UIKit.h>
 
 @interface Categories : NSObject
-
-/**  类别名称 */
-@property (nonatomic, copy) NSString *name;
-/**  子类别名称 */
-@property (nonatomic, strong) NSArray *subCategories;
+/**  主分类id */
+@property (nonatomic, assign) int mainclassId;
+/**  主分类名称 */
+@property (nonatomic, copy) NSString *mainclassName;
+/**  子分类模型数组 */
+@property (nonatomic, strong) NSArray *subClass;
 
 
 /** 使用字典实例化模型 */
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
 /** 类方法快速实例化一个对象 */
 + (instancetype)categoriesWithDict:(NSDictionary *)dict;
-
-+ (NSArray *)categoriesList;
-
 @end

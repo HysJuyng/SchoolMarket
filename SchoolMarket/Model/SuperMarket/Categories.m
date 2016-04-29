@@ -7,6 +7,8 @@
 //
 
 #import "Categories.h"
+#import "SubCategories.h"
+#import "AFRequest.h"
 
 @implementation Categories
 
@@ -25,7 +27,10 @@
     self = [super init];
     if (self) {
         // KVC
-        [self setValuesForKeysWithDictionary:dict];
+        [self setValuesForKeysWithDictionary:dict[@"mainClassify"]];
+        
+        // 将字典数组 dict[@"subCategories"] 转换成模型数组
+        self.subClass = [SubCategories subClassWithArray:dict[@"subClass"]];
     }
     return self;
 }
@@ -34,21 +39,6 @@
 {
     // 返回实例化对象
     return [[self alloc] initWithDictionary:dict];
-}
-
-+ (NSArray *)categoriesList
-{
-    // 将plist文件数据取出
-    NSArray *array = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"categories.plist" ofType:nil]];
-    
-    // 创建临时数组
-    NSMutableArray *arrayM = [NSMutableArray array];
-    
-    // 遍历数组，依次转换模型
-    for (NSDictionary *dict in array) {
-        [arrayM addObject:[self categoriesWithDict:dict]];
-    }
-    return arrayM;
 }
 
 @end

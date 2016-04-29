@@ -39,7 +39,7 @@
         self.btnAdd.frame = CGRectMake(self.frame.size.width / 4 * 3, self.frame.size.height / 20 * 17, self.frame.size.width / 4, self.frame.size.width / 4);
         [self.btnAdd setTitle:@"+" forState:(UIControlStateNormal)];
         self.btnAdd.titleLabel.font = [UIFont systemFontOfSize:self.btnAdd.frame.size.width * 1.2];
-        [self.btnAdd setTitleColor:[UIColor colorWithRed:0.317 green:1.000 blue:0.444 alpha:1.000] forState:(UIControlStateNormal)];
+        [self.btnAdd setTitleColor:[UIColor colorWithRed:10.0/255.0 green:200.0/255.0 blue:150.0/255.0 alpha:1.0] forState:(UIControlStateNormal)];
         [self addSubview:self.btnAdd];
         
         [self.btnAdd addTarget:self.delegate action:@selector(commCellClickAdd:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -77,64 +77,17 @@
 
 /** 通过model设置cell内容*/
 - (void)setCommCell:(Commodity*)commodity {
-    if (!commodity) {
-        self.commImgv.image = [UIImage imageNamed:@"default_img"];
-        
-        self.lbName.text = @"加载中...";
-        self.lbSpecification.text = @"加载中...";
-        self.lbPrice.text = @"加载中...";
-        
-        //隐藏按钮
-        self.btnAdd.hidden = true;
+    self.lbName.text = commodity.commName;
+    self.lbSpecification.text = commodity.specification;
+    self.lbPrice.text = [NSString stringWithFormat:@"￥%@",commodity.price];
+    NSLog(@"%@",commodity.picture);
+    if ([commodity.picture isEqual:[NSNull null]]) {
+        [self.commImgv setImage:[UIImage imageNamed:@"default_img_failed"]];
     } else {
-        self.lbName.text = commodity.commName;
-        self.lbSpecification.text = commodity.specification;
-        self.lbPrice.text = [NSString stringWithFormat:@"￥%@",commodity.price];
-        
         [self.commImgv sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/uploadDir/%@",commodity.picture]]
-                         placeholderImage:[UIImage imageNamed:@"default_img"]
+                         placeholderImage:[UIImage imageNamed:commodity.picture]
                                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                                    if (error) {
-                                        self.commImgv.image = [UIImage imageNamed:@"default_img_failed"];
-                                    }
                                 }];
-        
-        //如果数量不为0 设置选择数量 并显示
-        if (commodity.selectedNum != 0) {
-            self.lbNum.text = [NSString stringWithFormat:@"%d",commodity.selectedNum];
-            //隐藏价格 显示减按钮 数量文本
-            self.lbNum.hidden = false;
-            self.btnMinus.hidden = false;
-            self.lbPrice.hidden = true;
-        } else {
-            //设置文本
-            self.lbNum.text = @"";
-            //显示价格  隐藏减按钮 数量文本
-            self.lbNum.hidden = true;
-            self.btnMinus.hidden = true;
-            self.lbPrice.hidden = false;
-        }
-        
-        //显示加按钮
-        self.btnAdd.hidden = false;
-    }
-}
-/** 设置cell的数量*/
-- (void)setCommcellOfSelectedNum:(NSString*)selectedNum {
-    //如果数量为0
-    if ([selectedNum isEqualToString:@"0"]) {
-        //设置文本
-        self.lbNum.text = @"";
-        //显示价格  隐藏减按钮 数量文本
-        self.lbNum.hidden = true;
-        self.btnMinus.hidden = true;
-        self.lbPrice.hidden = false;
-    } else {  //如果数量不为0
-        self.lbNum.text = selectedNum;
-        //隐藏价格 显示减按钮 数量文本
-        self.lbNum.hidden = false;
-        self.btnMinus.hidden = false;
-        self.lbPrice.hidden = true;
     }
 }
 

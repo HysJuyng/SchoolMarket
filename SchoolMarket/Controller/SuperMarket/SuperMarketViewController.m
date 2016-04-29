@@ -4,9 +4,10 @@
 
 #import "SuperMarketViewController.h"
 #import "Categories.h"
+#import "SubCategories.h"
+#import "Commodity.h"
 #import "CategoriesCell.h"
 #import "SubCategoriesCell.h"
-#import "Commodity.h"
 #import "CommCell.h"
 #import "CommDetailViewController.h"
 #import "AFRequest.h"
@@ -16,36 +17,35 @@
 @property (nonatomic, weak) UIButton *openTimeView;
 /**  大分类 */
 @property (nonatomic, weak) UITableView *category;
-/**  小分类 */
+/**  子分类 */
 @property (nonatomic, weak) UITableView *subCategory;
 /**  商品展示 */
 @property (nonatomic, weak) UICollectionView *commCV;
-
-/**  分类对象数组 */
-@property (nonatomic, strong) NSArray *categoriesList;
-
 /**  collectionViewCell边距 */
 @property (nonatomic, assign) CGFloat margin;
 
-/**  被选择的分类 */
-@property (nonatomic, strong) Categories *selectedCategory;
-
-/**  被选择的商品 */
-@property (nonatomic, strong) Commodity *selectedComm;
-
+/**  分类对象数组 */
+@property (nonatomic, strong) NSMutableArray *categories;
 /**  商品模型数组 */
 @property (nonatomic, strong) NSMutableArray *comms;
+/**  选择的主分类包含的商品数组 */
+@property (nonatomic, strong) NSMutableArray *categoryComms;
+/**  选择的子分类包含的商品数组 */
+@property (nonatomic, strong) NSMutableArray *selectedCategoryComms;
+
+/**  被选择的主分类 */
+@property (nonatomic, strong) Categories *selectedCategory;
+/**  被选择的子分类 */
+@property (nonatomic, strong) SubCategories *selectedSubcategory;
 
 @end
 
 @implementation SuperMarketViewController
-
-- (NSArray *)categoriesList
-{
-    if (_categoriesList == nil) {
-        _categoriesList = [Categories categoriesList];
+- (NSMutableArray *)comms {
+    if (_comms == nil) {
+        _comms = [NSMutableArray array];
     }
-    return _categoriesList;
+    return _comms;
 }
 
 /**
@@ -55,19 +55,6 @@
  *  @param parameter 参数
  *  @param commblock 闭包回调
  */
-- (NSMutableArray *)comms
-{
-    if (_comms == nil) {
-        NSString *commUrl = [NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/findAllCommodity.jhtml"];
-        NSDictionary *commParameter = [[NSDictionary alloc] initWithObjectsAndKeys:@"1", @"supermarketId", nil];
-        [AFRequest getComm:commUrl andParameter:commParameter andCommBlock:^(NSMutableArray * _Nonnull commArr) {
-            _comms = commArr;
-            [self.commCV reloadData];
-        }];
-    }
-    return _comms;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -80,19 +67,60 @@
     CGFloat frameH = CGRectGetMinY(self.tabBarController.tabBar.frame);
         
     CGRect frame = CGRectMake(0, frameY, frameW, frameH);
+    
+    // 创建营业时间条视图
     [self openTimeViewWithFrame:frame];
-    [self categoryTableViewWithFrame:frame];
-    [self subCategoryTablelViewWithFrame:frame];
-    [self commCollectionViewWithFrame:frame];
+    // 获取分类和商品信息
+    [self getInfo:frame];
+}
+
+#pragma mark - 网络请求
+/**  获取商品信息 */
+- (void)getComms:(Categories *)category
+{
+    NSString *commUrl = [NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/findAllCommByMainId.jhtml"];
+    NSDictionary *commParameter = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d", category.mainclassId], @"mainclassId", nil];
+    [AFRequest getComm:commUrl andParameter:commParameter andCommBlock:^(NSMutableArray * _Nonnull commArr) {
+        self.categoryComms = commArr;
+        self.selectedCategoryComms = commArr;
+        [self.commCV reloadData];
+        [self setSelectedIndexPath:self.subCategory];
+    }];
+}
+
+/**  获取分类信息并创建分类和商品视图 */
+- (void)getInfo:(CGRect)frame
+{
+    // 创建临时数组
+    NSMutableArray *tempArray = [NSMutableArray array];
+    // 获取分类数据的接口
+    NSString *categoriesUrl = [NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/findAllClassify.jhtml"];
     
-    [self setSelectedIndexPath:self.category];
-    
-    // 被点击的分类
-    self.selectedCategory = self.categoriesList[0];
-    
-    // 刷新子分类数据
-    [self.subCategory reloadData];
-    [self setSelectedIndexPath:self.subCategory];
+    [AFRequest getCategorier:categoriesUrl andParameter:nil andCategorierBlock:^(NSMutableArray * _Nonnull categories) {
+        // 遍历数组，依次转换模型
+        for (NSDictionary *dict in categories) {
+            [tempArray addObject:[Categories categoriesWithDict:dict]];
+        }
+        self.categories = tempArray;
+        
+        // 创建主分类视图
+        [self categoryTableViewWithFrame:frame];
+        // 创建子分类视图
+        [self subCategoryTablelViewWithFrame:frame];
+        // 创建商品视图
+        [self commCollectionViewWithFrame:frame];
+        
+        // 设置选中第一个主分类
+        [self setSelectedIndexPath:self.category];
+        // 被点击的分类
+        self.selectedCategory = [self.categories firstObject];
+        // 开启多一条线程获取商品信息
+        [NSThread detachNewThreadSelector:@selector(getComms:) toTarget:self withObject:self.selectedCategory];
+        // 刷新子分类数据
+        [self.subCategory reloadData];
+        // 设置选中第一个子分类
+        [self setSelectedIndexPath:self.subCategory];
+    }];
 }
 
 #pragma mark - 创建导航控制器Item
@@ -101,8 +129,8 @@
 {
     // 设置定位
     UIButton *test = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    test.frame = CGRectMake(0, 0, 20, 20);
-    test.backgroundColor = [UIColor orangeColor];
+    [test setTitle:@"五邑大学" forState:UIControlStateNormal];
+    test.frame = CGRectMake(0, 0, 60, 30);
     UIBarButtonItem *locationItem = [[UIBarButtonItem alloc] initWithCustomView:test];
     self.navigationItem.leftBarButtonItem = locationItem;
     
@@ -118,11 +146,10 @@
     [btnmessage setImage:[UIImage imageNamed:@"home_message"] forState:(UIControlStateNormal)];
     UIBarButtonItem *messageItem = [[UIBarButtonItem alloc] initWithCustomView:btnmessage];
     
-    self.navigationItem.rightBarButtonItems = @[ searchItem,messageItem];
+    self.navigationItem.rightBarButtonItems = @[searchItem, messageItem];
 }
 
 #pragma mark - 添加控件
-
 #pragma mark - 营业时间
 /**  创建营业时间 */
 - (UIButton *)openTimeViewWithFrame:(CGRect)frame
@@ -199,14 +226,15 @@
 }
 
 #pragma mark 数据源方法
+/**  返回cell的数量 */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView == self.category) {
         // 如果是主分类TableView，则返回主分类的数量
-        return self.categoriesList.count;
+        return self.categories.count;
     } else {
         // 如果是子分类TableView，则返回子分类的数量
-        return self.selectedCategory.subCategories.count;
+        return self.selectedCategory.subClass.count;
     }
 }
 
@@ -218,40 +246,85 @@
     if (tableView == self.category) {
         // 主分类
         cell = [CategoriesCell cellWithTableView:tableView];
-        // 通过数据模型，设置Cell内容
-        Categories *category = self.categoriesList[indexPath.row];
-        cell.textLabel.text = category.name;
-        cell.textLabel.adjustsFontSizeToFitWidth = YES;
-        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        if (self.categories.count != 0) {
+            // 通过数据模型，设置Cell内容
+            Categories *category = self.categories[indexPath.row];
+            cell.textLabel.text = category.mainclassName;
+            cell.textLabel.adjustsFontSizeToFitWidth = YES;
+            cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        }
     } else {
         // 子分类
         cell = [SubCategoriesCell cellWithTableView:tableView];
-        
-        cell.textLabel.text = self.selectedCategory.subCategories[indexPath.row];
-        [cell.textLabel sizeToFit];
-        cell.textLabel.transform = CGAffineTransformMakeRotation(M_PI_2);
+            SubCategories *subCategories = self.selectedCategory.subClass[indexPath.row];
+            cell.textLabel.text = subCategories.subclassName;
+            [cell.textLabel sizeToFit];
+            cell.textLabel.transform = CGAffineTransformMakeRotation(M_PI_2);
+            cell.textLabel.textAlignment = NSTextAlignmentCenter;
         tableView.rowHeight = cell.textLabel.frame.size.height + 10;
-        cell.textLabel.textAlignment = NSTextAlignmentCenter;
     }
     return cell;
 }
 
 #pragma mark 代理方法
+/**  tableViewCell被点击时调用 */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView == self.category) {
         // 被点击的分类
-        self.selectedCategory = self.categoriesList[indexPath.row];
-
+        self.selectedCategory = self.categories[indexPath.row];
         // 刷新子分类数据
         [self.subCategory reloadData];
         [self setSelectedIndexPath:self.subCategory];
+        
+        // 查询已经获取的数据中是否包含点击前的分类商品
+        if (self.categoryComms.count != 0 && ![self.comms containsObject:self.categoryComms[0]]) {
+            [self.comms addObjectsFromArray:self.categoryComms];
+        }
+        
+        NSMutableArray *tempArray = [NSMutableArray array];
+        // 遍历已经获取的商品数据中是否有当前选择的分类商品
+        for (Commodity *comm in self.comms) {
+            if (comm.mainclassId == self.selectedCategory.mainclassId) {
+                [tempArray addObject:comm];
+            }
+        }
+        // 如果没有找到当前选择的分类商品，则新建一条线程请求对应商品数据
+        if (tempArray.count == 0) {
+            [NSThread detachNewThreadSelector:@selector(getComms:) toTarget:self withObject:self.selectedCategory];
+        }
+        // 将临时数组赋给主分类和子分类数组
+        self.categoryComms = tempArray;
+        self.selectedCategoryComms = tempArray;
+    } else if (tableView == self.subCategory) {
+        // 被点击的子分类
+        self.selectedSubcategory = self.selectedCategory.subClass[indexPath.row];
+        
+        if ([self.selectedSubcategory.subclassName isEqualToString:@"全部"]) {
+            // 如果选择全部则将当前主分类数组中的数据赋给子分类数组
+            self.selectedCategoryComms = self.categoryComms;
+        } else {
+            // 如果选择某个子分类，则从当前主分类数组中遍历出该子分类的商品
+            NSMutableArray *tempArray = [NSMutableArray array];
+            for (Commodity *comm in self.categoryComms) {
+                if (comm.subclassId == self.selectedSubcategory.subclassId) {
+                    [tempArray addObject:comm];
+                }
+            }
+            self.selectedCategoryComms = tempArray;
+        }
+    }
+    // 刷新UICollectionView
+    [self.commCV reloadData];
+    if (self.selectedCategoryComms.count != 0) {
+        NSIndexPath *commIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.commCV selectItemAtIndexPath:commIndexPath animated:YES scrollPosition:UICollectionViewScrollPositionTop];
     }
 }
 
+/**  设置UITableView默认选中第一个cell */
 - (void)setSelectedIndexPath:(UITableView *)tableView
 {
-    // 设置默认选中第一个cell
     NSInteger selectedIndex = 0;
     NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:selectedIndex inSection:0];
     [tableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionTop];
@@ -284,7 +357,7 @@
 /**  返回collectionViewCell数量 */
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.comms.count;
+    return self.selectedCategoryComms.count;
 }
 
 /**  设置cell单元格 */
@@ -293,7 +366,7 @@
     NSString *ID = @"commcell";
     CommCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ID forIndexPath:indexPath];
 
-    Commodity *comm = self.comms[indexPath.row];
+    Commodity *comm = self.selectedCategoryComms[indexPath.row];
     [cell setCommCell:comm];
     
     // 添加监听方法
@@ -320,7 +393,7 @@
 
 /**  商品单元格 减少按钮事件 */
 - (void)commCellClickMinus:(UIButton *)button {
-//    //获取button所在的cell
+    //获取button所在的cell
 //    CommCell *cell = (CommCell *)[button superview];
 //    
 //    //操作
@@ -357,12 +430,18 @@
 {
     if (collectionView == self.commCV) {
         CommDetailViewController *commDetail = [[CommDetailViewController alloc] init];
-        Commodity *comm = self.comms[indexPath.row];
+        Commodity *comm = self.selectedCategoryComms[indexPath.row];
         commDetail.comm = comm;
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:commDetail animated:YES];
         self.hidesBottomBarWhenPushed = NO;
     }
+}
+
+
+- (void)refreshCategories
+{
+    [self.category reloadData];
 }
 @end
