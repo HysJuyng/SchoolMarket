@@ -8,6 +8,7 @@
 #import "PersonalMsgController.h"
 #import "LoginViewController.h"
 #import "AddressController.h"
+#import "OrderViewController.h"
 
 @interface PersonalViewController () <UITableViewDelegate,UITableViewDataSource>
 
@@ -86,6 +87,8 @@
         if (cell == nil) {
             cell = [[PersonalCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid andSuperVc:self];
         }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;  //单元格选取样式
+        
         //设置标题和图片
         [cell setTitleAndImage:self.sectionTitle[indexPath.row] andImage:self.sectionImage[indexPath.row]];
         return cell;
@@ -94,8 +97,8 @@
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
         }
-        //点击风格
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;  //单元格选取样式
         
         cell.textLabel.text = @"退出登录";
         cell.textLabel.textAlignment = NSTextAlignmentCenter;
@@ -121,16 +124,25 @@
         PersonalMsgController *subvc = [[PersonalMsgController alloc] init];
         //返回按钮
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:(UIBarButtonItemStylePlain) target:nil action:nil];
+        
+        self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:subvc animated:true];
+        self.hidesBottomBarWhenPushed = NO;
+        
     } else if (indexPath.section == 1) {
         NSLog(@"%@",self.sectionTitle[indexPath.row]);
-        if (indexPath.row == 1) {
-            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
-            AddressController *address = [[AddressController alloc] init];
-            self.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:address  animated:YES];
-            self.hidesBottomBarWhenPushed = NO;
+        UIViewController *subvc;
+        if (indexPath.row == 0) {   //订单
+            subvc = [[OrderViewController alloc] init];
+        } else if (indexPath.row == 1) {  //收货地址
+            subvc = [[AddressController alloc] init];
         }
+        
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
+        
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:subvc  animated:YES];
+        self.hidesBottomBarWhenPushed = NO;
     } else if (indexPath.section == 2) {
         NSLog(@"退出登录");
         [self signOut];

@@ -85,9 +85,10 @@
             LoginViewController *loginvc = [[LoginViewController alloc] init];
             
             //隐藏tabbar
-            self.hidesBottomBarWhenPushed = YES;
+            self.selectedViewController.hidesBottomBarWhenPushed = YES;
 
             [self.selectedViewController pushViewController:loginvc animated:true];
+            self.selectedViewController.hidesBottomBarWhenPushed = NO;
             return false;
         }
     } else if ([viewController.tabBarItem.title isEqualToString:@"购物车"]) {  //判断是否选择购物车

@@ -10,6 +10,7 @@
 #import "SCCAddAndMinusView.h"
 #import "LbMiddleLine.h"
 #import "FMDBsql.h"
+#import "NotifitionSender.h"
 
 @interface SpecialCommdityController () <UITableViewDataSource,UITableViewDelegate,SCCAddAndMinusViewDelegate>
 
@@ -188,8 +189,8 @@
     NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
     [userdef setValue:@"true" forKey:@"shopcartIsUpdate"];
     
-    //发送修改通知
-    [self updateSelectedNumNotification:((Commodity*)self.specialComms[button.tag])];
+    //发送通知
+    [NotifitionSender updateSelectedNumNotification:((Commodity*)self.specialComms[button.tag])];
     
 }
 /** 商品减*/
@@ -227,19 +228,8 @@
     NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
     [userdef setValue:@"true" forKey:@"shopcartIsUpdate"];
     
-    //发送修改通知
-    [self updateSelectedNumNotification:((Commodity*)self.specialComms[button.tag])];
-}
-/** 发送修改数量通知*/
-- (void)updateSelectedNumNotification:(Commodity*)comm {
-    //发送修改通知
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    //通知参数 参数为commid selectedNum  type
-    NSMutableDictionary *notificationDic = [[NSMutableDictionary alloc] init];
-    [notificationDic setObject:[NSString stringWithFormat:@"%d",comm.commodityId] forKey:@"commid"];
-    [notificationDic setObject:[NSString stringWithFormat:@"%d",comm.selectedNum] forKey:@"selectedNum"];
-    [notificationDic setObject:comm.type forKey:@"type"];
-    [center postNotificationName:@"updateSelectedNum" object:self userInfo:notificationDic];
+    //发送通知
+    [NotifitionSender updateSelectedNumNotification:((Commodity*)self.specialComms[button.tag])];
 }
 
 #pragma mark 其它自定义方法
