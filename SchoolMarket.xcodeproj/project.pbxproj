@@ -28,8 +28,12 @@
 		33D8AD451CCC8C1800CEF593 /* ConfirmOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D8AD441CCC8C1800CEF593 /* ConfirmOrderCell.m */; };
 		33EE6DB01CB3B5DD00FA55FC /* categories.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33EE6DAF1CB3B5DD00FA55FC /* categories.plist */; };
 		3B0A6D2C1CCA2C2D00C99CB7 /* FMDBsql.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0A6D2B1CCA2C2D00C99CB7 /* FMDBsql.m */; };
+		3B2961101CD389CC00A4E89D /* NotifitionSender.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B29610F1CD389CC00A4E89D /* NotifitionSender.m */; };
 		3B33A3821CB5FF7000506665 /* CategoriesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B33A37B1CB5FF7000506665 /* CategoriesCell.m */; };
 		3B5889391CAFFDA400074B96 /* HCHeaderCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5889381CAFFDA400074B96 /* HCHeaderCollectionCell.m */; };
+		3B71D7371CD1DB5100F5B9F6 /* OrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B71D7361CD1DB5100F5B9F6 /* OrderViewController.m */; };
+		3B71D73E1CD1FB6100F5B9F6 /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B71D73D1CD1FB6100F5B9F6 /* Address.m */; };
+		3B71D7411CD1FB8000F5B9F6 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B71D7401CD1FB8000F5B9F6 /* Order.m */; };
 		3B83119C1CBE15F200D6FA69 /* SpecialCommdityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B83119B1CBE15F200D6FA69 /* SpecialCommdityController.m */; };
 		3B8311A51CBE9B8E00D6FA69 /* LbMiddleLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B8311A41CBE9B8E00D6FA69 /* LbMiddleLine.m */; };
 		3B84ED671CBF659200E16A6F /* SCCAddAndMinusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B84ED661CBF659200E16A6F /* SCCAddAndMinusView.m */; };
@@ -38,6 +42,9 @@
 		3B89468C1CAFC84900959786 /* HCHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B89468B1CAFC84900959786 /* HCHeaderView.m */; };
 		3B89468F1CAFF03C00959786 /* HCHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B89468E1CAFF03C00959786 /* HCHeaderCell.m */; };
 		3B9E13661CBA29E2003BB0A5 /* AFRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9E13651CBA29E1003BB0A5 /* AFRequest.m */; };
+		3BB8B8DB1CD22EA600C77FA9 /* OrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB8B8DA1CD22EA600C77FA9 /* OrderCell.m */; };
+		3BB8B8DE1CD23D9800C77FA9 /* OrderDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB8B8DD1CD23D9800C77FA9 /* OrderDetailController.m */; };
+		3BB8B8E11CD248FE00C77FA9 /* OrderDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB8B8E01CD248FE00C77FA9 /* OrderDetailCell.m */; };
 		3BBA9D851CAD13C100DF67B7 /* CommCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBA9D841CAD13C100DF67B7 /* CommCell.m */; };
 		3BD638911CB6293D0077D2A4 /* PersonalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD638901CB6293D0077D2A4 /* PersonalCell.m */; };
 		3BD638991CB643CC0077D2A4 /* PersonalMsgCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD638981CB643CC0077D2A4 /* PersonalMsgCell.m */; };
@@ -112,12 +119,20 @@
 		33EE6DAF1CB3B5DD00FA55FC /* categories.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = categories.plist; sourceTree = "<group>"; };
 		3B0A6D2A1CCA2C2D00C99CB7 /* FMDBsql.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDBsql.h; path = FMDB/FMDBsql.h; sourceTree = "<group>"; };
 		3B0A6D2B1CCA2C2D00C99CB7 /* FMDBsql.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMDBsql.m; path = FMDB/FMDBsql.m; sourceTree = "<group>"; };
+		3B29610E1CD389CC00A4E89D /* NotifitionSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotifitionSender.h; path = Notification/NotifitionSender.h; sourceTree = "<group>"; };
+		3B29610F1CD389CC00A4E89D /* NotifitionSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotifitionSender.m; path = Notification/NotifitionSender.m; sourceTree = "<group>"; };
 		3B33A37A1CB5FF7000506665 /* CategoriesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesCell.h; sourceTree = "<group>"; };
 		3B33A37B1CB5FF7000506665 /* CategoriesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesCell.m; sourceTree = "<group>"; };
 		3B33A37E1CB5FF7000506665 /* SubCategoriesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubCategoriesCell.h; sourceTree = "<group>"; };
 		3B33A37F1CB5FF7000506665 /* SubCategoriesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubCategoriesCell.m; sourceTree = "<group>"; };
 		3B5889371CAFFDA400074B96 /* HCHeaderCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HCHeaderCollectionCell.h; path = Homepage/HCHeaderCollectionCell.h; sourceTree = "<group>"; };
 		3B5889381CAFFDA400074B96 /* HCHeaderCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HCHeaderCollectionCell.m; path = Homepage/HCHeaderCollectionCell.m; sourceTree = "<group>"; };
+		3B71D7351CD1DB5100F5B9F6 /* OrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderViewController.h; path = Personal/Order/OrderViewController.h; sourceTree = "<group>"; };
+		3B71D7361CD1DB5100F5B9F6 /* OrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderViewController.m; path = Personal/Order/OrderViewController.m; sourceTree = "<group>"; };
+		3B71D73C1CD1FB6100F5B9F6 /* Address.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Address.h; sourceTree = "<group>"; };
+		3B71D73D1CD1FB6100F5B9F6 /* Address.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Address.m; sourceTree = "<group>"; };
+		3B71D73F1CD1FB8000F5B9F6 /* Order.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Order.h; sourceTree = "<group>"; };
+		3B71D7401CD1FB8000F5B9F6 /* Order.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Order.m; sourceTree = "<group>"; };
 		3B83119A1CBE15F200D6FA69 /* SpecialCommdityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpecialCommdityController.h; path = Homepage/SpecialCommdityController.h; sourceTree = "<group>"; };
 		3B83119B1CBE15F200D6FA69 /* SpecialCommdityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpecialCommdityController.m; path = Homepage/SpecialCommdityController.m; sourceTree = "<group>"; };
 		3B8311A01CBE197300D6FA69 /* SpecialCommCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpecialCommCell.h; path = Homepage/SpecialView/SpecialCommCell.h; sourceTree = "<group>"; };
@@ -135,6 +150,12 @@
 		3B89468D1CAFF03C00959786 /* HCHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HCHeaderCell.h; path = Homepage/HCHeaderCell.h; sourceTree = "<group>"; };
 		3B89468E1CAFF03C00959786 /* HCHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HCHeaderCell.m; path = Homepage/HCHeaderCell.m; sourceTree = "<group>"; };
 		3B9E13651CBA29E1003BB0A5 /* AFRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFRequest.m; path = AFNetworking/AFRequest.m; sourceTree = "<group>"; };
+		3BB8B8D91CD22EA600C77FA9 /* OrderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderCell.h; path = Personal/Order/OrderCell.h; sourceTree = "<group>"; };
+		3BB8B8DA1CD22EA600C77FA9 /* OrderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderCell.m; path = Personal/Order/OrderCell.m; sourceTree = "<group>"; };
+		3BB8B8DC1CD23D9800C77FA9 /* OrderDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderDetailController.h; path = Personal/Order/OrderDetailController.h; sourceTree = "<group>"; };
+		3BB8B8DD1CD23D9800C77FA9 /* OrderDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderDetailController.m; path = Personal/Order/OrderDetailController.m; sourceTree = "<group>"; };
+		3BB8B8DF1CD248FE00C77FA9 /* OrderDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderDetailCell.h; path = Personal/Order/OrderDetailCell.h; sourceTree = "<group>"; };
+		3BB8B8E01CD248FE00C77FA9 /* OrderDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderDetailCell.m; path = Personal/Order/OrderDetailCell.m; sourceTree = "<group>"; };
 		3BBA9D831CAD13C100DF67B7 /* CommCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommCell.h; path = Cell/CommCell.h; sourceTree = "<group>"; };
 		3BBA9D841CAD13C100DF67B7 /* CommCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommCell.m; path = Cell/CommCell.m; sourceTree = "<group>"; };
 		3BD6388F1CB6293D0077D2A4 /* PersonalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalCell.h; path = Personal/PersonalCell.h; sourceTree = "<group>"; };
@@ -262,6 +283,15 @@
 			name = FMDB;
 			sourceTree = "<group>";
 		};
+		3B29610D1CD3898F00A4E89D /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				3B29610E1CD389CC00A4E89D /* NotifitionSender.h */,
+				3B29610F1CD389CC00A4E89D /* NotifitionSender.m */,
+			);
+			name = Notification;
+			sourceTree = "<group>";
+		};
 		3B33A3791CB5FF7000506665 /* SuperMarket */ = {
 			isa = PBXGroup;
 			children = (
@@ -280,6 +310,28 @@
 				33A9D5651CB4D9310005F7BA /* SuperMarketViewController.m */,
 			);
 			path = SuperMarket;
+			sourceTree = "<group>";
+		};
+		3B71D7341CD1DB2D00F5B9F6 /* Order */ = {
+			isa = PBXGroup;
+			children = (
+				3B71D7351CD1DB5100F5B9F6 /* OrderViewController.h */,
+				3B71D7361CD1DB5100F5B9F6 /* OrderViewController.m */,
+				3BB8B8DC1CD23D9800C77FA9 /* OrderDetailController.h */,
+				3BB8B8DD1CD23D9800C77FA9 /* OrderDetailController.m */,
+			);
+			name = Order;
+			sourceTree = "<group>";
+		};
+		3B71D7381CD1E08500F5B9F6 /* Order */ = {
+			isa = PBXGroup;
+			children = (
+				3BB8B8D91CD22EA600C77FA9 /* OrderCell.h */,
+				3BB8B8DA1CD22EA600C77FA9 /* OrderCell.m */,
+				3BB8B8DF1CD248FE00C77FA9 /* OrderDetailCell.h */,
+				3BB8B8E01CD248FE00C77FA9 /* OrderDetailCell.m */,
+			);
+			name = Order;
 			sourceTree = "<group>";
 		};
 		3B83119E1CBE18C700D6FA69 /* SpecialView */ = {
@@ -330,6 +382,7 @@
 		3BD638921CB629400077D2A4 /* Personal */ = {
 			isa = PBXGroup;
 			children = (
+				3B71D7381CD1E08500F5B9F6 /* Order */,
 				338AE9D61CCCB93100488029 /* Address */,
 				3BD6389D1CB6530D0077D2A4 /* PersonalMsg */,
 				3BD638931CB62C280077D2A4 /* PersonalHeader.h */,
@@ -364,6 +417,7 @@
 		3BD86DCB1CAEAD3A004B651B /* Personal */ = {
 			isa = PBXGroup;
 			children = (
+				3B71D7341CD1DB2D00F5B9F6 /* Order */,
 				338AE9DA1CCCB98500488029 /* Address */,
 				3BD86DC81CAEAD36004B651B /* PersonalViewController.h */,
 				3BD86DC91CAEAD36004B651B /* PersonalViewController.m */,
@@ -429,10 +483,14 @@
 			isa = PBXGroup;
 			children = (
 				33A9D5631CB4D8BF0005F7BA /* SuperMarket */,
+				3B71D73C1CD1FB6100F5B9F6 /* Address.h */,
+				3B71D73D1CD1FB6100F5B9F6 /* Address.m */,
 				3BE2AE161CB60E8000247429 /* Commodity.h */,
 				3BE2AE171CB60E8000247429 /* Commodity.m */,
 				335066651CCD17A400DD91E9 /* User.h */,
 				335066661CCD17A400DD91E9 /* User.m */,
+				3B71D73F1CD1FB8000F5B9F6 /* Order.h */,
+				3B71D7401CD1FB8000F5B9F6 /* Order.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -440,6 +498,7 @@
 		3BF269C51CACF9B800173221 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				3B29610D1CD3898F00A4E89D /* Notification */,
 				3B0A6D291CCA2BB900C99CB7 /* FMDB */,
 				33A9D5491CB4D70E0005F7BA /* AFNetworking */,
 			);
@@ -769,7 +828,10 @@
 				3B0A6D2C1CCA2C2D00C99CB7 /* FMDBsql.m in Sources */,
 				3BD8EF5B1CB4B37900194F21 /* LRFootView.m in Sources */,
 				3BD86DC61CAEACE0004B651B /* ShoppingCartController.m in Sources */,
+				3BB8B8DE1CD23D9800C77FA9 /* OrderDetailController.m in Sources */,
+				3B71D7371CD1DB5100F5B9F6 /* OrderViewController.m in Sources */,
 				3BD8EF5E1CB4B8A600194F21 /* LRTableviewCell.m in Sources */,
+				3BB8B8DB1CD22EA600C77FA9 /* OrderCell.m in Sources */,
 				3B84ED671CBF659200E16A6F /* SCCAddAndMinusView.m in Sources */,
 				3BD638911CB6293D0077D2A4 /* PersonalCell.m in Sources */,
 				33D5A1171CBFE4E700E88EA8 /* SCCommCell.m in Sources */,
@@ -777,7 +839,6 @@
 				33D550891CBFD4FD003E4EE3 /* SpecialCommCell.m in Sources */,
 				3BD638991CB643CC0077D2A4 /* PersonalMsgCell.m in Sources */,
 				3B8946861CAFBA4400959786 /* HCLastFootView.m in Sources */,
-				3BC22CF51CCD23B3000160A9 /* Address.m in Sources */,
 				3BDEDD931CBCBE8900E67A3F /* CommDetailViewController.m in Sources */,
 				33357FD51CC907E2008C22A5 /* ConfirmOrderViewController.m in Sources */,
 				3B89468C1CAFC84900959786 /* HCHeaderView.m in Sources */,
@@ -786,6 +847,7 @@
 				335066671CCD17A400DD91E9 /* User.m in Sources */,
 				3B89468F1CAFF03C00959786 /* HCHeaderCell.m in Sources */,
 				3B9E13661CBA29E2003BB0A5 /* AFRequest.m in Sources */,
+				3B71D7411CD1FB8000F5B9F6 /* Order.m in Sources */,
 				3B83119C1CBE15F200D6FA69 /* SpecialCommdityController.m in Sources */,
 				338AE9DD1CCCB9C600488029 /* AddressController.m in Sources */,
 				3BD638A31CB65F6D0077D2A4 /* PersonalNameController.m in Sources */,
@@ -796,6 +858,7 @@
 				3BFFAE551CACF7F40099D766 /* AppDelegate.m in Sources */,
 				3BD638A01CB653480077D2A4 /* PersonMsgCell.m in Sources */,
 				33D5506E1CBFB5BD003E4EE3 /* RegisterViewController.m in Sources */,
+				3B2961101CD389CC00A4E89D /* NotifitionSender.m in Sources */,
 				33A9D57B1CB4D96F0005F7BA /* Categories.m in Sources */,
 				33D8AD451CCC8C1800CEF593 /* ConfirmOrderCell.m in Sources */,
 				335066641CCD149B00DD91E9 /* EditAddressController.m in Sources */,
@@ -803,9 +866,11 @@
 				33D550701CBFB650003E4EE3 /* PersonalMsgController.m in Sources */,
 				3BD86DCA1CAEAD36004B651B /* PersonalViewController.m in Sources */,
 				33D5506F1CBFB61D003E4EE3 /* SubCategoriesCell.m in Sources */,
+				3B71D73E1CD1FB6100F5B9F6 /* Address.m in Sources */,
 				3BE2AE181CB60E8000247429 /* Commodity.m in Sources */,
 				3BFFAE521CACF7F40099D766 /* main.m in Sources */,
 				3B5889391CAFFDA400074B96 /* HCHeaderCollectionCell.m in Sources */,
+				3BB8B8E11CD248FE00C77FA9 /* OrderDetailCell.m in Sources */,
 				33D5506D1CBFB5BD003E4EE3 /* LoginViewController.m in Sources */,
 				338AE9D91CCCB95100488029 /* AddressCell.m in Sources */,
 			);

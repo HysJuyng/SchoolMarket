@@ -11,6 +11,7 @@
 #import "SpecialCommdityController.h"
 #import "AFRequest.h"
 #import "FMDBsql.h"
+#import "NotifitionSender.h"
 
 
 @interface HomepageController ()   <HomepageCellDelegate,UITableViewDataSource,UITableViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,CommCellDelegate>
@@ -367,6 +368,9 @@
     NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
     [userdef setValue:@"true" forKey:@"shopcartIsUpdate"];
     
+    //发送通知
+    [NotifitionSender updateSelectedNumNotification:comm];
+    
 }
 /** 商品单元格 减少按钮事件*/
 - (void)commCellClickMinus:(UIButton *)button {
@@ -397,6 +401,8 @@
     NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
     [userdef setValue:@"true" forKey:@"shopcartIsUpdate"];
     
+    //发送通知
+    [NotifitionSender updateSelectedNumNotification:comm];
 }
 
 #pragma mark 通知方法

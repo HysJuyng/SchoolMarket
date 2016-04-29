@@ -24,10 +24,8 @@
     [manager GET:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSMutableArray *comms = [[NSMutableArray alloc] init];
         NSLog(@"%@",responseObject);   //获得数据
-        //处理数据
-        NSDictionary *dic = responseObject;
         //提取数组
-        NSMutableArray *commsArr = dic[@"data"];
+        NSMutableArray *commsArr = responseObject;
         for (int i = 0; i < commsArr.count; i++) {  //遍历字典数组
             Commodity *comm = [[Commodity alloc] initWithCommDic:commsArr[i]];
             [comms addObject:comm];   //添加到结果集

@@ -8,7 +8,7 @@
 
 @protocol LRFootViewDelegate <NSObject>
 
-- (void)ReadAndAgreeClick;   //阅读并同意
+- (void)ReadAndAgreeClick:(UIButton*)sender;   //阅读并同意
 - (void)LoginOrRegClick;   //登录或注册
 - (void)UrSerAgreeClick;   //打开用户服务协议
 
@@ -26,4 +26,6 @@
 //初始化 
 - (instancetype)initWithFrame:(CGRect)frame andSuperVc:(UIViewController*)supervc;
 
+//设置同意按钮图片
+- (void)setAgreeImg:(UIImage *)img;
 @end

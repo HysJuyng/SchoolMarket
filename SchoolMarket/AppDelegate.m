@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "RootTabBarController.h"
 
-#import "EditAddressController.h"
+#import "OrderViewController.h"
 
 @interface AppDelegate ()
 
@@ -21,7 +21,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     
-//    EditAddressController *vc = [[EditAddressController alloc] init];
+//    OrderViewController *vc = [[OrderViewController alloc] init];
 //    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:vc];
 //    self.window.rootViewController = nav;
     

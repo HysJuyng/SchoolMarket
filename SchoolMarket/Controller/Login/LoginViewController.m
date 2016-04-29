@@ -13,6 +13,8 @@
 
 @property (nonatomic,weak) UITableView *loginTableview;
 @property (nonatomic,strong) UIAlertController *alertController;
+
+@property (nonatomic,assign) int isAgree;  //同意条款状态 1为同意 0为不同意
 @end
 
 @implementation LoginViewController
@@ -36,7 +38,6 @@
     [self.loginTableview setSeparatorInset:UIEdgeInsetsMake(0, 30, 0, 30)];
     [self.view addSubview:self.loginTableview];
     
-    
 }
 
 #pragma mark tableview代理方法
@@ -49,6 +50,7 @@
     LRFootView *lrfootView = [[LRFootView alloc ]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100) andSuperVc:self];
     lrfootView.delegate = self;
     [lrfootView.btnLoginOrReg setTitle:@"登录" forState:(UIControlStateNormal)];
+    self.isAgree = 1;//设置初始状态 默认为同意
     return lrfootView;
 }
 /** 脚视图高度*/
@@ -64,10 +66,8 @@
     LRTableviewCell *cell = [[LRTableviewCell alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
     cell.selectionStyle = UITableViewCellSelectionStyleNone; //cell选择样式
     if (indexPath.row == 0) {
-        //    cell.titleImgv.image = //设置图片
         cell.tfContent.placeholder = @"输入您的手机号码";  //设置提示文本
     } else if (indexPath.row == 1) {
-        //    cell.titleImgv.image = //设置图片
         cell.tfContent.placeholder = @"输入您的密码";  //设置提示文本
         cell.tfContent.secureTextEntry = true; //密码输入
     }
@@ -96,13 +96,25 @@
     if (code.length == 0 && code != nil) {
         return @"请输入验证码!";
     }
+    if (self.isAgree == 0) {
+        return @"请阅读并同意《用户服务协议》";
+    }
     return @"success";
 }
 /**
  *  阅读并同意
  */
-- (void)ReadAndAgreeClick {
+- (void)ReadAndAgreeClick:(UIButton*)sender {
     NSLog(@"点击同意");
+    LRFootView *footview = (LRFootView*)[sender superview];
+    //切换状态
+    if (self.isAgree == 1) {
+        self.isAgree = 0;
+        [footview setAgreeImg:[UIImage imageNamed:@"checked_grey"]];
+    } else {
+        self.isAgree = 1;
+        [footview setAgreeImg:[UIImage imageNamed:@"checked_green"]];
+    }
 }
 /**
  *  登录或注册

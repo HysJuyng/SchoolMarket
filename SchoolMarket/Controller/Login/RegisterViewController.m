@@ -11,6 +11,9 @@
 
 @property (nonatomic,weak) UITableView *registerTableview;
 @property (nonatomic,strong) UIAlertController *alertController;
+
+@property (nonatomic,assign) int isAgree;  //同意条款状态 1为同意 0为不同意
+
 @end
 
 @implementation RegisterViewController
@@ -45,6 +48,7 @@
     LRFootView *lrfootView = [[LRFootView alloc ]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100) andSuperVc:self];
     lrfootView.delegate = self;
     [lrfootView.btnLoginOrReg setTitle:@"注册" forState:(UIControlStateNormal)];
+    self.isAgree = 1;
     return lrfootView;
 }
 /** 脚视图高度*/
@@ -76,12 +80,6 @@
 }
 
 #pragma mark 自定义方法
-/**
- *  阅读并同意
- */
-- (void)ReadAndAgreeClick {
-    NSLog(@"点击同意");
-}
 /**
  *  登录或注册
  */
@@ -115,10 +113,26 @@
     }
 }
 /**
+ *  阅读并同意
+ */
+- (void)ReadAndAgreeClick:(UIButton*)sender {
+    NSLog(@"点击同意");
+    LRFootView *footview = (LRFootView*)[sender superview];
+    //切换状态
+    if (self.isAgree == 1) {
+        self.isAgree = 0;
+        [footview setAgreeImg:[UIImage imageNamed:@"checked_grey"]];
+    } else {
+        self.isAgree = 1;
+        [footview setAgreeImg:[UIImage imageNamed:@"checked_green"]];
+    }
+}
+/**
  *  打开用户服务协议
  */
 - (void)UrSerAgreeClick {
     NSLog(@"用户服务协议");
+    
 }
 /**
  *  获取验证码
@@ -176,6 +190,9 @@
     }
     if (code.length == 0 && code != nil) {
         return @"请输入验证码!";
+    }
+    if (self.isAgree == 0) {
+        return @"请阅读并同意《用户服务协议》";
     }
     return @"success";
 }
