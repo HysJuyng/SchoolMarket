@@ -4,6 +4,7 @@
 
 #import "OrderViewController.h"
 #import "OrderCell.h"
+#import "OrderDetailController.h"
 
 
 @interface OrderViewController () <UITableViewDataSource,UITableViewDelegate>
@@ -129,10 +130,24 @@
     //如果是状态tableview
     if (tableView == _statesTableview) {
         NSLog(@"%@",[tableView cellForRowAtIndexPath:indexPath].textLabel.text);
+        //切换所要显示的状态的订单
         [self.orderTableview reloadData];
     } else if (tableView == _orderTableview) {  //如果是订单tableview
-        NSLog(@"订单");
         //跳转订单详情页面
+        
+        OrderDetailController *subvc = [[OrderDetailController alloc] init];
+        //正向传值
+        if (self.statesTableview.indexPathForSelectedRow.row == 0) {  //进行中
+            subvc.orderDetail = self.ongoingOrders[indexPath.row];
+        } else {  //已完成
+            subvc.orderDetail = self.completedOrders[indexPath.row];
+        }
+        
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+        
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:subvc animated:true];
+        
     }
 }
 

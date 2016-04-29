@@ -42,6 +42,10 @@
  *  备注
  */
 @property (nonatomic,copy) NSString *remarks;
+/**
+ *  订单商品数组
+ */
+@property (nonatomic,weak) NSMutableArray *comms;
 
 
 /** 初始化方法 字典转模型*/
