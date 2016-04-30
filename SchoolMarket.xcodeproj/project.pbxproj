@@ -720,7 +720,7 @@
 				TargetAttributes = {
 					3BFFAE4C1CACF7F30099D766 = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = JB8VVE957X;
+						DevelopmentTeam = 367RRF9ZJ7;
 					};
 					3BFFAE651CACF7F40099D766 = {
 						CreatedOnToolsVersion = 7.1;
@@ -1030,12 +1030,12 @@
 			baseConfigurationReference = AD44FC6465AFA88FAE9D0F6D /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 773780366@qq.com (WR659F7CRR)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SchoolMarket/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.linjy.SchoolMarket;
+				PRODUCT_BUNDLE_IDENTIFIER = SchoolMarket;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1046,12 +1046,12 @@
 			baseConfigurationReference = FA0952D30943B7CCF9901A8D /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 773780366@qq.com (WR659F7CRR)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SchoolMarket/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.linjy.SchoolMarket;
+				PRODUCT_BUNDLE_IDENTIFIER = SchoolMarket;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

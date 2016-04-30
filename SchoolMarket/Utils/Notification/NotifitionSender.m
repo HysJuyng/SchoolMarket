@@ -26,6 +26,10 @@ static NSNotificationCenter *center;
  *  @param comm 选中的商品
  */
 + (void)updateSelectedNumNotification:(Commodity*)comm {
+    //若商品空
+    if (!comm) {
+        return;
+    }
     //通知参数 参数为commid selectedNum  type mainclass subclass
     NSMutableDictionary *notificationDic = [[NSMutableDictionary alloc] init];
     [notificationDic setObject:[NSString stringWithFormat:@"%d",comm.commodityId] forKey:@"commid"];

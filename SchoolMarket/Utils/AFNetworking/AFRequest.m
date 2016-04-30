@@ -40,10 +40,10 @@
         NSMutableArray *comms = [[NSMutableArray alloc] init];
         //处理数据
         NSMutableArray *commsArr = responseObject;
+        NSLog(@"%@", responseObject);
         //提取数组` `
         for (NSDictionary *dict in commsArr) {
             [comms addObject:[[Commodity alloc] initWithCommDic:dict ]];
-            NSLog(@"%@", responseObject);
         }
         commblock(comms);     //闭包回调处理
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

@@ -73,12 +73,16 @@
 
 //设置内容
 - (void)setSpecialComm:(Commodity*)comm {
-    [self.commImgv sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/uploadDir/%@",comm.picture]] placeholderImage:[UIImage imageNamed:@"default_img"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        if (error) {
-            self.commImgv.image = [UIImage imageNamed:@"default_img_failed"];
-            NSLog(@"%@",comm.picture);
-        }
-    }];
+    if ([comm.picture isEqual:[NSNull null]]) {
+        self.commImgv.image = [UIImage imageNamed:@"default_img_failed"];
+    } else {
+        [self.commImgv sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/uploadDir/%@",comm.picture]] placeholderImage:[UIImage imageNamed:@"default_img"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            if (error) {
+                self.commImgv.image = [UIImage imageNamed:@"default_img_failed"];
+                NSLog(@"%@",comm.picture);
+            }
+        }];
+    }
     self.lbCommName.text = comm.commName;
     self.lbSpecification.text = comm.specification;
     self.lbPrice.text = [NSString stringWithFormat:@"%@",comm.price];;

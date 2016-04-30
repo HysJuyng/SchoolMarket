@@ -239,10 +239,10 @@
     if (collectionView.tag == 101) {  //若collectionview为头部的collectionview
         return 4;
     } else if (collectionView.tag == 102) {
-        return 6;
+        return self.recommendComms.count;
     }
     //若collectionview为非头部的collectionview
-    return 6;
+    return self.hotComms.count;
 }
 
 /** cv 单元格*/
@@ -437,7 +437,7 @@
     //获取tableviewcell
     HomepageCell *Htableviewcell = [self.tableview cellForRowAtIndexPath:tableviewIndexpath];
     //获取商品cell
-    CommCell *commcell = [Htableviewcell.cvComm cellForItemAtIndexPath:collectionviewIndexpath];
+    CommCell *commcell = (CommCell*)[Htableviewcell.cvComm cellForItemAtIndexPath:collectionviewIndexpath];
     [commcell setCommcellOfSelectedNum:notification.userInfo[@"selectedNum"]];
     
 }
