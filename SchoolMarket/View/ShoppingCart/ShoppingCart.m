@@ -16,12 +16,12 @@
     if (self) {
         // 图片
         UIImageView *pic = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height * 0.8)];
-        pic.backgroundColor = [UIColor cyanColor];
+        pic.image = [UIImage imageNamed:@"emptySC"];
         [self addSubview:pic];
         
         // 文字提示
         UILabel *tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, pic.frame.size.height, frame.size.width, frame.size.height * 0.1)];
-        tipLabel.text = @"购物车还没有东西喔^_^";
+        tipLabel.text = @"购物车还没有东西";
         tipLabel.font = [UIFont systemFontOfSize:20.0f];
         tipLabel.textColor = [UIColor grayColor];
         tipLabel.textAlignment = NSTextAlignmentCenter;
@@ -43,7 +43,7 @@
         toSMBtn.backgroundColor = [UIColor colorWithRed:10.0/255.0 green:200.0/255.0 blue:150.0/255.0 alpha:1.0];
         
         // 监听方法
-        [toSMBtn addTarget:shoppingCartVC action:@selector(goToSuperMarket) forControlEvents:UIControlEventTouchUpInside];
+        [toSMBtn addTarget:self.delegate action:@selector(goToSuperMarket) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:toSMBtn];
     }
     return self;

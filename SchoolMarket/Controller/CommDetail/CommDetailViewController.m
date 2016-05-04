@@ -8,6 +8,8 @@
 #import "CommDetailViewController.h"
 #import "CDBottomTool.h"
 #import "Commodity.h"
+#import "FMDBsql.h"
+#import "NotifitionSender.h"
 
 @interface CommDetailViewController () <UITableViewDataSource, UITableViewDelegate, CDBottomToolDelegate>
 
@@ -15,9 +17,6 @@
 
 /**  商品详情（容器） */
 @property (nonatomic, weak) UITableView *detailTbl;
-
-/** 购买数量 */
-@property (nonatomic, assign) int shoppingCartNum;
 
 @end
 
@@ -44,6 +43,12 @@
 {
     if (self.bottomTool == nil) {
         CDBottomTool *bottomTool = [[CDBottomTool alloc] initWithFrame:frame];
+        int shoppingCartNum = [FMDBsql getShopcartAllSelectedNum];
+        [bottomTool.shoppingCartBtn setTitle:[NSString stringWithFormat:@"%d", shoppingCartNum] forState:UIControlStateNormal];
+        if (self.comm.selectedNum != 0) {
+            [bottomTool.changeNumBtn setTitle:[NSString stringWithFormat:@"%d", self.comm.selectedNum] forState:UIControlStateNormal];
+            bottomTool.changeNumBtn.hidden = NO;
+        }
         self.bottomTool = bottomTool;
         [self.view addSubview:self.bottomTool];
     }
@@ -147,6 +152,28 @@
     currentNum += num;
     self.bottomTool.shoppingCartNum = currentNum;
     
+    // 修改模型中选择的商品数量
+    if ([btn isEqual:self.bottomTool.changeNumBtn]) {
+        self.comm.selectedNum += num;
+        
+        // 数据库操作
+        if (self.comm.selectedNum == 1) {
+            // 如果本来没有选择，则向数据库插入一条数据
+            [FMDBsql insertShopcartComm:self.comm];
+        } else {
+            // 如果已经有选择，则更新对应的数据
+            [FMDBsql updateShopcartComm:self.comm.commodityId andSelectedNum:self.comm.selectedNum];
+        }
+        
+        // 更新购物车状态，跳转到购物车视图的时候验证
+        NSUserDefaults *userDefaults = [[NSUserDefaults alloc] init];
+        [userDefaults setValue:@"true" forKey:@"shopCartIsUpdate"];
+        
+        // 发送通知
+        [NotifitionSender updateSelectedNumNotification:self.comm];
+    }
+    
+    
     // 改变按钮标题
     [btn setTitle:[NSString stringWithFormat:@"%d", currentNum] forState:UIControlStateNormal];
 }
@@ -166,7 +193,7 @@
 /**  减少数量 */
 - (void)decrease
 {
-    if (self.bottomTool.shoppingCartNum > 1) {
+    if (self.bottomTool.changeNumBtn.currentTitle.intValue > 1) {
         [self changeNumWithBtn:self.bottomTool.changeNumBtn andNum:-1];
         [self changeNumWithBtn:self.bottomTool.shoppingCartBtn andNum:-1];
     } else {
@@ -180,6 +207,14 @@
 /**  购物车 */
 - (void)shoppingCart
 {
+    //判断购物车数据是否有更新
+    NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
+    if ([[userdef objectForKey:@"shopcartIsUpdate"] isEqualToString:@"true"]) {
+        //数据库 有修改 则提示购物车controller进行reload
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        //发送购物车数据库已更新消息
+        [center postNotificationName:@"shopcartIsUpdate" object:self];
+    }
     if (self.tabBarController.selectedIndex != 2) {
         self.tabBarController.selectedIndex = 2;
         [self.navigationController popToRootViewControllerAnimated:YES];

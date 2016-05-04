@@ -9,8 +9,6 @@
 #import "AppDelegate.h"
 #import "RootTabBarController.h"
 
-#import "OrderViewController.h"
-
 @interface AppDelegate ()
 
 @end
@@ -19,11 +17,6 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
-    
-//    OrderViewController *vc = [[OrderViewController alloc] init];
-//    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:vc];
-//    self.window.rootViewController = nav;
     
     RootTabBarController *rootTabbar = [[RootTabBarController alloc] init];
     self.window.rootViewController = rootTabbar;

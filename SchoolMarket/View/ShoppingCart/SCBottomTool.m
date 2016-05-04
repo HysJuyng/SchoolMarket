@@ -9,7 +9,6 @@
 #import "SCBottomTool.h"
 
 @implementation SCBottomTool
-
 /**  初始化底部工具栏 */
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -64,7 +63,6 @@
             CGFloat sumPriceW = CGRectGetMinX(continueSelect.frame) - sumPriceX;
             
             UILabel *sumPriceLbl = [[UILabel alloc] initWithFrame:CGRectMake(sumPriceX, 0, sumPriceW, frame.size.height)];
-            sumPriceLbl.text = [NSString stringWithFormat:@"￥%d", 10];
             sumPriceLbl.textColor = [UIColor redColor];
             
             self.sumPriceLbl = sumPriceLbl;

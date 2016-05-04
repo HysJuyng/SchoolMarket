@@ -18,8 +18,6 @@
 @end
 
 @interface ShoppingCart : UIView
-{
-    ShoppingCartController *shoppingCartVC;
-}
+@property (nonatomic, strong) id<ShoppingCartDelegate> delegate;
 
 @end

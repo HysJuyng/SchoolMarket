@@ -20,4 +20,5 @@
 @property (nonatomic, weak) id<SCBottomToolDelegate> delegate;
 /**  总价Label */
 @property (nonatomic, weak) UILabel *sumPriceLbl;
+
 @end

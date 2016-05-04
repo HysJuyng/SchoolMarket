@@ -12,8 +12,9 @@
 #import "CommDetailViewController.h"
 #import "AFRequest.h"
 #import "FMDBsql.h"
+#import "NotifitionSender.h"
 
-@interface SuperMarketViewController () <UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
+@interface SuperMarketViewController () <UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, CommCellDelegate>
 /**  营业时间试图 */
 @property (nonatomic, weak) UIButton *openTimeView;
 /**  大分类 */
@@ -91,7 +92,9 @@
     [AFRequest getComm:commUrl andParameter:commParameter andCommBlock:^(NSMutableArray * _Nonnull commArr) {
         // 获得数据
         self.categoryComms = commArr;
-        self.selectedCategoryComms = commArr;
+        if (self.selectedCategoryComms.count == 0) {
+            self.selectedCategoryComms = commArr;
+        }
         // 与购物车的商品进行对比
         [FMDBsql contrastShopcartAndModels:self.selectedCategoryComms];
         // 刷新商品视图
@@ -120,6 +123,11 @@
     [self subCategoryTablelViewWithFrame:frame];
     // 创建商品视图
     [self commCollectionViewWithFrame:frame];
+    
+    // 设置通知
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    // 商品数量改变通知
+    [center addObserver:self selector:@selector(updateSMSelectedNum:) name:@"updateSelectedNum" object:nil];
 }
 
 #pragma mark - 创建导航控制器Item
@@ -358,45 +366,81 @@
     // 获取选中商品的模型，并设置商品cell的数据
     Commodity *comm = self.selectedCategoryComms[indexPath.row];
     [cell setCommCell:comm];
-    
-    // 添加监听方法
-    [cell.btnAdd addTarget:self action:@selector(commCellClickAdd:) forControlEvents:(UIControlEventTouchUpInside)];
-    [cell.btnMinus addTarget:self action:@selector(commCellClickMinus:) forControlEvents:(UIControlEventTouchUpInside)];
+
     return cell;
 }
 
 /**  商品单元格 添加按钮事件 （重用bug） */
 - (void)commCellClickAdd:(UIButton *)button {
-//    //获取button所在的cell
-//    CommCell *cell = (CommCell *)[button superview];
-//    
-//    //操作
-//    [cell addNum];
-//    int num = [cell commNum];
-//    if (num > 0) {
-//        cell.btnMinus.hidden = false;
-//        cell.lbNum.hidden = false;
-//        cell.lbNum.text = [NSString stringWithFormat:@"%d",num];
-//        cell.lbPrice.hidden = true;
-//    }
+    // 获取button所在的cell
+    CommCell *currentCell = (CommCell *)[button superview];
+    // 找到对应的商品模型
+    NSIndexPath *indexPath = [self.commCV indexPathForCell:currentCell];
+    Commodity *currentComm = self.selectedCategoryComms[indexPath.row];
+    // 判断库存
+    if (currentComm.selectedNum == currentComm.stock.intValue) {
+        NSLog(@"库存不足");
+        return;
+    }
+
+    // 判断完成之后进行数据和视图的修改
+    if (currentComm.selectedNum == 0) {
+        // 显示减按钮和数量
+        currentCell.btnMinus.hidden = NO;
+        currentCell.lbNum.hidden = NO;
+        // 隐藏商品价格
+        currentCell.lbPrice.hidden = YES;
+    }
+    
+    // 修改模型中选择的商品数量
+    currentComm.selectedNum++;
+    
+    // 数据库操作
+    if (currentComm.selectedNum == 1) {
+        // 如果本来没有选择，则向数据库插入一条数据
+        [FMDBsql insertShopcartComm:currentComm];
+    } else {
+        // 如果已经有选择，则更新对应的数据
+        [FMDBsql updateShopcartComm:currentComm.commodityId andSelectedNum:currentComm.selectedNum];
+    }
+    
+    // 更新购物车状态，跳转到购物车视图的时候验证
+    NSUserDefaults *userDefaults = [[NSUserDefaults alloc] init];
+    [userDefaults setValue:@"true" forKey:@"shopCartIsUpdate"];
+    
+    // 发送通知
+    [NotifitionSender updateSelectedNumNotification:currentComm];
 }
 
 /**  商品单元格 减少按钮事件 */
 - (void)commCellClickMinus:(UIButton *)button {
-    //获取button所在的cell
-//    CommCell *cell = (CommCell *)[button superview];
-//    
-//    //操作
-//    [cell minusNum];
-//    int num = [cell commNum];
-//    if (num == 0) {
-//        cell.btnMinus.hidden = true;
-//        cell.lbNum.hidden = true;
-//        cell.lbNum.text = @"";
-//        cell.lbPrice.hidden = false;
-//    } else {
-//        cell.lbNum.text = [NSString stringWithFormat:@"%d",num];
-//    }
+    // 获取button所在的cell
+    CommCell *currentCell = (CommCell *)[button superview];
+    // 找到对应的商品模型
+    NSIndexPath *indexPath = [self.commCV indexPathForCell:currentCell];
+    Commodity *currentComm = self.selectedCategoryComms[indexPath.row];
+    
+    // 判断完成之后进行数据和视图的修改
+    if (currentComm.selectedNum == 1) {
+        // 显示减按钮和数量
+        currentCell.btnMinus.hidden = YES;
+        currentCell.lbNum.hidden = YES;
+        // 隐藏商品价格
+        currentCell.lbPrice.hidden = NO;
+    }
+    
+    // 修改模型中选择的商品数量
+    currentComm.selectedNum--;
+    
+    // 更新数据库对应数据
+    [FMDBsql updateShopcartComm:currentComm.commodityId andSelectedNum:currentComm.selectedNum];
+
+    // 更新购物车状态，跳转到购物车视图的时候验证
+    NSUserDefaults *userDefaults = [[NSUserDefaults alloc] init];
+    [userDefaults setValue:@"true" forKey:@"shopCartIsUpdate"];
+    
+    // 发送通知
+    [NotifitionSender updateSelectedNumNotification:currentComm];
 }
 
 #pragma mark 代理方法
@@ -424,6 +468,20 @@
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:commDetail animated:YES];
         self.hidesBottomBarWhenPushed = NO;
+    }
+}
+
+#pragma mark - 通知方法
+- (void)updateSMSelectedNum:(NSNotification *)notification {
+    int commid = [notification.userInfo[@"commid"] intValue];
+    for (int i = 0; i < self.selectedCategoryComms.count; i++) {
+        Commodity *comm = self.selectedCategoryComms[i];
+        if (commid == comm.commodityId) {
+            NSIndexPath *commIndexPath = [NSIndexPath indexPathForItem:i inSection:0];
+            CommCell *commCell = (CommCell *)[self.commCV cellForItemAtIndexPath:commIndexPath];
+            [commCell setCommcellOfSelectedNum:notification.userInfo[@"selectedNum"]];
+            comm.selectedNum = [notification.userInfo[@"selectedNum"] intValue];
+        }
     }
 }
 @end
