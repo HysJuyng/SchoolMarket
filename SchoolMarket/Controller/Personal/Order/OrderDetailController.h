@@ -11,6 +11,6 @@
 /**
  *  订单模型
  */
-@property (nonatomic,weak) Order *order;
+@property (nonatomic,weak) Order *orderDetail;
 
 @end

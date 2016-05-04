@@ -143,6 +143,7 @@
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:subvc  animated:YES];
         self.hidesBottomBarWhenPushed = NO;
+        
     } else if (indexPath.section == 2) {
         NSLog(@"退出登录");
         [self signOut];

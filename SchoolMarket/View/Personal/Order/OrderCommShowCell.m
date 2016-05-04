@@ -1,10 +1,10 @@
 /*
- 订单详情cell
+ 订单详情 商品展示cell
  */
 
-#import "OrderDetailCell.h"
+#import "OrderCommShowCell.h"
 
-@implementation OrderDetailCell
+@implementation OrderCommShowCell
 
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -13,7 +13,7 @@
     if (self) {
         
         //标题
-        UILabel *temptitle = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, self.frame.size.width / 4, self.frame.size.height)];
+        UILabel *temptitle = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, self.frame.size.width / 5, self.frame.size.height)];
         self.lbTitle = temptitle;
         self.lbTitle.textAlignment = NSTextAlignmentLeft;
         [self addSubview:self.lbTitle];
@@ -23,6 +23,13 @@
         self.lbContent = tempcontent;
         self.lbContent.textAlignment = NSTextAlignmentRight;
         [self addSubview:self.lbContent];
+        
+        //商品展示 collectionview
+        UICollectionViewLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+        UICollectionView *tempcv = [[UICollectionView alloc]initWithFrame:CGRectMake(0, self.frame.size.height, self.frame.size.width, 0) collectionViewLayout:layout];
+        self.commCollectionview = tempcv;
+        self.commCollectionview.backgroundColor = [UIColor whiteColor];
+        [self addSubview:self.commCollectionview];
         
     }
     return self;
@@ -38,6 +45,7 @@
     self.lbTitle.text = title;
     self.lbContent.text = content;
 }
+
 - (void)awakeFromNib {
     
 }

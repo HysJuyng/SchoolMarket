@@ -37,6 +37,7 @@
         NSMutableArray *comms = [[NSMutableArray alloc] init];
         //处理数据
         NSMutableArray *commsArr = responseObject;
+        NSLog(@"%@", responseObject);
         //提取数组` `
         for (NSDictionary *dict in commsArr) {
             [comms addObject:[[Commodity alloc] initWithCommDic:dict ]];

@@ -85,9 +85,49 @@
         [self.commImgv setImage:[UIImage imageNamed:@"default_img_failed"]];
     } else {
         [self.commImgv sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/uploadDir/%@",commodity.picture]]
-                         placeholderImage:[UIImage imageNamed:commodity.picture]
+                         placeholderImage:[UIImage imageNamed:@"default_img"]
                                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                    if (error) {
+                                        self.commImgv.image = [UIImage imageNamed:@"default_img_failed"];
+                                    }
                                 }];
+        
+        //如果数量不为0 设置选择数量 并显示
+        if (commodity.selectedNum != 0) {
+            self.lbNum.text = [NSString stringWithFormat:@"%d",commodity.selectedNum];
+            //隐藏价格 显示减按钮 数量文本
+            self.lbNum.hidden = false;
+            self.btnMinus.hidden = false;
+            self.lbPrice.hidden = true;
+        } else {
+            //设置文本
+            self.lbNum.text = @"";
+            //显示价格  隐藏减按钮 数量文本
+            self.lbNum.hidden = true;
+            self.btnMinus.hidden = true;
+            self.lbPrice.hidden = false;
+        }
+        
+        //显示加按钮
+        self.btnAdd.hidden = false;
+    }
+}
+/** 设置cell的数量*/
+- (void)setCommcellOfSelectedNum:(NSString*)selectedNum {
+    //如果数量为0
+    if ([selectedNum isEqualToString:@"0"]) {
+        //设置文本
+        self.lbNum.text = @"";
+        //显示价格  隐藏减按钮 数量文本
+        self.lbNum.hidden = true;
+        self.btnMinus.hidden = true;
+        self.lbPrice.hidden = false;
+    } else {  //如果数量不为0
+        self.lbNum.text = selectedNum;
+        //隐藏价格 显示减按钮 数量文本
+        self.lbNum.hidden = false;
+        self.btnMinus.hidden = false;
+        self.lbPrice.hidden = true;
     }
 }
 
