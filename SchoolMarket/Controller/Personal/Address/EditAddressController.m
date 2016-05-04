@@ -7,15 +7,10 @@
 //
 
 #import "EditAddressController.h"
+#import "Address.h"
+#import "EditAddressCell.h"
 
 @interface EditAddressController () <UITableViewDataSource>
-
-/**  联系人 */
-@property (nonatomic, weak) UITextField *consigneeTF;
-/**  手机号码 */
-@property (nonatomic, weak) UITextField *phoneTF;
-/**  详细地址 */
-@property (nonatomic, weak) UITextField *addDetailTF;
 
 /**  tableView容器 */
 @property (nonatomic, weak) UITableView *containerTbl;
@@ -28,7 +23,7 @@
     [super viewDidLoad];
     self.title = @"编辑地址";
     self.view.backgroundColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:nil];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:@selector(saveClick)];
     
     [self createContainerTbl];
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -62,34 +57,42 @@
 /**  设置cell的明细 */
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    EditAddressCell *cell = [[EditAddressCell alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            cell.textLabel.text = @"联 系 人";
-            [self createTextFieldWithCell:cell andTextField:self.consigneeTF andText:@"请输入联系人姓名"];
+            [cell setEditAddressCell:@"联 系 人:" andPlaceholder:@"请输入联系人姓名" andText:self.address.consignee];
         } else if (indexPath.row == 1) {
-            cell.textLabel.text = @"手机号码";
-            [self createTextFieldWithCell:cell andTextField:self.phoneTF andText:@"请输入手机号码"];
+            [cell setEditAddressCell:@"手机号码:" andPlaceholder:@"请输入手机号码" andText:self.address.phone];
         } else {
-            cell.textLabel.text = @"详细地址";
-            [self createTextFieldWithCell:cell andTextField:self.addDetailTF andText:@"请输入详细地址"];
+            [cell setEditAddressCell:@"详细地址:" andPlaceholder:@"请输入详细地址" andText:self.address.addressDetail];
         }
     }
     return cell;
 }
 
-/**  设置UITextField */
-- (UITextField *)createTextFieldWithCell:(UITableViewCell *)cell andTextField:(UITextField *)textField andText:(NSString *)text
-{
-    if (textField == nil) {
-        CGFloat tfX = self.view.bounds.size.width * 0.3;
-        CGFloat tfW = self.view.bounds.size.width - tfX - 15;
-        UITextField *tf = [[UITextField alloc] initWithFrame:CGRectMake(tfX, 0, tfW, cell.frame.size.height)];
-        tf.placeholder = text;
-        textField = tf;
-        [cell addSubview:textField];
+
+#pragma mark 自定义方法
+/** 保存按钮*/
+- (void)saveClick {
+    
+    //获取收货地址信息
+    NSString *consignee;
+    NSString *phone;
+    NSString *addressDetail;
+    for (int i = 0; i < 3; i++) {
+        NSIndexPath *index = [NSIndexPath indexPathForRow:i inSection:0];
+        EditAddressCell *cell = [self.containerTbl cellForRowAtIndexPath:index];
+        if (i == 0) {
+            consignee = cell.tfContent.text;
+        } else if (i == 1) {
+            phone = cell.tfContent.text;
+        } else if (i == 2) {
+            addressDetail = cell.tfContent.text;
+        }
     }
-    return textField;
+    
+    NSLog(@"%@,%@,%@",consignee,phone,addressDetail);
+    
 }
 @end

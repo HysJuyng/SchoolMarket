@@ -47,8 +47,13 @@
 //        [[self.tableview headerViewForSection:0] reloadInputViews];;  //测试 刷新头视图
 //    }];
 
+    //获取商品数据
+    [self getHomeComms];
+    
     //设置通知
     [self setNotification];
+    
+//    [AFRequest posttest];
 }
 
 /** 设置通知*/
@@ -57,6 +62,26 @@
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     //商品数量改变通知
     [center addObserver:self selector:@selector(updateSelectedNum:) name:@"updateSelectedNum" object:nil];
+}
+
+/** 获取主页商品数据*/
+- (void)getHomeComms {
+    NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/findSaleAndSpecialComm.jhtml";
+    [AFRequest getSaleAndSpecialComm:url andParameter:nil andCommBlock:^(NSMutableArray * _Nonnull hotComms, NSMutableArray * _Nonnull recommendComms) {
+        self.hotComms = hotComms;  //热卖
+        self.recommendComms = recommendComms;  //推荐
+        
+        //刷新视图
+        NSIndexPath *recommendindex = [NSIndexPath indexPathForRow:0 inSection:1];
+        NSIndexPath *hotindex = [NSIndexPath indexPathForRow:0 inSection:2];
+        
+        //刷新
+        HomepageCell *recommendcell = [self.tableview cellForRowAtIndexPath:recommendindex];
+        [recommendcell.cvComm reloadData];
+        HomepageCell *hotcell = [self.tableview cellForRowAtIndexPath:hotindex];
+        [hotcell.cvComm reloadData];
+
+    }];
 }
 
 #pragma mark 设置导航栏
@@ -101,7 +126,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView; {
     return 3;
 }
-/** tableview行数(1：1个、2：2个)*/
+/** tableview行数*/
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 1;
 }
@@ -173,43 +198,10 @@
         if (indexPath.section == 1) {
             [cell setTitleAndImage:@"推荐" andImage:@"home_recommend"];
             cell.cvComm.tag = 102;   //推荐
-            
-            //当数据源为空时 则进行请求
-            if (!self.recommendComms) {
-                //-------获取推荐商品
-                NSString *recommendCommUrl = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllCommodity.jhtml";
-                NSDictionary *recommendParam = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"supermarketId", nil];
-                [AFRequest getComm:recommendCommUrl andParameter:recommendParam andCommBlock:^(NSMutableArray * _Nonnull comms) {
-                    self.recommendComms = comms;  //获得推荐商品
-                    
-                    //对比购物车数据库
-                    [FMDBsql contrastShopcartAndModels:self.recommendComms];
-                    
-                    //刷新热卖collectionview
-                    [cell.cvComm reloadData];
-                }];
-            }
-            
-            
+ 
         } else if(indexPath.section == 2) {
             [cell setTitleAndImage:@"热卖" andImage:@"home_hot"];
             cell.cvComm.tag = 103;    //热卖
-            
-            //当数据源为空时 则进行请求
-            if (!self.hotComms) {
-                //-------获取热卖商品
-                NSString *hotCommUrl = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllCommodity.jhtml";
-                NSDictionary *hotParam = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"supermarketId", nil];
-                [AFRequest getComm:hotCommUrl andParameter:hotParam andCommBlock:^(NSMutableArray * _Nonnull comms) {
-                    self.hotComms = comms;  //获得热卖商品
-                    
-                    //对比购物车数据库
-                    [FMDBsql contrastShopcartAndModels:self.hotComms];
-                    
-                    //刷新热卖collectionview
-                    [cell.cvComm reloadData];
-                }];
-            }
             
         }
         
@@ -352,7 +344,6 @@
     }
     //修改数据
     comm.selectedNum ++;   //选中数量自增
-    commcell.lbNum.text = [NSString stringWithFormat:@"%d",comm.selectedNum];  //更改cell上的数量显示
     
     
     //操作数据库 从0到1 则插入数据库  否则修改数据库
@@ -392,7 +383,6 @@
     }
     //修改数据
     comm.selectedNum --;   //选中数量自减
-    commcell.lbNum.text = [NSString stringWithFormat:@"%d",comm.selectedNum];  //更改cell上的数量显示
     
     //操作数据库 从1到0 则删除数据库 否则修改数据库
     [FMDBsql updateShopcartComm:comm.commodityId andSelectedNum:comm.selectedNum];
@@ -420,7 +410,9 @@
         tableviewIndexpath = [NSIndexPath indexPathForItem:0 inSection:1];  //tableview 推荐indexpath
         //遍历推荐商品
         for (int i = 0; i < self.recommendComms.count; i++) {
-            if (commid == ((Commodity*)self.hotComms[i]).commodityId ) {
+            if (commid == ((Commodity*)self.recommendComms[i]).commodityId ) {
+                //修改商品model的数量
+                ((Commodity*)self.recommendComms[i]).selectedNum = [notification.userInfo[@"selectedNum"] intValue];
                 collectionviewIndexpath = [NSIndexPath indexPathForItem:i inSection:0];   //推荐商品的indexpath
             }
         }
@@ -429,6 +421,7 @@
         //遍历热卖商品
         for (int i = 0; i < self.hotComms.count ; i ++) {
             if (commid == ((Commodity*)self.hotComms[i]).commodityId ) {
+                ((Commodity*)self.hotComms[i]).selectedNum = [notification.userInfo[@"selectedNum"] intValue];
                 collectionviewIndexpath = [NSIndexPath indexPathForItem:i inSection:0];   //热卖商品的indexpath
             }
         }

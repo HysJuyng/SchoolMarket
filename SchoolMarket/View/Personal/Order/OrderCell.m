@@ -52,15 +52,16 @@
  *  @param order 订单模型
  */
 - (void)setOrderCellWithOrder:(Order *)order {
-    
-//    self.lbOrderId.text = [NSString stringWithFormat:@"%d",order.orderId];
-//    self.lbState.text = order.state;
-//    self.lbTotalAndFreight.text = [NSString stringWithFormat:@"总额：%@(含运费：%@)",order.total,order.freight];
-    
-    self.lbOrderId.text = @"订单编号：123888439185";
-    self.lbState.text = @"未完成";
-    self.lbTotalAndFreight.text = @"总额：123（含运费：8）";
-    
+    if (order) {
+        self.lbOrderId.text = [NSString stringWithFormat:@"%d",order.orderId];
+        [self.lbOrderId sizeToFit];
+        self.lbState.text = order.state;
+        self.lbTotalAndFreight.text = [NSString stringWithFormat:@"总额：%@(含运费：%@)",order.total,order.freight];
+    } else {
+        self.lbOrderId.text = @"订单编号：123888439185";
+        self.lbState.text = @"未完成";
+        self.lbTotalAndFreight.text = @"总额：123（含运费：8）";
+    }
 }
 
 - (void)awakeFromNib {

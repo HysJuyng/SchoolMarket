@@ -5,6 +5,8 @@
 #import "OrderViewController.h"
 #import "OrderCell.h"
 #import "OrderDetailController.h"
+#import "AFRequest.h"
+#import "Order.h"
 
 
 @interface OrderViewController () <UITableViewDataSource,UITableViewDelegate>
@@ -17,6 +19,8 @@
 @property (nonatomic,strong) NSMutableArray *ongoingOrders;   //进行中的订单
 @property (nonatomic,strong) NSMutableArray *completedOrders;  //已完成的订单
 
+@property (nonatomic,assign) int flag;   //选择标识  （0：进行中  1：已完成）
+
 @end
 
 @implementation OrderViewController
@@ -25,6 +29,8 @@
     [super viewDidLoad];
     
     self.title = @"我的订单";
+    //默认为进行中
+    self.flag = 0;
     
     self.automaticallyAdjustsScrollViewInsets = false;
     
@@ -35,6 +41,27 @@
     //添加订单tableview
     [self.view addSubview:self.orderTableview];
     
+    [self getOrder];
+    
+}
+
+/** 获取订单*/
+- (void)getOrder {
+    NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllOrders.jhtml";
+    NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"userId", nil];
+    [AFRequest getOrderByUserid:url andParameter:param andBlock:^(NSMutableArray * _Nonnull orders) {
+        //处理订单数组
+        //遍历数组
+        for (Order *orderdetail in orders) {
+            //设置数组
+            if ([orderdetail.state isEqualToString:@"进行中"]) {
+                [self.ongoingOrders addObject:orderdetail];
+            } else {
+                [self.completedOrders addObject:orderdetail];
+            }
+        }
+        [self.orderTableview reloadData];
+    }];
 }
 
 /** 状态tableview*/
@@ -68,6 +95,20 @@
     }
     return _orderTableview;
 }
+/** 进行中数组*/
+- (NSMutableArray *)ongoingOrders {
+    if (!_ongoingOrders) {
+        _ongoingOrders = [[NSMutableArray alloc] init];
+    }
+    return _ongoingOrders;
+}
+/** 已完成数组*/
+- (NSMutableArray *)completedOrders {
+    if (!_completedOrders) {
+        _completedOrders = [[NSMutableArray alloc] init];
+    }
+    return _completedOrders;
+}
 
 #pragma mark tableview代理方法
 /** 返回cell行数*/
@@ -75,7 +116,13 @@
     if (tableView == _statesTableview) {
         return 2;
     }
-    return 3;
+    //判断哪个状态
+    if (self.flag == 0) {
+        return self.ongoingOrders.count;
+    } else {
+        return self.completedOrders.count;
+    }
+    return 0;
 }
 /** 获取cell*/
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -104,7 +151,12 @@
         //cell选择样式
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         //设置cell的内容
-        [cell setOrderCellWithOrder:nil];
+        if (self.flag == 0) {
+            [cell setOrderCellWithOrder:self.ongoingOrders[indexPath.row]];
+        } else {
+            [cell setOrderCellWithOrder:self.completedOrders[indexPath.row]];
+        }
+        
         
         return cell;
     }
@@ -129,9 +181,15 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //如果是状态tableview
     if (tableView == _statesTableview) {
-        NSLog(@"%@",[tableView cellForRowAtIndexPath:indexPath].textLabel.text);
-        //切换所要显示的状态的订单
-        [self.orderTableview reloadData];
+        
+        
+        
+        
+        //判断是不是选择不同的状态
+        if (self.flag != indexPath.row) {
+            self.flag = (int)indexPath.row;
+            [self.orderTableview reloadData];
+        }
     } else if (tableView == _orderTableview) {  //如果是订单tableview
         //跳转订单详情页面
         

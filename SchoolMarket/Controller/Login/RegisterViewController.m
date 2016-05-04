@@ -156,13 +156,15 @@
     [param setObject:password forKey:@"password"];
     [param setObject:code forKey:@"code"];
     //请求
-    [AFRequest postLogin:url andParameter:param andResponse:^(NSString * _Nonnull flag) {
+    [AFRequest postLogin:url andParameter:param andResponse:^(NSString * _Nonnull flag, NSDictionary * _Nullable dic) {
         NSString *messgae = [flag valueForKey:@"message"];
         if ([messgae isEqualToString:@"success"]) {
             //注册成功 修改userdefalut
             NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
             [userdef setObject:@"true" forKey:@"logined"];//登录状态
             [userdef setObject:userphone forKey:@"userphone"];  //登录用户手机
+            //获取用户数据
+            
             //注册 成功 返回根视图
             [self.navigationController popToRootViewControllerAnimated:true];
         } else {

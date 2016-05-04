@@ -4,6 +4,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class Address;
+
 @interface Order : NSObject
 
 /**
@@ -13,7 +15,7 @@
 /**
  *  收货地址编号
  */
-@property (nonatomic,assign) int addressId;
+@property (nonatomic,strong) Address *address;
 /**
  *  用户id
  */
@@ -45,10 +47,13 @@
 /**
  *  订单商品数组
  */
-@property (nonatomic,weak) NSMutableArray *comms;
+@property (nonatomic,strong) NSMutableArray *comms;
 
 
 /** 初始化方法 字典转模型*/
 - (instancetype)initWithDic:(NSDictionary*)orderDic;
+
+/** 模型转字典*/
+- (NSDictionary*)orderToDictionary:(Order*)order;
 
 @end
