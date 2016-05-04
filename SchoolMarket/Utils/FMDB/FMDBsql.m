@@ -98,6 +98,22 @@ static FMDatabase *db;
     }
 }
 /**
+ *  删除购物车商品数据（单条）
+ *
+ *  @param commid 商品id
+ */
++ (void)deleteShopcartComm:(int)commid {
+    //删除
+    [db executeUpdate:[NSString stringWithFormat:@"DELETE FROM t_shopcart WHERE commid = %d;",commid]];
+}
+/**
+ *  删除所有购物车商品
+ */
++ (void)deleteAllShopcartComms {
+    //删除
+    [db executeUpdate:@"DELETE FROM t_shopcart;"];
+}
+/**
  *  插入购物车商品
  *
  *  @param comm 商品内容

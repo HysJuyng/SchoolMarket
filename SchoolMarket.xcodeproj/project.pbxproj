@@ -29,6 +29,7 @@
 		33D8AD451CCC8C1800CEF593 /* ConfirmOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D8AD441CCC8C1800CEF593 /* ConfirmOrderCell.m */; };
 		33EE6DB01CB3B5DD00FA55FC /* categories.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33EE6DAF1CB3B5DD00FA55FC /* categories.plist */; };
 		3B0A6D2C1CCA2C2D00C99CB7 /* FMDBsql.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0A6D2B1CCA2C2D00C99CB7 /* FMDBsql.m */; };
+		3B1D3E9D1CD9FAD700D77D6F /* EditAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1D3E9C1CD9FAD700D77D6F /* EditAddressCell.m */; };
 		3B2961101CD389CC00A4E89D /* NotifitionSender.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B29610F1CD389CC00A4E89D /* NotifitionSender.m */; };
 		3B2961131CD3935000A4E89D /* OrderCommCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2961121CD3935000A4E89D /* OrderCommCell.m */; };
 		3B2961161CD395BF00A4E89D /* OrderCommShowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2961151CD395BF00A4E89D /* OrderCommShowCell.m */; };
@@ -124,6 +125,8 @@
 		33EE6DAF1CB3B5DD00FA55FC /* categories.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = categories.plist; sourceTree = "<group>"; };
 		3B0A6D2A1CCA2C2D00C99CB7 /* FMDBsql.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDBsql.h; path = FMDB/FMDBsql.h; sourceTree = "<group>"; };
 		3B0A6D2B1CCA2C2D00C99CB7 /* FMDBsql.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMDBsql.m; path = FMDB/FMDBsql.m; sourceTree = "<group>"; };
+		3B1D3E9B1CD9FAD700D77D6F /* EditAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditAddressCell.h; path = Personal/Address/EditAddressCell.h; sourceTree = "<group>"; };
+		3B1D3E9C1CD9FAD700D77D6F /* EditAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditAddressCell.m; path = Personal/Address/EditAddressCell.m; sourceTree = "<group>"; };
 		3B29610E1CD389CC00A4E89D /* NotifitionSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotifitionSender.h; path = Notification/NotifitionSender.h; sourceTree = "<group>"; };
 		3B29610F1CD389CC00A4E89D /* NotifitionSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotifitionSender.m; path = Notification/NotifitionSender.m; sourceTree = "<group>"; };
 		3B2961111CD3935000A4E89D /* OrderCommCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderCommCell.h; path = Personal/Order/OrderCommCell.h; sourceTree = "<group>"; };
@@ -250,6 +253,8 @@
 			children = (
 				338AE9D71CCCB95100488029 /* AddressCell.h */,
 				338AE9D81CCCB95100488029 /* AddressCell.m */,
+				3B1D3E9B1CD9FAD700D77D6F /* EditAddressCell.h */,
+				3B1D3E9C1CD9FAD700D77D6F /* EditAddressCell.m */,
 			);
 			name = Address;
 			sourceTree = "<group>";
@@ -876,6 +881,7 @@
 				3BFFAE551CACF7F40099D766 /* AppDelegate.m in Sources */,
 				3BD638A01CB653480077D2A4 /* PersonMsgCell.m in Sources */,
 				33D5506E1CBFB5BD003E4EE3 /* RegisterViewController.m in Sources */,
+				3B1D3E9D1CD9FAD700D77D6F /* EditAddressCell.m in Sources */,
 				3B2961101CD389CC00A4E89D /* NotifitionSender.m in Sources */,
 				33A9D57B1CB4D96F0005F7BA /* Categories.m in Sources */,
 				33D8AD451CCC8C1800CEF593 /* ConfirmOrderCell.m in Sources */,

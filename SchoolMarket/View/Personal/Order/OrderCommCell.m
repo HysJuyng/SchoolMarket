@@ -39,9 +39,10 @@
         [self addSubview:self.lbPrice];
         
         //数量lable
-        UILabel *tempNum = [[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width / 4, self.frame.size.height / 20 * 17, self.frame.size.width / 3 - 15, self.frame.size.width / 4)];
+        UILabel *tempNum = [[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width / 5 * 3, self.frame.size.height / 20 * 17, self.frame.size.width / 4, self.frame.size.width / 4)];
         self.lbNum = tempNum;
         self.lbNum.textAlignment = NSTextAlignmentRight;  //设置文本右
+        self.lbNum.font = [UIFont systemFontOfSize:self.lbNum.frame.size.height / 5 * 3 ];
         [self addSubview:self.lbNum];
     }
     return self;
@@ -52,7 +53,7 @@
     self.lbName.text = commodity.commName;
     self.lbSpecification.text = commodity.specification;
     self.lbPrice.text = [NSString stringWithFormat:@"￥%@",commodity.price];
-    self.lbNum.text = [NSString stringWithFormat:@"×%d",commodity.selectedNum];
+    self.lbNum.text = [NSString stringWithFormat:@"×%d",commodity.orderNumber];
     
     [self.commImgv sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/uploadDir/%@",commodity.picture]]
                      placeholderImage:[UIImage imageNamed:@"default_img"]

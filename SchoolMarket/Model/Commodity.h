@@ -71,6 +71,8 @@
 
 //选择的数量
 @property (nonatomic,assign) int selectedNum;
+//订单上数量
+@property (nonatomic,assign) int orderNumber;
 
 //初始化
 //通过字典初始化模型

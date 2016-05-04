@@ -9,13 +9,14 @@
 #import "OrderDetailCell.h"
 #import "OrderCommShowCell.h"
 #import "OrderCommCell.h"
+#import "AFRequest.h"
+#import "CommDetailViewController.h"
 
 
 @interface OrderDetailController () <UITableViewDataSource,UITableViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
 
 @property (nonatomic,strong) UITableView *odTableview;
-@property (nonatomic,weak) NSArray *comms;  //商品数组
 
 @end
 
@@ -26,11 +27,11 @@
     
     self.title = @"订单详情";
     
-//    self.automaticallyAdjustsScrollViewInsets = false;
-    
     [self.view addSubview:self.odTableview];
+    [self getComms];
 }
 
+/** 订单详情tableview*/
 - (UITableView *)odTableview {
     if (!_odTableview) {
         _odTableview = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStyleGrouped)];
@@ -40,6 +41,22 @@
         [_odTableview setSeparatorInset:UIEdgeInsetsMake(2, 0, 1, 10)];
     }
     return _odTableview;
+}
+/** 获取订单商品*/
+- (void)getComms {
+    NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllOrderComm.jhtml";
+    NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self.orderDetail.orderId],@"orderId", nil];
+    [AFRequest getComm:url andParameter:param andCommBlock:^(NSMutableArray * _Nonnull comms) {
+        //获取订单商品
+        self.orderDetail.comms = comms;
+        
+        //商品展示cell
+        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:2];
+//        OrderCommShowCell *cell = [self.odTableview cellForRowAtIndexPath:indexpath];
+//        //刷新数据
+//        [cell.commCollectionview reloadData];
+        [self.odTableview reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:(UITableViewRowAnimationNone)];
+    }];
 }
 
 #pragma mark tableview代理
@@ -65,18 +82,16 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     //根据区来获取cell
     if (indexPath.section == 0) {  //收货地址
-        NSString *cellid = @"addresscellid";
-        AddressCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-        if (!cell) {
-            cell = [[AddressCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
-        }
+        AddressCell *cell = [AddressCell cellWithTableView:tableView];
         //选中风格
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         //设置内容
-        cell.textLabel.text = @"姓名 手机号码";
+        cell.textLabel.text = [NSString stringWithFormat:@"%@  %@",self.orderDetail.address.consignee,self.orderDetail.address.phone];
         cell.textLabel.font = [UIFont systemFontOfSize:18.0];
-        cell.detailTextLabel.text = @"详细地址";
+        cell.detailTextLabel.text = self.orderDetail.address.addressDetail;
         cell.detailTextLabel.font = [UIFont systemFontOfSize:17.0];
+        
+        [cell sizeToFit];
         
         return cell;
     } else if (indexPath.section == 1) { //订单信息
@@ -115,10 +130,14 @@
         
         //设置内容
         [cell setOrderDetail:@"商品" andContent:nil];
-        
-        //单元格自适应
-        [cell.commCollectionview sizeToFit];  //先适应collectionview
-        [cell sizeToFit];  //再适应cell
+        //设置大小
+        CGRect frame = cell.commCollectionview.frame;
+        int r = (int)self.orderDetail.comms.count / 3;
+        if ((int)self.orderDetail.comms.count % 3 > 0) {
+            r ++;
+        }
+        frame.size.height = (self.view.frame.size.width / 12 * 5  + 10)* r;
+        cell.commCollectionview.frame = frame;
         
         return cell;
         
@@ -153,6 +172,20 @@
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    //收货地址
+    if (indexPath.section == 0) {
+        return 70;
+    }
+    //如果是商品展示区
+    if (indexPath.section == 2) {
+        int r = (int)self.orderDetail.comms.count / 3;
+        if ((int)self.orderDetail.comms.count % 3 > 0) {
+            r ++;
+        }
+        return 50 + (self.view.frame.size.width / 12 * 5 + 10) * r ;
+        
+    }
+    
     return 50;
 }
 /** 头视图高度*/
@@ -174,7 +207,7 @@
     NSString *cellid = @"commscellid";
     OrderCommCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellid forIndexPath:indexPath];
     //设置内容
-    [cell setCommCell:(Commodity*)self.comms[indexPath.row]];
+    [cell setCommCell:(Commodity*)self.orderDetail.comms[indexPath.row]];
     
     return cell;
     
@@ -186,6 +219,18 @@
 /** cell间距*/
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(5, self.view.frame.size.width / 15, 5, 20);
+}
+/** 选中商品cell*/
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    //跳转商品详情
+    CommDetailViewController *subvc = [[CommDetailViewController alloc] init];
+    //正向传值
+    subvc.comm = self.orderDetail.comms[indexPath.row];
+    
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:subvc animated:true];
 }
 
 - (void)didReceiveMemoryWarning {

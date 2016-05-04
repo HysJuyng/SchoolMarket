@@ -34,6 +34,10 @@
         self.discount = [commDic[@"discount"] floatValue];             //折扣
         self.specialTime = commDic[@"specialTime"];                   //折扣时间
         
+        if ([commDic objectForKey:@"orderNumber"]) {
+            self.orderNumber = [commDic[@"orderNumber"] intValue];
+        }
+        
     }
     return self;
 }
@@ -51,7 +55,6 @@
     [dic setObject:self.price forKey:@"price"];
     [dic setObject:self.sales forKey:@"sales"];
     [dic setObject:self.specification forKey:@"spercification"];
-//    [dic setObject:self.describe forKey:@"describe"];
     [dic setObject:self.stock forKey:@"stock"];
     [dic setObject:self.type forKey:@"type"];
     [dic setObject:[NSString stringWithFormat:@"%0.1f",self.discount] forKey:@"discount"];

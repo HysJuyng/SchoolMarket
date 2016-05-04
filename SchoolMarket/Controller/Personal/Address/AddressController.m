@@ -9,6 +9,8 @@
 #import "AddressController.h"
 #import "AddressCell.h"
 #import "EditAddressController.h"
+#import "AFRequest.h"
+#import "Address.h"
 
 @interface AddressController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -17,6 +19,8 @@
 
 /**  新增收货地址按钮 */
 @property (nonatomic, weak) UIButton *addBtn;
+
+@property (nonatomic,strong) NSMutableArray *addresses;
 
 @end
 
@@ -41,8 +45,24 @@
     CGFloat addBtnY = CGRectGetMaxY(self.addressTbl.frame) + ((self.view.bounds.size.height - CGRectGetMaxY(self.addressTbl.frame)) - 44) * 0.5;
     
     [self createAddBtnWithFrame:CGRectMake(addBtnX, addBtnY, addBtnW, 44)];
+    
+    //发送请求
+    [self getAddresses];
+    
 }
 
+/** 获取收货地址数据*/
+- (void)getAddresses {
+    NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllAdress.jhtml";
+    NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"userId", nil];
+    [AFRequest getAddresses:url andParameter:param andAddress:^(NSMutableArray * _Nonnull comms) {
+        //获取数组
+        self.addresses = comms;
+        
+        //刷新数据
+        [self.addressTbl reloadData];
+    }];
+}
 
 #pragma mark - 收货地址列表
 /**  收货地址列表Tbl */
@@ -68,16 +88,16 @@
 /**  tableView每个分组的cell数量 */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 20;
+    return self.addresses.count;
 }
 
 /**  设置cell的明细 */
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     AddressCell *cell = [AddressCell cellWithTableView:tableView];
-    cell.textLabel.text = @"姓名 手机号码";
+    cell.textLabel.text = [NSString stringWithFormat:@"%@  %@",((Address*)self.addresses[indexPath.row]).consignee,((Address*)self.addresses[indexPath.row]).phone];
     cell.textLabel.font = [UIFont systemFontOfSize:18.0];
-    cell.detailTextLabel.text = @"详细地址";
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",((Address*)self.addresses[indexPath.row]).addressDetail];
     cell.detailTextLabel.font = [UIFont systemFontOfSize:17.0];
     
     return cell;
@@ -108,7 +128,7 @@
 /**  被选中后执行的方法 */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self goToEditAddress];
+    [self goToEditAddress:self.addresses[indexPath.row]];
 }
 
 #pragma mark - 新增收货地址按钮
@@ -120,18 +140,29 @@
         addBtn.backgroundColor = [UIColor colorWithRed:10.0/255.0 green:200.0/255.0 blue:150.0/255.0 alpha:1.0];
         addBtn.layer.cornerRadius = 5.0;
         [addBtn setTitle:@"新增收货地址" forState:UIControlStateNormal];
-        [addBtn addTarget:self action:@selector(goToEditAddress) forControlEvents:UIControlEventTouchUpInside];
+        [addBtn addTarget:self action:@selector(addClick) forControlEvents:UIControlEventTouchUpInside];
         self.addBtn = addBtn;
         [self.view addSubview:self.addBtn];
     }
     return self.addBtn;
 }
 
+/** 新增收货地址按钮事件*/
+- (void)addClick {
+    [self goToEditAddress:nil];
+}
+
 /**  进入编辑收货地址页面 */
-- (void)goToEditAddress
+- (void)goToEditAddress:(Address*)address
 {
+
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
     EditAddressController *edit = [[EditAddressController alloc] init];
+    //正向传值
+    if (address) {
+        edit.address = address;
+    }
+    
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:edit animated:YES];
 }

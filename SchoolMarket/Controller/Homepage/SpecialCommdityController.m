@@ -44,8 +44,8 @@
 - (NSMutableArray *)specialComms {
     if (! _specialComms) {
         //获取特价商品
-        NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllCommodity.jhtml";
-        NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"supermarketId", nil];
+        NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllCommByType.jhtml";
+        NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:@"特价商品",@"type", nil];
         [AFRequest getComm:url andParameter:param andCommBlock:^(NSMutableArray * _Nonnull comms) {
             //获得数据
             self.specialComms = comms;

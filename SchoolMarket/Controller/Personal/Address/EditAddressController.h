@@ -8,6 +8,10 @@
 
 #import "ViewController.h"
 
+@class Address;
+
 @interface EditAddressController : ViewController
+
+@property (nonatomic,strong) Address *address;
 
 @end

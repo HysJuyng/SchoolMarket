@@ -44,7 +44,16 @@ typedef void(^spComplete)(NSArray* comms);
  *  @param comms 需要对比的商品模型数组
  */
 + (void)contrastShopcartAndModels:(NSArray*)comms;
-
+/**
+ *  删除购物车商品数据（单条）
+ *
+ *  @param commid 商品id
+ */
++ (void)deleteShopcartComm:(int)commid;
+/**
+ *  删除所有购物车商品
+ */
++ (void)deleteAllShopcartComms;
 
 
 /**

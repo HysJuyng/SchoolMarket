@@ -174,13 +174,14 @@
     [param setObject:userphone forKey:@"username"];
     [param setObject:password forKey:@"password"];
     //请求
-    [AFRequest postLogin:url andParameter:param andResponse:^(NSString * _Nonnull flag) {
+    [AFRequest postLogin:url andParameter:param andResponse:^(NSString * _Nonnull flag, NSDictionary * _Nullable dic) {
         NSString *messgae = [flag valueForKey:@"message"];
         if ([messgae isEqualToString:@"success"]) {
             //登录成功 修改userdefalut
             NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
             [userdef setObject:@"true" forKey:@"logined"];//登录状态
             [userdef setObject:userphone forKey:@"userphone"];  //登录用户手机
+            //获得用户信息
             //登录 成功 返回上级
             [self.navigationController popViewControllerAnimated:true];
         } else {

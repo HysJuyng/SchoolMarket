@@ -37,6 +37,7 @@ static NSNotificationCenter *center;
     [notificationDic setObject:comm.type forKey:@"type"];
     [notificationDic setObject:[NSString stringWithFormat:@"%d",comm.mainclassId] forKey:@"mainclassId"];
     [notificationDic setObject:[NSString stringWithFormat:@"%d",comm.subclassId] forKey:@"subclassId"];
+    
     [center postNotificationName:@"updateSelectedNum" object:self userInfo:notificationDic];
 }
 
