@@ -233,8 +233,8 @@
 - (void)hideTimePicker:(UIBarButtonItem *)btnItem
 {
     // 取消cell的第一响应
-    NSIndexPath *cellIndexPath = [NSIndexPath indexPathForRow:1 inSection:1];
-    UITableViewCell *cell = [self.detailOrderTbl cellForRowAtIndexPath:cellIndexPath];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:1];
+    UITableViewCell *cell = [self.detailOrderTbl cellForRowAtIndexPath:indexPath];
     [cell resignFirstResponder];
     // 如果点击完成按钮则将cell的detailTextLabel改为对应的时间
     if ([btnItem.title isEqualToString:@"完成"]) {

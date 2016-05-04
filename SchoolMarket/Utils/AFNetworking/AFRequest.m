@@ -16,9 +16,6 @@
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager GET:url parameters:parameter success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if (responseObject) {
-            NSLog(@"%@", responseObject);
-        }
         categoriesblock(responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@", error);
@@ -43,8 +40,8 @@
         //提取数组` `
         for (NSDictionary *dict in commsArr) {
             [comms addObject:[[Commodity alloc] initWithCommDic:dict ]];
-            NSLog(@"%@", responseObject);
         }
+        NSLog(@"%@", responseObject);
         commblock(comms);     //闭包回调处理
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);

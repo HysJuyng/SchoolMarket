@@ -36,7 +36,7 @@
     
     //添加tableview section1的条目
     self.sectionTitle = [[NSArray alloc] initWithObjects:@"订单",@"收货地址",@"常见问题",@"意见反馈",@"关于我们",@"检查更新", nil];
-    self.sectionImage = [[NSArray alloc] initWithObjects:@"",@"personal_addr",@"personal_problem",@"personal_feedback",@"personal_aboutme",@"personal_update", nil];
+    self.sectionImage = [[NSArray alloc] initWithObjects:@"personal_order",@"personal_addr",@"personal_problem",@"personal_feedback",@"personal_aboutme",@"personal_update", nil];
     
 }
 
