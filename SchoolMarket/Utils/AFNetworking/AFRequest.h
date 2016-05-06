@@ -9,8 +9,10 @@
 typedef void (^commResponseBlock)( NSMutableArray * _Nonnull comms);
 typedef void (^saleAndSpecialComm)( NSMutableArray * _Nonnull hotComms,NSMutableArray * _Nonnull recommendComms);
 typedef void (^OrderBlock)( NSMutableArray * _Nonnull orders);
+typedef void (^addressResponseBlock)( NSMutableArray * _Nonnull address);
 typedef void (^categoriesResponseBlock)( NSMutableArray * _Nonnull categories);
 typedef void (^postBack)( NSString * _Nonnull flag,NSDictionary * _Nullable dic);
+typedef void (^orderPostBack)(NSString * _Nonnull resultStr);
 
 
 @interface AFRequest : NSObject
@@ -22,9 +24,15 @@ typedef void (^postBack)( NSString * _Nonnull flag,NSDictionary * _Nullable dic)
  *  @param parameter    参数（用户id 或者 收货地址id）
  *  @param addressBlock 闭包（收货地址数组）
  */
-+ (void)getAddresses:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andAddress:(nonnull commResponseBlock)addressBlock;
++ (void)getAddresses:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andAddress:(nonnull addressResponseBlock)addressBlock;
 
-/**  获取分类信息 */
+/**
+ *  获取分类信息
+ *
+ *  @param url             请求地址
+ *  @param parameter       请求参数
+ *  @param categoriesblock 闭包回调
+ */
 + (void)getCategorier:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andCategorierBlock:(nonnull categoriesResponseBlock)categoriesblock;
 
 /**
@@ -57,7 +65,13 @@ typedef void (^postBack)( NSString * _Nonnull flag,NSDictionary * _Nullable dic)
 
 //发送请求
 + (void)postLogin:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBack)postback;
-
-+ (void)posttest;
+/**
+ *  发送下单请求
+ *
+ *  @param url       请求地址
+ *  @param parameter 发送对象
+ *  @param postback  闭包回调（是否成功下单）
+ */
++ (void)postConfirmOrder:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull orderPostBack)postback;
 
 @end

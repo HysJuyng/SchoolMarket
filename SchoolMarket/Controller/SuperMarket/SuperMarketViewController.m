@@ -380,6 +380,8 @@
     // 判断库存
     if (currentComm.selectedNum == currentComm.stock.intValue) {
         NSLog(@"库存不足");
+        UIAlertView *error = [[UIAlertView alloc] initWithTitle:nil message:@"库存不足" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [error show];
         return;
     }
 

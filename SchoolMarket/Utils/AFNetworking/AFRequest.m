@@ -15,10 +15,17 @@
 
 
 #pragma mark GET
+/**
+ *  获取分类信息
+ *
+ *  @param url             请求地址
+ *  @param parameter       请求参数
+ *  @param categoriesblock 闭包回调
+ */
 + (void)getCategorier:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andCategorierBlock:(nonnull categoriesResponseBlock)categoriesblock
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:url parameters:parameter success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [manager GET:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         categoriesblock(responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@", error);
@@ -40,7 +47,7 @@
         //处理数据
         NSMutableArray *commsArr = responseObject;
         NSLog(@"%@", responseObject);
-        //提取数组` `
+        //提取数组
         for (NSDictionary *dict in commsArr) {
             [comms addObject:[[Commodity alloc] initWithCommDic:dict ]];
         }
@@ -118,11 +125,11 @@
         for (NSDictionary *dict in addressArr) {
             [addresses addObject:[[Address alloc] initWithAddressDic:dict]];
         }
+
         addressBlock(addresses);     //闭包回调处理(返回地址数组)
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
     }];
-
 }
 
 #pragma mark POST
@@ -138,6 +145,19 @@
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
+    }];
+}
+
++ (void)postConfirmOrder:(NSString *)url andParameter:(NSDictionary *)parameter andResponse:(orderPostBack)postback {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    // 设置提交的数据为json格式
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager POST:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSDictionary *result = responseObject;
+        NSString *resultStr = result[@"message"];
+        postback(resultStr);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@", error);
     }];
 }
 
@@ -167,12 +187,11 @@
     NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:dic,@"buyCommBean", nil];
     NSLog(@"===================%@",param);
     [manager POST:url parameters:param progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@",responseObject);   //获得数据
+        NSLog(@"%@",responseObject);   //获得数据
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
     }];
-
 }
 
 @end

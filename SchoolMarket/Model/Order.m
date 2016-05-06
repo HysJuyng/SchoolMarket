@@ -41,11 +41,6 @@
     
     [dic setObject:[NSString stringWithFormat:@"%d",self.address.addressId] forKey:@"addressId"];
     [dic setObject:[NSString stringWithFormat:@"%d",self.userId] forKey:@"userId"];
-    if ([self.state isEqualToString:@"进行中"]) {
-        [dic setObject:@"0" forKey:@"state"];
-    } else {
-        [dic setObject:@"1" forKey:@"state"];
-    }
     
     [dic setObject:self.orderTime forKey:@"orderTime"];
     [dic setObject:self.deliverTime forKey:@"deliverTime"];

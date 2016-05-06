@@ -10,4 +10,9 @@
 
 @interface ConfirmOrderViewController : ViewController
 
+/**  商品模型数组 */
+@property (nonatomic, strong) NSArray *commsNum;
+/**  商品总价 */
+@property (nonatomic, copy) NSString *commSumPrice;
+
 @end

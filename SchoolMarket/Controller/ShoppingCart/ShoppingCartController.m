@@ -63,14 +63,17 @@
     [self.commsNum addObjectsFromArray:[FMDBsql getShopcartComms]];
     self.sumPrice = nil;
     self.bottomTool.sumPriceLbl.text = self.sumPrice;
-    [self.comms reloadData];
-    
+    if (self.commsNum.count != 0) {
+        [self.comms reloadData];
+    }
+
     // 更新购物车状态
     NSUserDefaults *userDefaults = [[NSUserDefaults alloc] init];
     [userDefaults setValue:@"false" forKey:@"shopCartIsUpdate"];
     
     if (self.detailSC == nil && self.commsNum.count != 0) {
         [self.emptySC removeFromSuperview];
+
         // 如果有添加商品则创建商品展示视图
         CGFloat detailSCY = CGRectGetMaxY(self.navigationController.navigationBar.frame);
         CGFloat detailSCW = self.view.bounds.size.width;
@@ -79,6 +82,7 @@
         [self detailShoppingCartWithFrame:CGRectMake(0, detailSCY, detailSCW, detailSCH)];
     } else if (self.emptySC == nil && self.commsNum.count == 0){
         [self.detailSC removeFromSuperview];
+        self.comms = nil;
         
         // 如果没有添加商品则创建空购物车视图
         CGFloat emptySCY = self.view.bounds.size.height * 0.18;
@@ -133,10 +137,10 @@
 - (void)editClick
 {
     if ([self.navigationItem.rightBarButtonItem.title  isEqual: @"编辑"]) {
-        self.comms.editing = YES;
+        [self.comms setEditing:YES animated:YES];
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(editClick)];
     } else {
-        self.comms.editing = NO;
+        [self.comms setEditing:NO animated:YES];
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStylePlain target:self action:@selector(editClick)];
     }
 }
@@ -173,10 +177,24 @@
 /**  实现拖拽删除 */
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    Commodity *comm = self.commsNum[indexPath.row];
+    comm.selectedNum = 0;
+    // 发送通知
+    [NotifitionSender updateSelectedNumNotification:comm];
+    // 将数据库中对应的商品删除
+    [FMDBsql deleteShopcartComm:comm.commodityId];
+    
     // 删除数组中对应的模型
-    [self.commsNum removeObjectAtIndex:indexPath.row];
-    // 动态删除指定的cell
-    [self.comms deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
+    [self.commsNum removeObject:comm];
+    if (self.commsNum.count == 0) {
+        [self updateShopcart];
+    } else {
+        // 动态删除指定的cell
+        [self.comms deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
+    }
+    // 更改购物车总价格
+    self.sumPrice = nil;
+    self.bottomTool.sumPriceLbl.text = self.sumPrice;
 }
 
 #pragma mark 代理方法
@@ -217,7 +235,6 @@
 /**  初始化空购物车视图 */
 - (UIView *)emptyShoppingCartWithFrame:(CGRect)frame
 {
-    
     if (self.emptySC == nil) {
         ShoppingCart *emptySC = [[ShoppingCart alloc] initWithFrame:frame];
         self.emptySC = emptySC;
@@ -238,6 +255,8 @@
 - (void)goToConfirmOrder
 {
     ConfirmOrderViewController *confirmOrder = [[ConfirmOrderViewController alloc] init];
+    confirmOrder.commsNum = self.commsNum;
+    confirmOrder.commSumPrice = self.sumPrice;
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:confirmOrder animated:YES];
@@ -274,17 +293,16 @@
     
     if (currentComm.selectedNum == 0) {
         [self.commsNum removeObject:currentComm];
+        [self.comms deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
         if (self.commsNum.count == 0) {
             [self updateShopcart];
         }
     } else {
         currentCell.comm = currentComm;
-        [self.comms reloadData];
-        
-        // 更改购物车总价格
-        self.sumPrice = nil;
-        self.bottomTool.sumPriceLbl.text = self.sumPrice;
     }
+    // 更改购物车总价格
+    self.sumPrice = nil;
+    self.bottomTool.sumPriceLbl.text = self.sumPrice;
     
     // 发送通知
     [NotifitionSender updateSelectedNumNotification:currentComm];
