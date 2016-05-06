@@ -134,13 +134,37 @@
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager POST:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"%@",responseObject);   //获得数据
-        NSDictionary *dic = [[NSDictionary alloc] init];
-        NSString *flag = @"";
-        postback(flag,dic);
+        NSDictionary *dic = responseObject;
+        NSDictionary *dictest = [[NSDictionary alloc] init];
+        NSString *str = [dic objectForKey:@"message"];
+        if ([[dic objectForKey:@"message"] isEqualToString:@"passwordError"]) {
+            NSLog(@"%@",str);
+        } else {
+            dictest = [dic objectForKey:@"message"];
+        }
+//        NSLog(@"%@",dictest);
+//        postback(flag,dic);
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
     }];
+}
+/**
+ *  添加收货地址
+ *
+ *  @param url       请求地址
+ *  @param parameter 参数（收货地址内容）
+ *  @param postback  返回
+ */
++ (void)postAddress:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBack)postback {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager POST:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"%@",responseObject);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+    }];
+
 }
 
 + (void)posttest {

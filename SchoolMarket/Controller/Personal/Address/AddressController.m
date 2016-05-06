@@ -53,8 +53,12 @@
 
 /** 获取收货地址数据*/
 - (void)getAddresses {
+    //取得用户id
+    NSUserDefaults *userdef = [[NSUserDefaults alloc]init];
+    NSString *userid = [userdef objectForKey:@"userId"];
+    //请求地址
     NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllAdress.jhtml";
-    NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"userId", nil];
+    NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:userid,@"userId", nil];
     [AFRequest getAddresses:url andParameter:param andAddress:^(NSMutableArray * _Nonnull comms) {
         //获取数组
         self.addresses = comms;
@@ -95,7 +99,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     AddressCell *cell = [AddressCell cellWithTableView:tableView];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@  %@",((Address*)self.addresses[indexPath.row]).consignee,((Address*)self.addresses[indexPath.row]).phone];
+    //设置内容
+    //判断是否为默认地址
+    if (((Address*)self.addresses[indexPath.row]).defaultAddress == 1) {
+        cell.textLabel.text = [NSString stringWithFormat:@"%@  %@ (默认)",((Address*)self.addresses[indexPath.row]).consignee,((Address*)self.addresses[indexPath.row]).phone];
+    } else {
+        cell.textLabel.text = [NSString stringWithFormat:@"%@  %@",((Address*)self.addresses[indexPath.row]).consignee,((Address*)self.addresses[indexPath.row]).phone];
+    }
     cell.textLabel.font = [UIFont systemFontOfSize:18.0];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",((Address*)self.addresses[indexPath.row]).addressDetail];
     cell.detailTextLabel.font = [UIFont systemFontOfSize:17.0];

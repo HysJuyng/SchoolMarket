@@ -22,14 +22,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //测试用 过后删
-    //=================
-    NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
-    [userdef setValue:@"true" forKey:@"logined"];
-    //=================
-    
-    
-    
     //初始化4个页面
     HomepageController *homeVC = [[HomepageController alloc] init];
     SuperMarketViewController *supermarketVC = [[SuperMarketViewController alloc] init];

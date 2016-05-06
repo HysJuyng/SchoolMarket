@@ -47,8 +47,11 @@
 
 /** 获取订单*/
 - (void)getOrder {
+    //获取用户id
+    NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
+    NSString *userid = [userdef objectForKey:@"userId"];
     NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllOrders.jhtml";
-    NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"userId", nil];
+    NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:userid,@"userId", nil];
     [AFRequest getOrderByUserid:url andParameter:param andBlock:^(NSMutableArray * _Nonnull orders) {
         //处理订单数组
         //遍历数组

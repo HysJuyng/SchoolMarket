@@ -4,7 +4,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EditAddressCell : UITableViewCell 
+@interface EditAddressCell : UITableViewCell <UITextFieldDelegate>
 
 @property (nonatomic,weak) UILabel *lbTitle;   //标题
 @property (nonatomic,weak) UITextField *tfContent;   //内容输入框

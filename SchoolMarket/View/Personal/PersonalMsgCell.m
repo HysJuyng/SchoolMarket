@@ -4,6 +4,8 @@
  */
 
 #import "PersonalMsgCell.h"
+#import "SDWebImage-umbrella.h"
+#import "User.h"
 
 @implementation PersonalMsgCell
 
@@ -49,6 +51,21 @@
         
     }
     return self;
+}
+
+/**
+ *  设置内容
+ *
+ *  @param user 用户model
+ */
+- (void)setPersonalCell:(User*)user {
+    [self.userImgv sd_setImageWithURL:[NSURL URLWithString:user.portrait] placeholderImage:[UIImage imageNamed:@"personal_default_head"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        if (error) {
+            
+        }
+    }];
+    self.lbName.text = user.userName;
+    self.lbPhone.text = user.userPhone;
 }
 
 - (void)awakeFromNib {

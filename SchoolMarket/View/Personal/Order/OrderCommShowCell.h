@@ -19,7 +19,8 @@
  */
 @property (nonatomic,weak) UICollectionView *commCollectionview;
 
-
+//初始化方法
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier andFrame:(CGRect)frame;
 
 /**
  *  设置cell内容

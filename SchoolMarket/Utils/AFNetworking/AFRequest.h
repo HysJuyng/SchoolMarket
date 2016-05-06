@@ -26,7 +26,6 @@ typedef void (^postBack)( NSString * _Nonnull flag,NSDictionary * _Nullable dic)
 
 /**  获取分类信息 */
 + (void)getCategorier:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andCategorierBlock:(nonnull categoriesResponseBlock)categoriesblock;
-
 /**
  *  获取商品信息
  *
@@ -54,6 +53,15 @@ typedef void (^postBack)( NSString * _Nonnull flag,NSDictionary * _Nullable dic)
  *  @param commblock 闭包回调 （订单）
  */
 + (void)getOrderByUserid:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andBlock:(nonnull OrderBlock)orderblock;
+/**
+ *  添加收货地址
+ *
+ *  @param url       请求地址
+ *  @param parameter 参数（收货地址内容）
+ *  @param postback  返回
+ */
++ (void)postAddress:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBack)postback;
+
 
 //发送请求
 + (void)postLogin:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBack)postback;

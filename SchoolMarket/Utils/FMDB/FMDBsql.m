@@ -233,5 +233,4 @@ static FMDatabase *db;
     [db executeUpdateWithFormat:@"UPDATE t_user SET user = %@ WHERE userid = %d;",userData,user.userId];
 }
 
-
 @end

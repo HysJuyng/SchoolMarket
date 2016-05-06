@@ -9,6 +9,8 @@
 #import "LoginViewController.h"
 #import "AddressController.h"
 #import "OrderViewController.h"
+#import "User.h"
+#import "FMDBsql.h"
 
 @interface PersonalViewController () <UITableViewDelegate,UITableViewDataSource>
 
@@ -16,7 +18,7 @@
 //tableview选项数组
 @property (nonatomic,copy) NSArray *sectionTitle;
 @property (nonatomic,copy) NSArray *sectionImage;
-//@property (nonatomic,strong) User *userMsg;
+@property (nonatomic,strong) User *userMsg;
 @end
 
 @implementation PersonalViewController
@@ -38,6 +40,18 @@
     self.sectionTitle = [[NSArray alloc] initWithObjects:@"订单",@"收货地址",@"常见问题",@"意见反馈",@"关于我们",@"检查更新", nil];
     self.sectionImage = [[NSArray alloc] initWithObjects:@"",@"personal_addr",@"personal_problem",@"personal_feedback",@"personal_aboutme",@"personal_update", nil];
     
+}
+
+/** 懒加载用户数据*/
+- (User *)userMsg {
+    if (!_userMsg) {
+        //获取用户id
+        NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
+        int userid = [[userdef objectForKey:@"userId"] intValue];
+        //通过数据库查找用户信息
+        _userMsg = [FMDBsql getUserMsg:userid];
+    }
+    return _userMsg;
 }
 
 #pragma mark tableview代理方法
@@ -78,9 +92,8 @@
             cell = [[PersonalMsgCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid andFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height / 4)];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;  //单元格选取样式
-        cell.lbName.text = @"godhandsome";
-        cell.lbPhone.text = @"18814182438";
-        //***********这里应该使用set 通过model填写数据
+        //设置内容
+        [cell setPersonalCell:self.userMsg];
         return cell;
     } else if (indexPath.section == 1) {   //第二区    一些操作
         PersonalCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];

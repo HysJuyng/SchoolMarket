@@ -5,6 +5,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class User;
+
 @interface PersonalMsgCell : UITableViewCell
 
 
@@ -15,4 +17,12 @@
 
 //初始化
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier andFrame:(CGRect)frame;
+
+/**
+ *  设置内容
+ *
+ *  @param user 用户model
+ */
+- (void)setPersonalCell:(User*)user;
+
 @end

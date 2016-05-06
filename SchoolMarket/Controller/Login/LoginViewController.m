@@ -7,6 +7,8 @@
 #import "RegisterViewController.h"
 #import "LoginHeader.h"
 #import "AFRequest.h"
+#import "FMDBsql.h"
+#import "User.h"
 
 
 @interface LoginViewController () <LRFootViewDelegate,UITableViewDataSource,UITableViewDelegate>
@@ -168,10 +170,10 @@
  */
 - (void)login:(NSString*)userphone andpassword:(NSString*)password {
     //url
-    NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/userLogin.jhtml";
+    NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/userLoginByPhone.jhtml";
     //参数
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
-    [param setObject:userphone forKey:@"username"];
+    [param setObject:userphone forKey:@"userPhone"];
     [param setObject:password forKey:@"password"];
     //请求
     [AFRequest postLogin:url andParameter:param andResponse:^(NSString * _Nonnull flag, NSDictionary * _Nullable dic) {
@@ -182,6 +184,11 @@
             [userdef setObject:@"true" forKey:@"logined"];//登录状态
             [userdef setObject:userphone forKey:@"userphone"];  //登录用户手机
             //获得用户信息
+            User *user = [[User alloc] initWithUserDic:dic];
+            //保存用户信息到数据库
+            [FMDBsql savePersonalMsg:user];
+            //把用户id设置在userdefaults中
+            [userdef setObject:[NSString stringWithFormat:@"%d",user.userId] forKey:@"userId"];
             //登录 成功 返回上级
             [self.navigationController popViewControllerAnimated:true];
         } else {

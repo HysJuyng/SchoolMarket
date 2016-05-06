@@ -98,7 +98,7 @@
         NSString *cellid = @"orderdetailcellid";
         OrderDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
         if (!cell) {
-            cell = [[OrderDetailCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
+            cell = [[OrderDetailCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid andFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
         }
         //选中风格
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -118,7 +118,7 @@
         NSString *cellid = @"commscellid";
         OrderCommShowCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
         if (!cell) {
-            cell = [[OrderCommShowCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
+            cell = [[OrderCommShowCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid andFrame:CGRectMake(0, 0, self.view.frame.size.width, 0)];
         }
         //选中风格
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -145,7 +145,7 @@
         NSString *cellid = @"orderdetailcellid";
         OrderDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
         if (!cell) {
-            cell = [[OrderDetailCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
+            cell = [[OrderDetailCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid andFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
         }
         //选中风格
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -160,7 +160,7 @@
         NSString *cellid = @"orderdetailcellid";
         OrderDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
         if (!cell) {
-            cell = [[OrderDetailCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
+            cell = [[OrderDetailCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid andFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
         }
         //选中风格
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
