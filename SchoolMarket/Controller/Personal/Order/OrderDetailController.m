@@ -18,6 +18,8 @@
 
 @property (nonatomic,strong) UITableView *odTableview;
 
+@property (nonatomic,strong) UIAlertController *alertController;
+
 @end
 
 @implementation OrderDetailController
@@ -52,11 +54,30 @@
         
         //商品展示cell
         NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:2];
-//        OrderCommShowCell *cell = [self.odTableview cellForRowAtIndexPath:indexpath];
-//        //刷新数据
-//        [cell.commCollectionview reloadData];
         [self.odTableview reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:(UITableViewRowAnimationNone)];
+    } andError:^(NSError * _Nullable error) {
+        //推出alertview
+        self.alertController.message = @"网络请求失败！";
+        [self presentViewController:self.alertController animated:true completion:nil];
     }];
+}
+
+/**
+ *  懒加载 alertController
+ */
+- (UIAlertController *)alertController {
+    if (! _alertController) {
+        
+        _alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+        
+        //取消按钮
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
+            NSLog(@"取消");
+        }];
+        [_alertController addAction:cancel];
+    }
+    
+    return _alertController;
 }
 
 #pragma mark tableview代理

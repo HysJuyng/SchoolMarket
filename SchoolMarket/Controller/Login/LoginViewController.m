@@ -176,9 +176,8 @@
     [param setObject:userphone forKey:@"userPhone"];
     [param setObject:password forKey:@"password"];
     //请求
-    [AFRequest postLogin:url andParameter:param andResponse:^(NSString * _Nonnull flag, NSDictionary * _Nullable dic) {
-        NSString *messgae = [flag valueForKey:@"message"];
-        if ([messgae isEqualToString:@"success"]) {
+    [AFRequest postLogin:url andParameter:param andResponse:^(NSString * _Nullable flag, NSDictionary * _Nullable dic) {
+        if (dic) {
             //登录成功 修改userdefalut
             NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
             [userdef setObject:@"true" forKey:@"logined"];//登录状态
@@ -193,9 +192,13 @@
             [self.navigationController popViewControllerAnimated:true];
         } else {
             //登录 失败 提示失败信息
-            self.alertController.message = messgae;
+            self.alertController.message = flag;
             [self presentViewController:self.alertController animated:true completion:nil];
         }
+    } andError:^(NSError * _Nullable error) {
+        //推出alertview
+        self.alertController.message = @"网络请求失败！";
+        [self presentViewController:self.alertController animated:true completion:nil];
     }];
 }
 

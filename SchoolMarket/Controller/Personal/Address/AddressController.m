@@ -22,6 +22,8 @@
 
 @property (nonatomic,strong) NSMutableArray *addresses;
 
+@property (nonatomic,strong) UIAlertController *alertController;
+
 @end
 
 @implementation AddressController
@@ -51,6 +53,24 @@
     
 }
 
+/**
+ *  懒加载 alertController
+ */
+- (UIAlertController *)alertController {
+    if (! _alertController) {
+        
+        _alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+        
+        //取消按钮
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
+            NSLog(@"取消");
+        }];
+        [_alertController addAction:cancel];
+    }
+    
+    return _alertController;
+}
+
 /** 获取收货地址数据*/
 - (void)getAddresses {
     //取得用户id
@@ -62,9 +82,18 @@
     [AFRequest getAddresses:url andParameter:param andAddress:^(NSMutableArray * _Nonnull comms) {
         //获取数组
         self.addresses = comms;
-        
+        //如果没有收货地址 则提示
+        if (self.addresses.count == 0) {
+            //推出alertview
+            self.alertController.message = @"暂无收货地址!";
+            [self presentViewController:self.alertController animated:true completion:nil];
+        }
         //刷新数据
         [self.addressTbl reloadData];
+    } andError:^(NSError * _Nullable error) {
+        //推出alertview
+        self.alertController.message = @"网络请求失败！";
+        [self presentViewController:self.alertController animated:true completion:nil];
     }];
 }
 

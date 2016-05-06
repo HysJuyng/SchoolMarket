@@ -18,6 +18,8 @@
 
 @property (nonatomic,strong) NSMutableArray *specialComms;
 
+@property (nonatomic,strong) UIAlertController *alertController;
+
 @end
 
 @implementation SpecialCommdityController
@@ -41,6 +43,24 @@
     
 }
 
+/**
+ *  懒加载 alertController
+ */
+- (UIAlertController *)alertController {
+    if (! _alertController) {
+        
+        _alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+        
+        //取消按钮
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
+            NSLog(@"取消");
+        }];
+        [_alertController addAction:cancel];
+    }
+    
+    return _alertController;
+}
+
 - (NSMutableArray *)specialComms {
     if (! _specialComms) {
         //获取特价商品
@@ -49,6 +69,12 @@
         [AFRequest getComm:url andParameter:param andCommBlock:^(NSMutableArray * _Nonnull comms) {
             //获得数据
             self.specialComms = comms;
+            //如果没有特价商品 则提示
+            if (self.specialComms.count == 0) {
+                //推出alertview
+                self.alertController.message = @"暂无特价商品!";
+                [self presentViewController:self.alertController animated:true completion:nil];
+            }
             
             //对比购物车数据库
             [FMDBsql contrastShopcartAndModels:self.specialComms];
@@ -56,6 +82,10 @@
             //reload tableview
             [self.specialTableview reloadData];
             NSLog(@"123");
+        } andError:^(NSError * _Nullable error) {
+            //推出alertview
+            self.alertController.message = @"网络请求失败！";
+            [self presentViewController:self.alertController animated:true completion:nil];
         }];
     }
     return _specialComms;

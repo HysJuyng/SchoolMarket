@@ -59,11 +59,16 @@
  *  @param user 用户model
  */
 - (void)setPersonalCell:(User*)user {
-    [self.userImgv sd_setImageWithURL:[NSURL URLWithString:user.portrait] placeholderImage:[UIImage imageNamed:@"personal_default_head"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        if (error) {
-            
-        }
-    }];
+    if ([user.portrait.class isEqual:[NSNull class]]) {
+        self.userImgv.image = [UIImage imageNamed:@"personal_default_head"];
+    } else {
+        [self.userImgv sd_setImageWithURL:[NSURL URLWithString:user.portrait] placeholderImage:[UIImage imageNamed:@"personal_default_head"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            if (error) {
+                
+            }
+        }];
+    }
+    
     self.lbName.text = user.userName;
     self.lbPhone.text = user.userPhone;
 }

@@ -14,6 +14,7 @@
 @property (nonatomic,weak) UITableView *registerTableview;
 @property (nonatomic,strong) UIAlertController *alertController;
 
+
 @property (nonatomic,assign) int isAgree;  //同意条款状态 1为同意 0为不同意
 
 @end
@@ -38,6 +39,24 @@
     self.btnGetCode = tempcode;
     [self.btnGetCode setTitle:@"获取验证码" forState:(UIControlStateNormal)];
     [self.btnGetCode addTarget:self action:@selector(getIdentifyingCode) forControlEvents:(UIControlEventTouchUpInside)];
+}
+
+/**
+ *  懒加载 alertController
+ */
+- (UIAlertController *)alertController {
+    if (! _alertController) {
+        
+        _alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+        
+        //取消按钮
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
+            NSLog(@"取消");
+        }];
+        [_alertController addAction:cancel];
+    }
+    
+    return _alertController;
 }
 
 #pragma mark tableview代理方法
@@ -158,8 +177,7 @@
     [param setObject:password forKey:@"password"];
     //请求
     [AFRequest postLogin:url andParameter:param andResponse:^(NSString * _Nonnull flag, NSDictionary * _Nullable dic) {
-        NSString *messgae = [flag valueForKey:@"message"];
-        if ([messgae isEqualToString:@"success"]) {
+        if (dic) {
             //注册成功 修改userdefalut
             NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
             [userdef setObject:@"true" forKey:@"logined"];//登录状态
@@ -174,9 +192,13 @@
             [self.navigationController popToRootViewControllerAnimated:true];
         } else {
             //注册 失败 提示失败信息
-            self.alertController.message = messgae;
+            self.alertController.message = flag;
             [self presentViewController:self.alertController animated:true completion:nil];
         }
+    } andError:^(NSError * _Nullable error) {
+        //推出alertview
+        self.alertController.message = @"网络请求失败！";
+        [self presentViewController:self.alertController animated:true completion:nil];
     }];
 }
 /**
@@ -204,21 +226,7 @@
     return @"success";
 }
 
-/**
- *  懒加载 alertController
- */
-- (UIAlertController *)alertController {
-    if (! _alertController) {
-        _alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:(UIAlertControllerStyleAlert)];
-        //取消按钮
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
-            NSLog(@"取消");
-        }];
-        [_alertController addAction:cancel];
-    }
-    
-    return _alertController;
-}
+
 
 
 - (void)didReceiveMemoryWarning {

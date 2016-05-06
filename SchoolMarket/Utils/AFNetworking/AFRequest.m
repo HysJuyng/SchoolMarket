@@ -35,7 +35,7 @@
  *  @param parameter 参数
  *  @param commblock 闭包回调
  */
-+ (void)getComm:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andCommBlock:(nonnull commResponseBlock)commblock
++ (void)getComm:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andCommBlock:(nonnull commResponseBlock)commblock andError:(nullable errorBlock)errorblock
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager GET:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -50,6 +50,7 @@
         commblock(comms);     //闭包回调处理
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
+        errorblock(error);
     }];
 }
 /**
@@ -59,7 +60,7 @@
  *  @param parameter 参数
  *  @param commblock 闭包回调 （热卖和特价数组）
  */
-+ (void)getSaleAndSpecialComm:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andCommBlock:(nonnull saleAndSpecialComm)commblock {
++ (void)getSaleAndSpecialComm:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andCommBlock:(nonnull saleAndSpecialComm)commblock andError:(nullable errorBlock)errorblock{
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager GET:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSMutableArray *hotComms = [[NSMutableArray alloc] init];  //热卖商品
@@ -77,6 +78,7 @@
         commblock(hotComms,recommendComms);     //闭包回调处理(热卖，推荐)
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
+        errorblock(error);
     }];
 }
 /**
@@ -86,7 +88,7 @@
  *  @param parameter 参数 （userid）
  *  @param commblock 闭包回调 （订单）
  */
-+ (void)getOrderByUserid:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andBlock:(nonnull OrderBlock)orderblock {
++ (void)getOrderByUserid:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andBlock:(nonnull OrderBlock)orderblock andError:(nullable errorBlock)errorblock{
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager GET:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSMutableArray *orders = [[NSMutableArray alloc] init];  //订单数组
@@ -100,6 +102,7 @@
         orderblock(orders);     //闭包回调处理(订单数组)
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
+        errorblock(error);
     }];
 }
 /**
@@ -109,7 +112,7 @@
  *  @param parameter    参数（用户id 或者 收货地址id）
  *  @param addressBlock 闭包（收货地址数组）
  */
-+ (void)getAddresses:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andAddress:(nonnull commResponseBlock)addressBlock {
++ (void)getAddresses:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andAddress:(nonnull commResponseBlock)addressBlock andError:(nullable errorBlock)errorblock{
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager GET:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSMutableArray *addresses = [[NSMutableArray alloc] init];  //地址数组
@@ -123,30 +126,35 @@
         addressBlock(addresses);     //闭包回调处理(返回地址数组)
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
+        errorblock(error);
     }];
 
 }
 
 #pragma mark POST
 //发送请求（登录注册）
-+ (void)postLogin:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBack)postback {
++ (void)postLogin:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBack)postback andError:(nullable errorBlock)errorblock{
     NSLog(@"%@",parameter);
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager POST:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"%@",responseObject);   //获得数据
         NSDictionary *dic = responseObject;
-        NSDictionary *dictest = [[NSDictionary alloc] init];
-        NSString *str = [dic objectForKey:@"message"];
-        if ([[dic objectForKey:@"message"] isEqualToString:@"passwordError"]) {
-            NSLog(@"%@",str);
+        NSDictionary *userdic = [[NSDictionary alloc] init];
+        NSString *flag = [[NSString alloc] init];
+        if ([[dic objectForKey:@"message"]  isEqual:@"passwordError" ]) {
+            flag = @"密码错误！";
+        } else if ([[dic objectForKey:@"message"]  isEqual:@"userError" ]) {
+            flag = @"用户错误！";
+        } else if ([[dic objectForKey:@"message"]  isEqual:@"userexist" ]) {
+            flag = @"用户存在！";
         } else {
-            dictest = [dic objectForKey:@"message"];
+            userdic = [dic objectForKey:@"message"];
         }
-//        NSLog(@"%@",dictest);
-//        postback(flag,dic);
+        postback(flag,userdic);
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
+        errorblock(error);
     }];
 }
 /**
@@ -156,13 +164,21 @@
  *  @param parameter 参数（收货地址内容）
  *  @param postback  返回
  */
-+ (void)postAddress:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBack)postback {
++ (void)postAddress:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBackMessage)postback andError:(nullable errorBlock)errorblock{
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager POST:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"%@",responseObject);
-        
+        NSDictionary *dic = responseObject;
+        NSString *message = [[NSString alloc] init];
+        if ([dic[@"message"] isEqual:@"addSingleAddressError"]) {
+            message = @"添加地址失败!";
+        } else {
+            message = dic[@"message"];
+        }
+        postback(message);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
+        errorblock(error);
     }];
 
 }

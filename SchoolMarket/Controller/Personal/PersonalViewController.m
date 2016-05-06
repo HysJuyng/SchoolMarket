@@ -174,6 +174,7 @@
     
     //返回主页
     self.tabBarController.selectedIndex = 0;
+    
 }
 
 - (void)didReceiveMemoryWarning {

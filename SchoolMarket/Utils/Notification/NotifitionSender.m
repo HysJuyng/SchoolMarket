@@ -31,15 +31,31 @@ static NSNotificationCenter *center;
         return;
     }
     //通知参数 参数为commid selectedNum  type mainclass subclass
-    NSMutableDictionary *notificationDic = [[NSMutableDictionary alloc] init];
-    [notificationDic setObject:[NSString stringWithFormat:@"%d",comm.commodityId] forKey:@"commid"];
-    [notificationDic setObject:[NSString stringWithFormat:@"%d",comm.selectedNum] forKey:@"selectedNum"];
-    [notificationDic setObject:comm.type forKey:@"type"];
-    [notificationDic setObject:[NSString stringWithFormat:@"%d",comm.mainclassId] forKey:@"mainclassId"];
-    [notificationDic setObject:[NSString stringWithFormat:@"%d",comm.subclassId] forKey:@"subclassId"];
+    NSMutableDictionary *notificationDic = [[NSMutableDictionary alloc] initWithDictionary:[comm commToNotifitionDic]];
     
     [center postNotificationName:@"updateSelectedNum" object:self userInfo:notificationDic];
 }
 
+/**
+ *  发送修改数量通知
+ *  通知名字 “updateAllSelectedNum”  通知参数  （商品id，数量，类型，主分类id，次分类id）数组
+ *  @param comms 需要改动的所有商品
+ */
++ (void)updateAllSelectedNumNotification:(NSArray*)comms {
+    //如果商品空
+    if (comms.count == 0) {
+        return;
+    }
+    
+    NSMutableArray *commArr = [[NSMutableArray alloc] init];
+    for (Commodity* comm in comms) {
+        NSDictionary *commdic = [comm commToNotifitionDic];
+        [commArr addObject:commdic];
+    }
+    //通知参数  （商品id，数量，类型，主分类id，次分类id）数组
+    NSDictionary *notificationDic = [[NSDictionary alloc] initWithObjectsAndKeys:commArr,@"comms", nil];
+    
+    [center postNotificationName:@"updateAllSelectedNum" object:self userInfo:notificationDic];
+}
 
 @end

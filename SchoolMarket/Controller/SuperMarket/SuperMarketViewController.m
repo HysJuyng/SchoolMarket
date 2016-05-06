@@ -80,11 +80,13 @@
 {
     NSString *commUrl = [NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/findAllCommByMainId.jhtml"];
     NSDictionary *commParameter = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d", category.mainclassId], @"mainclassId", nil];
-    [AFRequest getComm:commUrl andParameter:commParameter andCommBlock:^(NSMutableArray * _Nonnull commArr) {
+    [AFRequest getComm:commUrl andParameter:commParameter andCommBlock:^(NSMutableArray * _Nonnull commArr ) {
         self.categoryComms = commArr;
         self.selectedCategoryComms = commArr;
         [self.commCV reloadData];
         [self setSelectedIndexPath:self.subCategory];
+    } andError:^(NSError * _Nullable error) {
+        //网络请求错误处理
     }];
 }
 

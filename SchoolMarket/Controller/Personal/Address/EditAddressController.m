@@ -149,8 +149,7 @@
     self.address.defaultAddress = self.switchflag;
     //获取用户信息
     NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
-//    self.address.userId = [[userdef objectForKey:@"userId"] intValue];
-    self.address.userId = 1;
+    self.address.userId = [[userdef objectForKey:@"userId"] intValue];
     
     //检测输入是否正确
     NSString *flag = [self textIsRequirements:self.address.phone andConsignee:self.address.consignee andAddressDetail:self.address.addressDetail];
@@ -190,14 +189,20 @@
     NSLog(@"%@",param);
     
     //发送请求
-    [AFRequest postAddress:url andParameter:param andResponse:^(NSString * _Nonnull flag, NSDictionary * _Nullable dic) {
+    [AFRequest postAddress:url andParameter:param andResponse:^(NSString * _Nonnull message) {
         //请求完成
-        if ([flag isEqualToString:@"success"]) {
+        if ([message isEqualToString:@"success"]) {
             //返回上级视图
             [self.navigationController popViewControllerAnimated:true];
         } else {
-            
+            //推出alertview
+            self.alertController.message = message;
+            [self presentViewController:self.alertController animated:true completion:nil];
         }
+    } andError:^(NSError * _Nullable error) {
+        //推出alertview
+        self.alertController.message = @"网络请求失败！";
+        [self presentViewController:self.alertController animated:true completion:nil];
     }];
     
 }

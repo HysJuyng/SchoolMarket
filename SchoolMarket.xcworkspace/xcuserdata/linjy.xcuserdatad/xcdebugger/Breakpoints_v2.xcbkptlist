@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SchoolMarket/Utils/AFNetworking/AFRequest.m"
-            timestampString = "484199448.816879"
+            filePath = "SchoolMarket/Controller/Login/LoginViewController.m"
+            timestampString = "484222931.950468"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
-            landmarkName = "+postLogin:andParameter:andResponse:"
+            startingLineNumber = "180"
+            endingLineNumber = "180"
+            landmarkName = "-login:andpassword:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
