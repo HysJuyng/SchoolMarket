@@ -22,6 +22,8 @@
 
 @property (nonatomic,strong) NSMutableArray *addresses;
 
+@property (nonatomic,strong) UIAlertController *alertController;
+
 @end
 
 @implementation AddressController
@@ -51,16 +53,47 @@
     
 }
 
+/**
+ *  懒加载 alertController
+ */
+- (UIAlertController *)alertController {
+    if (! _alertController) {
+        
+        _alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+        
+        //取消按钮
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
+            NSLog(@"取消");
+        }];
+        [_alertController addAction:cancel];
+    }
+    
+    return _alertController;
+}
+
 /** 获取收货地址数据*/
 - (void)getAddresses {
+    //取得用户id
+    NSUserDefaults *userdef = [[NSUserDefaults alloc]init];
+    NSString *userid = [userdef objectForKey:@"userId"];
+    //请求地址
     NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllAdress.jhtml";
-    NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"userId", nil];
+    NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:userid,@"userId", nil];
     [AFRequest getAddresses:url andParameter:param andAddress:^(NSMutableArray * _Nonnull comms) {
         //获取数组
         self.addresses = comms;
-        
+        //如果没有收货地址 则提示
+        if (self.addresses.count == 0) {
+            //推出alertview
+            self.alertController.message = @"暂无收货地址!";
+            [self presentViewController:self.alertController animated:true completion:nil];
+        }
         //刷新数据
         [self.addressTbl reloadData];
+    } andError:^(NSError * _Nullable error) {
+        //推出alertview
+        self.alertController.message = @"网络请求失败！";
+        [self presentViewController:self.alertController animated:true completion:nil];
     }];
 }
 
@@ -95,7 +128,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     AddressCell *cell = [AddressCell cellWithTableView:tableView];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@  %@",((Address*)self.addresses[indexPath.row]).consignee,((Address*)self.addresses[indexPath.row]).phone];
+    //设置内容
+    //判断是否为默认地址
+    if (((Address*)self.addresses[indexPath.row]).defaultAddress == 1) {
+        cell.textLabel.text = [NSString stringWithFormat:@"%@  %@ (默认)",((Address*)self.addresses[indexPath.row]).consignee,((Address*)self.addresses[indexPath.row]).phone];
+    } else {
+        cell.textLabel.text = [NSString stringWithFormat:@"%@  %@",((Address*)self.addresses[indexPath.row]).consignee,((Address*)self.addresses[indexPath.row]).phone];
+    }
     cell.textLabel.font = [UIFont systemFontOfSize:18.0];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",((Address*)self.addresses[indexPath.row]).addressDetail];
     cell.detailTextLabel.font = [UIFont systemFontOfSize:17.0];

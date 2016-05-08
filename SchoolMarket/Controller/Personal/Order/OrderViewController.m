@@ -21,6 +21,8 @@
 
 @property (nonatomic,assign) int flag;   //选择标识  （0：进行中  1：已完成）
 
+@property (nonatomic,strong) UIAlertController *alertController;
+
 @end
 
 @implementation OrderViewController
@@ -45,12 +47,39 @@
     
 }
 
+/**
+ *  懒加载 alertController
+ */
+- (UIAlertController *)alertController {
+    if (! _alertController) {
+        
+        _alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+        
+        //取消按钮
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
+            NSLog(@"取消");
+        }];
+        [_alertController addAction:cancel];
+    }
+    
+    return _alertController;
+}
+
 /** 获取订单*/
 - (void)getOrder {
+    //获取用户id
+    NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
+    NSString *userid = [userdef objectForKey:@"userId"];
     NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllOrders.jhtml";
-    NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"userId", nil];
+    NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:userid,@"userId", nil];
     [AFRequest getOrderByUserid:url andParameter:param andBlock:^(NSMutableArray * _Nonnull orders) {
         //处理订单数组
+        //若没有订单 则提示
+        if (orders.count == 0) {
+            //推出alertview
+            self.alertController.message = @"暂无订单!";
+            [self presentViewController:self.alertController animated:true completion:nil];
+        }
         //遍历数组
         for (Order *orderdetail in orders) {
             //设置数组
@@ -61,6 +90,10 @@
             }
         }
         [self.orderTableview reloadData];
+    } andError:^(NSError * _Nullable error) {
+        //推出alertview
+        self.alertController.message = @"网络请求失败！";
+        [self presentViewController:self.alertController animated:true completion:nil];
     }];
 }
 

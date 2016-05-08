@@ -7,10 +7,12 @@
 @implementation OrderCommShowCell
 
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier andFrame:(CGRect)frame
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        
+        self.frame = frame;
         
         //标题
         UILabel *temptitle = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, self.frame.size.width / 5, 50)];

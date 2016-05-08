@@ -34,7 +34,6 @@ typedef void (^orderPostBack)(NSString * _Nonnull resultStr);
  *  @param categoriesblock 闭包回调
  */
 + (void)getCategorier:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andCategorierBlock:(nonnull categoriesResponseBlock)categoriesblock;
-
 /**
  *  获取商品信息
  *
@@ -42,7 +41,7 @@ typedef void (^orderPostBack)(NSString * _Nonnull resultStr);
  *  @param parameter 参数 
  *  @param commblock 闭包回调 (商品)
  */
-+ (void)getComm:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andCommBlock:(nonnull commResponseBlock)commblock;
++ (void)getComm:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andCommBlock:(nonnull commResponseBlock)commblock andError:(nullable errorBlock)errorblock;
 /**
  *  获取热卖和特价商品
  *
@@ -50,10 +49,10 @@ typedef void (^orderPostBack)(NSString * _Nonnull resultStr);
  *  @param parameter 参数 (空)
  *  @param commblock 闭包回调 （热卖和特价数组）
  */
-+ (void)getSaleAndSpecialComm:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andCommBlock:(nonnull saleAndSpecialComm)commblock;
++ (void)getSaleAndSpecialComm:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andCommBlock:(nonnull saleAndSpecialComm)commblock andError:(nullable errorBlock)errorblock;
 
 //获取图片（数组）地址
-- (void)getImgs:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andImgsBlock:(nonnull commResponseBlock)imgsblock;
+- (void)getImgs:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andImgsBlock:(nonnull commResponseBlock)imgsblock andError:(nullable errorBlock)errorblock;
 /**
  *  获取订单
  *
@@ -61,7 +60,16 @@ typedef void (^orderPostBack)(NSString * _Nonnull resultStr);
  *  @param parameter 参数 （userid）
  *  @param commblock 闭包回调 （订单）
  */
-+ (void)getOrderByUserid:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andBlock:(nonnull OrderBlock)orderblock;
++ (void)getOrderByUserid:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andBlock:(nonnull OrderBlock)orderblock andError:(nullable errorBlock)errorblock;
+/**
+ *  添加收货地址
+ *
+ *  @param url       请求地址
+ *  @param parameter 参数（收货地址内容）
+ *  @param postback  返回
+ *  @param errorblock 错误信息返回
+ */
++ (void)postAddress:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBackMessage)postback andError:(nullable errorBlock)errorblock;
 
 //发送请求
 + (void)postLogin:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBack)postback;

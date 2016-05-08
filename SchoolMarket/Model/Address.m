@@ -22,9 +22,25 @@
         self.addressDetail = addressDic[@"addressDetail"];
         self.consignee = addressDic[@"consignee"];
         self.phone = addressDic[@"phone"];
+        self.defaultAddress = [addressDic[@"defaultedAddress"] intValue];
         
     }
     return self;
+}
+
+/**
+ *  模型转字典
+ */
+- (NSMutableDictionary*)addressToDic {
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    
+    [dic setObject:[NSString stringWithFormat:@"%d",self.userId] forKey:@"userId"];
+    [dic setObject:self.addressDetail forKey:@"addressDetail"];
+    [dic setObject:self.consignee forKey:@"consignee"];
+    [dic setObject:self.phone forKey:@"phone"];
+    [dic setObject:[NSString stringWithFormat:@"%d",self.defaultAddress] forKey:@"defaultedAddress"];
+    
+    return dic;
 }
 
 @end

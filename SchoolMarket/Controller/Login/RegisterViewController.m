@@ -6,11 +6,14 @@
 
 #import "LoginHeader.h"
 #import "AFRequest.h"
+#import "FMDBsql.h"
+#import "User.h"
 
 @interface RegisterViewController () <LRFootViewDelegate,UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic,weak) UITableView *registerTableview;
 @property (nonatomic,strong) UIAlertController *alertController;
+
 
 @property (nonatomic,assign) int isAgree;  //同意条款状态 1为同意 0为不同意
 
@@ -36,6 +39,24 @@
     self.btnGetCode = tempcode;
     [self.btnGetCode setTitle:@"获取验证码" forState:(UIControlStateNormal)];
     [self.btnGetCode addTarget:self action:@selector(getIdentifyingCode) forControlEvents:(UIControlEventTouchUpInside)];
+}
+
+/**
+ *  懒加载 alertController
+ */
+- (UIAlertController *)alertController {
+    if (! _alertController) {
+        
+        _alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+        
+        //取消按钮
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
+            NSLog(@"取消");
+        }];
+        [_alertController addAction:cancel];
+    }
+    
+    return _alertController;
 }
 
 #pragma mark tableview代理方法
@@ -149,29 +170,35 @@
  */
 - (void)doRegister:(NSString*)userphone andPassword:(NSString*)password andCode:(NSString*)code {
     //url
-    NSString *url = @"";
+    NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/registerNewUser.jhtml";
     //参数
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
-    [param setObject:userphone forKey:@"username"];
+    [param setObject:userphone forKey:@"userPhone"];
     [param setObject:password forKey:@"password"];
-    [param setObject:code forKey:@"code"];
     //请求
     [AFRequest postLogin:url andParameter:param andResponse:^(NSString * _Nonnull flag, NSDictionary * _Nullable dic) {
-        NSString *messgae = [flag valueForKey:@"message"];
-        if ([messgae isEqualToString:@"success"]) {
+        if (dic) {
             //注册成功 修改userdefalut
             NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
             [userdef setObject:@"true" forKey:@"logined"];//登录状态
             [userdef setObject:userphone forKey:@"userphone"];  //登录用户手机
-            //获取用户数据
-            
+            //获得用户信息
+            User *user = [[User alloc] initWithUserDic:dic];
+            //保存用户信息到数据库
+            [FMDBsql savePersonalMsg:user];
+            //把用户id设置在userdefaults中
+            [userdef setObject:[NSString stringWithFormat:@"%d",user.userId] forKey:@"userId"];
             //注册 成功 返回根视图
             [self.navigationController popToRootViewControllerAnimated:true];
         } else {
             //注册 失败 提示失败信息
-            self.alertController.message = messgae;
+            self.alertController.message = flag;
             [self presentViewController:self.alertController animated:true completion:nil];
         }
+    } andError:^(NSError * _Nullable error) {
+        //推出alertview
+        self.alertController.message = @"网络请求失败！";
+        [self presentViewController:self.alertController animated:true completion:nil];
     }];
 }
 /**
@@ -199,21 +226,7 @@
     return @"success";
 }
 
-/**
- *  懒加载 alertController
- */
-- (UIAlertController *)alertController {
-    if (! _alertController) {
-        _alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:(UIAlertControllerStyleAlert)];
-        //取消按钮
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
-            NSLog(@"取消");
-        }];
-        [_alertController addAction:cancel];
-    }
-    
-    return _alertController;
-}
+
 
 
 - (void)didReceiveMemoryWarning {

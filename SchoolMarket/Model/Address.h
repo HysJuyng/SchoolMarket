@@ -27,6 +27,10 @@
  *  电话号码
  */
 @property (nonatomic,copy) NSString *phone;
+/**
+ *  默认地址
+ */
+@property (nonatomic,assign) int defaultAddress;
 
 
 //初始化
@@ -36,5 +40,9 @@
  *  @param addressDic 收货地址字典
  */
 - (instancetype)initWithAddressDic:(NSDictionary*)addressDic;
+/**
+ *  模型转字典
+ */
+- (NSMutableDictionary*)addressToDic;
 
 @end

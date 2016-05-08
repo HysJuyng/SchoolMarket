@@ -79,6 +79,13 @@
 - (nonnull instancetype)initWithCommDic:(nonnull NSDictionary*)commDic;
 // 模型转字典
 - (nonnull NSDictionary*)commToDictionary:(nonnull Commodity*)comm;
-
+/**
+ *  模型转通知字典
+ *
+ *  @param comm 商品模型
+ *
+ *  @return 通知字典
+ */
+- (nonnull NSDictionary*)commToNotifitionDic;
 
 @end

@@ -21,6 +21,9 @@
 @property (nonatomic,strong) NSMutableArray *hotComms;
 @property (nonatomic,strong) NSMutableArray *recommendComms;
 @property (nonatomic,weak) NSMutableArray *adverImgs;
+
+@property (nonatomic,strong) UIAlertController *alertController;
+
 @end
 
 @implementation HomepageController
@@ -56,12 +59,32 @@
 //    [AFRequest posttest];
 }
 
+/**
+ *  懒加载 alertController
+ */
+- (UIAlertController *)alertController {
+    if (! _alertController) {
+        
+        _alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+        
+        //取消按钮
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
+            NSLog(@"取消");
+        }];
+        [_alertController addAction:cancel];
+    }
+    
+    return _alertController;
+}
+
 /** 设置通知*/
 - (void)setNotification {
     //通知
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     //商品数量改变通知
     [center addObserver:self selector:@selector(updateSelectedNum:) name:@"updateSelectedNum" object:nil];
+    //购物车下单后通知
+    [center addObserver:self selector:@selector(updateAllSelectedNum:) name:@"updateAllSelectedNum" object:nil];
 }
 
 /** 获取主页商品数据*/
@@ -81,6 +104,10 @@
         HomepageCell *hotcell = [self.tableview cellForRowAtIndexPath:hotindex];
         [hotcell.cvComm reloadData];
 
+    } andError:^(NSError * _Nullable error) {
+        //推出alertview
+        self.alertController.message = @"网络请求失败！";
+        [self presentViewController:self.alertController animated:true completion:nil];
     }];
 }
 
@@ -397,13 +424,41 @@
 
 #pragma mark 通知方法
 /**
- *  修改商品数量
+ *  修改商品数量
  *
  *  @param notification 接收到的通知内容
  */
 - (void)updateSelectedNum:(NSNotification *)notification {
-    int commid = [notification.userInfo[@"commid"] intValue];
-    NSString *type = notification.userInfo[@"type"];
+    //获取商品通知字典
+    NSDictionary *commdic = notification.userInfo;
+    
+    //查找需要修改的cell
+    [self changeSelectedNum:commdic andDownStocks:NO];
+}
+/**
+ *  修改所有商品数量 并减少库存
+ *
+ *  @param notification 接收到的通知内容
+ */
+- (void)updateAllSelectedNum:(NSNotification *)notification {
+    //获取商品通知字典数组
+    NSArray *commdicArr = [[NSArray alloc] initWithArray:notification.userInfo[@"comms"]];
+    
+    //遍历商品数组
+    for (NSDictionary* commdic in commdicArr) {
+        //查找需要修改的cell
+        [self changeSelectedNum:commdic andDownStocks:YES];
+    }
+}
+/**
+ *  改变商品cell内容
+ *
+ *  @param commdic 商品通知字典
+ *  @param downStocks  是否减少库存
+ */
+- (void)changeSelectedNum:(NSDictionary*)commdic andDownStocks:(BOOL)downStocks {
+    int commid = [commdic[@"commid"] intValue];
+    NSString *type = commdic[@"type"];
     NSIndexPath *tableviewIndexpath;    //tableview indexpath
     NSIndexPath *collectionviewIndexpath;  //collectionview indexpath
     if ([type isEqualToString:@"推荐商品"]) {   //如果商品类型为推荐商品
@@ -412,26 +467,48 @@
         for (int i = 0; i < self.recommendComms.count; i++) {
             if (commid == ((Commodity*)self.recommendComms[i]).commodityId ) {
                 //修改商品model的数量
-                ((Commodity*)self.recommendComms[i]).selectedNum = [notification.userInfo[@"selectedNum"] intValue];
+                ((Commodity*)self.recommendComms[i]).selectedNum = [commdic[@"selectedNum"] intValue];
+                //判断是否需要减少库存
+                if (downStocks) {
+                    int stock = [((Commodity*)self.recommendComms[i]).stock intValue];
+                    stock -= [commdic[@"selectedNum"] intValue];
+                    ((Commodity*)self.recommendComms[i]).stock = [NSString stringWithFormat:@"%d",stock];
+                }
                 collectionviewIndexpath = [NSIndexPath indexPathForItem:i inSection:0];   //推荐商品的indexpath
-            }
-        }
-    } else {    //如果商品类型非推荐商品 则在热卖区遍历
-        tableviewIndexpath = [NSIndexPath indexPathForItem:0 inSection:2];   //tableview 热卖indexpath
-        //遍历热卖商品
-        for (int i = 0; i < self.hotComms.count ; i ++) {
-            if (commid == ((Commodity*)self.hotComms[i]).commodityId ) {
-                ((Commodity*)self.hotComms[i]).selectedNum = [notification.userInfo[@"selectedNum"] intValue];
-                collectionviewIndexpath = [NSIndexPath indexPathForItem:i inSection:0];   //热卖商品的indexpath
+                
+                //获取tableviewcell
+                HomepageCell *Htableviewcell = [self.tableview cellForRowAtIndexPath:tableviewIndexpath];
+                //获取商品cell
+                CommCell *commcell = (CommCell*)[Htableviewcell.cvComm cellForItemAtIndexPath:collectionviewIndexpath];
+                //修改cell内容
+                [commcell setCommcellOfSelectedNum:commdic[@"selectedNum"]];
+                
             }
         }
     }
-    
-    //获取tableviewcell
-    HomepageCell *Htableviewcell = [self.tableview cellForRowAtIndexPath:tableviewIndexpath];
-    //获取商品cell
-    CommCell *commcell = (CommCell*)[Htableviewcell.cvComm cellForItemAtIndexPath:collectionviewIndexpath];
-    [commcell setCommcellOfSelectedNum:notification.userInfo[@"selectedNum"]];
+    //如果商品类型非推荐商品 则在热卖区遍历
+    tableviewIndexpath = [NSIndexPath indexPathForItem:0 inSection:2];   //tableview 热卖indexpath
+    //遍历热卖商品
+    for (int i = 0; i < self.hotComms.count ; i ++) {
+        if (commid == ((Commodity*)self.hotComms[i]).commodityId ) {
+            //修改商品model的数量
+            ((Commodity*)self.hotComms[i]).selectedNum = [commdic[@"selectedNum"] intValue];
+            //判断是否需要减少库存
+            if (downStocks) {
+                int stock = [((Commodity*)self.recommendComms[i]).stock intValue];
+                stock -= [commdic[@"selectedNum"] intValue];
+                ((Commodity*)self.recommendComms[i]).stock = [NSString stringWithFormat:@"%d",stock];
+            }
+            collectionviewIndexpath = [NSIndexPath indexPathForItem:i inSection:0];   //热卖商品的indexpath
+            
+            //获取tableviewcell
+            HomepageCell *Htableviewcell = [self.tableview cellForRowAtIndexPath:tableviewIndexpath];
+            //获取商品cell
+            CommCell *commcell = (CommCell*)[Htableviewcell.cvComm cellForItemAtIndexPath:collectionviewIndexpath];
+            //修改cell内容
+            [commcell setCommcellOfSelectedNum:commdic[@"selectedNum"]];
+        }
+    }
     
 }
 
