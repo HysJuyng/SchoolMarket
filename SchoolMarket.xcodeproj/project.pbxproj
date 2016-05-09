@@ -12,6 +12,7 @@
 		33357FD51CC907E2008C22A5 /* ConfirmOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33357FD41CC907E2008C22A5 /* ConfirmOrderViewController.m */; };
 		335066641CCD149B00DD91E9 /* EditAddressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 335066631CCD149B00DD91E9 /* EditAddressController.m */; };
 		335066671CCD17A400DD91E9 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 335066661CCD17A400DD91E9 /* User.m */; };
+		3360AA001CE078C1005239BD /* ActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3360A9FF1CE078C1005239BD /* ActivityIndicatorView.m */; };
 		3378E8F31CBE40B5004E7DFE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3378E8F21CBE40B5004E7DFE /* ViewController.m */; };
 		338AE9D91CCCB95100488029 /* AddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 338AE9D81CCCB95100488029 /* AddressCell.m */; };
 		338AE9DD1CCCB9C600488029 /* AddressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 338AE9DC1CCCB9C600488029 /* AddressController.m */; };
@@ -98,6 +99,8 @@
 		335066631CCD149B00DD91E9 /* EditAddressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditAddressController.m; path = Personal/Address/EditAddressController.m; sourceTree = "<group>"; };
 		335066651CCD17A400DD91E9 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		335066661CCD17A400DD91E9 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		3360A9FE1CE078C1005239BD /* ActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityIndicatorView.h; sourceTree = "<group>"; };
+		3360A9FF1CE078C1005239BD /* ActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityIndicatorView.m; sourceTree = "<group>"; };
 		3378E8F11CBE40B5004E7DFE /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		3378E8F21CBE40B5004E7DFE /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		338AE9D71CCCB95100488029 /* AddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddressCell.h; path = Personal/Address/AddressCell.h; sourceTree = "<group>"; };
@@ -540,6 +543,8 @@
 				3BC7F5B21CB4AEF3006A1754 /* Login */,
 				3BF4925E1CAE6BA800FB8B10 /* Homepage */,
 				3BBA9D861CAD13C500DF67B7 /* Cell */,
+				3360A9FE1CE078C1005239BD /* ActivityIndicatorView.h */,
+				3360A9FF1CE078C1005239BD /* ActivityIndicatorView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -851,6 +856,7 @@
 				3BF492591CAE68BB00FB8B10 /* HomepageController.m in Sources */,
 				3B8311A51CBE9B8E00D6FA69 /* LbMiddleLine.m in Sources */,
 				3B0A6D2C1CCA2C2D00C99CB7 /* FMDBsql.m in Sources */,
+				3360AA001CE078C1005239BD /* ActivityIndicatorView.m in Sources */,
 				3BD8EF5B1CB4B37900194F21 /* LRFootView.m in Sources */,
 				3BD86DC61CAEACE0004B651B /* ShoppingCartController.m in Sources */,
 				3BB8B8DE1CD23D9800C77FA9 /* OrderDetailController.m in Sources */,

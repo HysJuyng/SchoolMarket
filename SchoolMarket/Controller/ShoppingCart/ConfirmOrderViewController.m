@@ -93,6 +93,7 @@
         NSDictionary *parameter = [[NSDictionary alloc] initWithObjectsAndKeys:userId, @"userId", nil];
         [AFRequest getAddresses:url andParameter:parameter andAddress:^(NSMutableArray * _Nonnull data) {
             _address = data[0];
+            _address.userId = userId.intValue;
             [self.detailOrderTbl reloadData];
         } andError:^(NSError * _Nullable error) {
             
@@ -401,22 +402,25 @@
     // 发送下单请求
     [AFRequest postConfirmOrder:url andParameter:parameter andResponse:^(NSString * _Nonnull resultStr) {
         if ([resultStr localizedCaseInsensitiveContainsString:@"success"]) {
-            for (Commodity *comm in self.commsNum) {
-                comm.stock = [NSString stringWithFormat:@"%d", (comm.stock.intValue - comm.selectedNum)];
-                comm.selectedNum = 0;
-            }
+//            for (Commodity *comm in self.commsNum) {
+//                comm.stock = [NSString stringWithFormat:@"%d", (comm.stock.intValue - comm.selectedNum)];
+//                comm.selectedNum = 0;
+//            }
             // 发送通知，修改已经下单的商品的模型数据
-            [NotifitionSender updateAllSelectedNumNotification:self.commsNum];
+//            [NotifitionSender updateAllSelectedNumNotification:self.commsNum];
+            
             // 将已经下单的商品从数据库中删除
             [FMDBsql deleteAllShopcartComms];
-            
-            // 发送购物车已经更新的通知
             NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+            // 发送重新获取商品数据的通知
+            [center postNotificationName:@"reacquireCommodity" object:self];
+            // 发送购物车已经更新的通知
             [center postNotificationName:@"shopcartIsUpdate" object:self];
-            
+            // 弹出下单成功的提示
             self.alertController.message = @"下单成功";
             [self presentViewController:self.alertController animated:YES completion:nil];
         } else if ([resultStr localizedCaseInsensitiveContainsString:@"error"]) {
+            // 弹出下单失败的提示
             self.alertController.message = @"下单失败，请重新下单";
             [self presentViewController:self.alertController animated:YES completion:nil];
         }

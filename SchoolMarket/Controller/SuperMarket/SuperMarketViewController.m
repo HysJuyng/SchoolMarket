@@ -13,6 +13,7 @@
 #import "AFRequest.h"
 #import "FMDBsql.h"
 #import "NotifitionSender.h"
+#import "ActivityIndicatorView.h"
 
 @interface SuperMarketViewController () <UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, CommCellDelegate>
 /**  营业时间试图 */
@@ -23,6 +24,8 @@
 @property (nonatomic, weak) UITableView *subCategory;
 /**  商品展示 */
 @property (nonatomic, weak) UICollectionView *commCV;
+/**  旋转菊花视图 */
+@property (nonatomic, weak) ActivityIndicatorView *activityView;
 /**  collectionViewCell边距 */
 @property (nonatomic, assign) CGFloat margin;
 
@@ -68,13 +71,13 @@
     [self subCategoryTablelViewWithFrame:frame];
     // 创建商品视图
     [self commCollectionViewWithFrame:frame];
+    [self activityView:frame];
     
     // 设置通知
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     // 商品数量改变通知
     [center addObserver:self selector:@selector(updateSMSelectedNum:) name:@"updateSelectedNum" object:nil];
-//    NSNotificationCenter *center1 = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(updateAllSelectedNum:) name:@"updateAllSelectedNum" object:nil];
+    [center addObserver:self selector:@selector(reacquireCommodity) name:@"reacquireCommodity" object:nil];
 }
 
 #pragma mark - 懒加载
@@ -92,7 +95,6 @@
     }
     return _categories;
 }
-
 
 - (UIAlertController *)alertController {
     if (_alertController == nil) {
@@ -171,6 +173,24 @@
     }];
 }
 
+/**  将原来获取的商品数据删除，并重新获取 */
+- (void)reacquireCommodity {
+    [self.selectedCategoryComms removeAllObjects];
+    [self.comms removeAllObjects];
+    [NSThread detachNewThreadSelector:@selector(getComms:) toTarget:self withObject:self.selectedCategory];
+}
+
+/**  旋转菊花视图（正在加载数据） */
+- (ActivityIndicatorView *)activityView:(CGRect)frame {
+    if (self.activityView == nil) {
+        ActivityIndicatorView *activityView = [[ActivityIndicatorView alloc] initWithFrame:frame];
+        activityView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
+        self.activityView = activityView;
+        [self.view addSubview:self.activityView];
+    }
+    return self.activityView;
+}
+
 #pragma mark - 创建导航控制器Item
 /**  创建导航控制器Item */
 - (void)BarButtonItem {
@@ -197,7 +217,6 @@
 }
 
 #pragma mark - 添加控件
-#pragma mark - 营业时间
 /**  创建营业时间 */
 - (UIButton *)openTimeViewWithFrame:(CGRect)frame {
     if (self.openTimeView == nil) {
@@ -522,22 +541,22 @@
 }
 
 /**  更新所有已选择商品的数量 */
-- (void)updateAllSelectedNum:(NSNotification *)notification {
-    NSMutableArray *arrayM = notification.userInfo[@"comms"];
-    for (NSDictionary *dict in arrayM) {
-        int commid = [dict[@"commodityId"] intValue];
-        [self changeCommCell:dict commId:commid];
-        // 如果缓存下来的所有商品数组不为0的话，则将里面对应的商品模型进行数据修改
-        if (self.comms.count != 0) {
-            for (Commodity *comm in self.comms) {
-                if (commid == comm.commodityId) {
-                    [comm setValuesForKeysWithDictionary:dict];
-                    break;
-                }
-            }
-        }
-    }
-}
+//- (void)updateAllSelectedNum:(NSNotification *)notification {
+//    NSMutableArray *arrayM = notification.userInfo[@"comms"];
+//    for (NSDictionary *dict in arrayM) {
+//        int commid = [dict[@"commodityId"] intValue];
+//        [self changeCommCell:dict commId:commid];
+//        // 如果缓存下来的所有商品数组不为0的话，则将里面对应的商品模型进行数据修改
+//        if (self.comms.count != 0) {
+//            for (Commodity *comm in self.comms) {
+//                if (commid == comm.commodityId) {
+//                    [comm setValuesForKeysWithDictionary:dict];
+//                    break;
+//                }
+//            }
+//        }
+//    }
+//}
 
 /**
  *  更改分类商品模型数据和商品Cell的显示
