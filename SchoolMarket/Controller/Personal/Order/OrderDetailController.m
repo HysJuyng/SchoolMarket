@@ -48,9 +48,9 @@
 - (void)getComms {
     NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllOrderComm.jhtml";
     NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self.orderDetail.orderId],@"orderId", nil];
-    [AFRequest getComm:url andParameter:param andCommBlock:^(NSMutableArray * _Nonnull comms) {
+    [AFRequest getComm:url andParameter:param andCommBlock:^(NSMutableArray * _Nonnull data) {
         //获取订单商品
-        self.orderDetail.comms = comms;
+        self.orderDetail.comms = data;
         
         //商品展示cell
         NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:2];

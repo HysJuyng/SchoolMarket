@@ -21,10 +21,12 @@
         self.portrait = userDic[@"portrait"];
         
         //判断性别
-        if (userDic[@"sex"] == 0) {
+        if ([userDic[@"sex"] isEqual:@"0"]) {
             self.sex = @"男";
-        } else {
+        } else if ([userDic[@"sex"] isEqual:@"1"]) {
             self.sex = @"女";
+        } else {
+            self.sex = @"未设定";
         }
         
     }

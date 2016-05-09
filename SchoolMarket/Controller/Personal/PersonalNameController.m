@@ -3,8 +3,13 @@
  */
 
 #import "PersonalNameController.h"
+#import "ChangeNameView.h"
+#import "NotifitionSender.h"
 
-@interface PersonalNameController ()
+@interface PersonalNameController () <ChangeNameViewDelegate>
+
+@property (nonatomic,weak) ChangeNameView *changeNameView;
+@property (nonatomic,strong) UIAlertController *alertController;
 
 @end
 
@@ -14,24 +19,52 @@
     [super viewDidLoad];
     
     self.title = @"姓名";
-    self.view.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.8];
+    self.view.backgroundColor = [UIColor lightGrayColor];
     
-    //文本输入框
-    UITextField *tempname = [[UITextField alloc] initWithFrame:CGRectMake(10, 80, self.view.frame.size.width - 20, 40)];
-    self.tfName = tempname;
-    self.tfName.placeholder = @"姓名";
-    self.tfName.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:self.tfName];
+    //创建视图
+    ChangeNameView *tempview = [[ChangeNameView alloc] initWithFrame:self.view.bounds andUserName:self.userName];
+    self.changeNameView = tempview;
+    [self.view addSubview:self.changeNameView];
+}
+
+/**
+ *  懒加载 alertController
+ */
+- (UIAlertController *)alertController {
+    if (! _alertController) {
+        
+        _alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+        
+        //取消按钮
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
+            NSLog(@"取消");
+        }];
+        [_alertController addAction:cancel];
+    }
     
-    //确定修改按钮
-    UIButton *tempchange = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    self.btnChange = tempchange;
-    self.btnChange.frame = CGRectMake(25, 140, self.view.frame.size.width - 50, 33);
-    [self.btnChange setTitle:@"确定修改" forState:(UIControlStateNormal)];
-    self.btnChange.tintColor = [UIColor whiteColor];
-    self.btnChange.backgroundColor = [UIColor colorWithRed:10.0/255.0 green:200.0/255.0 blue:150.0/255.0 alpha:1.0];
-    self.btnChange.titleLabel.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:self.btnChange];
+    return _alertController;
+}
+
+#pragma mark 自定义方法
+/** 确定修改按钮方法*/
+- (void)changeNameClick {
+    //如果为空
+    if ([self.changeNameView.tfName.text isEqualToString:@""]) {
+        //推出alert
+        self.alertController.message = @"名字不能为空!";
+        [self presentViewController:self.alertController animated:YES completion:nil];
+    } else if (self.changeNameView.tfName.text.length > 8) {
+        //推出alert
+        self.alertController.message = @"名字长度不能超过8位!";
+        [self presentViewController:self.alertController animated:YES completion:nil];
+    }
+    else {
+        //发送通知
+        [NotifitionSender changeUserName:self.changeNameView.tfName.text];
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
     
 }
 

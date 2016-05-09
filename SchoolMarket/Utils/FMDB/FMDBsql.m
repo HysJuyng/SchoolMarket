@@ -232,5 +232,14 @@ static FMDatabase *db;
     //修改数据库
     [db executeUpdateWithFormat:@"UPDATE t_user SET user = %@ WHERE userid = %d;",userData,user.userId];
 }
+/**
+ *  删除用户信息
+ *
+ *  @param userid 用户id
+ */
++ (void)deleteUser:(int)userid {
+    //删除
+    [db executeUpdate:[NSString stringWithFormat:@"DELETE FROM t_user WHERE userid = %d;",userid]];
+}
 
 @end

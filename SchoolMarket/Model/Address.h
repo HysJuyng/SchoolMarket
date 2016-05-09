@@ -43,6 +43,6 @@
 /**
  *  模型转字典
  */
-- (NSMutableDictionary*)addressToDic;
+- (NSMutableDictionary*)addressToDic:(int)isAdd;
 
 @end

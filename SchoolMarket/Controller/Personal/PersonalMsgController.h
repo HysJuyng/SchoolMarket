@@ -5,12 +5,15 @@
  */
 
 #import <UIKit/UIKit.h>
+@class User;
 
 
 @interface PersonalMsgController : UIViewController 
 
 
 @property (nonatomic,weak) UIBarButtonItem *btnBack;  //导航栏左侧返回按钮
+
+@property (nonatomic,strong) User *userMsg;  //用户信息
 
 
 @end

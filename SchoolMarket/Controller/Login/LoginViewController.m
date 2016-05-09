@@ -9,6 +9,7 @@
 #import "AFRequest.h"
 #import "FMDBsql.h"
 #import "User.h"
+#import "NotifitionSender.h"
 
 
 @interface LoginViewController () <LRFootViewDelegate,UITableViewDataSource,UITableViewDelegate>
@@ -182,14 +183,19 @@
             NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
             [userdef setObject:@"true" forKey:@"logined"];//登录状态
             [userdef setObject:userphone forKey:@"userphone"];  //登录用户手机
+            
             //获得用户信息
             User *user = [[User alloc] initWithUserDic:dic];
             //保存用户信息到数据库
             [FMDBsql savePersonalMsg:user];
             //把用户id设置在userdefaults中
             [userdef setObject:[NSString stringWithFormat:@"%d",user.userId] forKey:@"userId"];
-            //登录 成功 返回上级
-            [self.navigationController popViewControllerAnimated:true];
+            //发送通知
+            [NotifitionSender updateUserMsg];
+            
+            //登录 成功 跳转个人中心
+            self.tabBarController.selectedIndex = 3;
+            [self.navigationController popToRootViewControllerAnimated:true];
         } else {
             //登录 失败 提示失败信息
             self.alertController.message = flag;

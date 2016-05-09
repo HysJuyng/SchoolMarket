@@ -15,4 +15,13 @@
 
 //初始化
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier andFrame:(CGRect)frame;
+
+/**
+ *  设置cell内容
+ *
+ *  @param title   标题
+ *  @param content 内容
+ */
+- (void)setPersonMsgCell:(NSString*)title andContent:(NSString*)content;
+
 @end

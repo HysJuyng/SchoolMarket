@@ -66,9 +66,9 @@
         //获取特价商品
         NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllCommByType.jhtml";
         NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:@"特价商品",@"type", nil];
-        [AFRequest getComm:url andParameter:param andCommBlock:^(NSMutableArray * _Nonnull comms) {
+        [AFRequest getComm:url andParameter:param andCommBlock:^(NSMutableArray * _Nonnull data) {
             //获得数据
-            self.specialComms = comms;
+            self.specialComms = data;
             //如果没有特价商品 则提示
             if (self.specialComms.count == 0) {
                 //推出alertview

@@ -6,7 +6,7 @@
 
 
 //闭包
-typedef void (^commResponseBlock)( NSMutableArray * _Nonnull comms);
+typedef void (^commResponseBlock)( NSMutableArray * _Nonnull data);
 typedef void (^saleAndSpecialComm)( NSMutableArray * _Nonnull hotComms,NSMutableArray * _Nonnull recommendComms);
 typedef void (^OrderBlock)( NSMutableArray * _Nonnull orders);
 typedef void (^categoriesResponseBlock)( NSMutableArray * _Nonnull categories);

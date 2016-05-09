@@ -48,9 +48,19 @@
     
     [self createAddBtnWithFrame:CGRectMake(addBtnX, addBtnY, addBtnW, 44)];
     
+    //设置通知
+    [self setNotification];
+    
     //发送请求
     [self getAddresses];
     
+}
+
+/** 设置通知*/
+- (void)setNotification {
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    //接收刷新通知
+    [center addObserver:self selector:@selector(getAddresses) name:@"updateAddressList" object:nil];
 }
 
 /**
@@ -79,9 +89,9 @@
     //请求地址
     NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllAdress.jhtml";
     NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:userid,@"userId", nil];
-    [AFRequest getAddresses:url andParameter:param andAddress:^(NSMutableArray * _Nonnull comms) {
+    [AFRequest getAddresses:url andParameter:param andAddress:^(NSMutableArray * _Nonnull data) {
         //获取数组
-        self.addresses = comms;
+        self.addresses = data;
         //如果没有收货地址 则提示
         if (self.addresses.count == 0) {
             //推出alertview
@@ -169,6 +179,48 @@
 {
     [self goToEditAddress:self.addresses[indexPath.row]];
 }
+/**  实现拖拽删除 */
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+    //取消按钮
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"取消");
+    }];
+    
+    [alert addAction:cancelAction];
+    
+    //确定按钮
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        //发送删除请求
+        NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/deleteAddress.jhtml";
+        NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",((Address*)self.addresses[indexPath.row]).addressId],@"addressId", nil];
+        [AFRequest postAddress:url andParameter:param andResponse:^(NSString * _Nullable message) {
+            //推出alertview
+            self.alertController.message = @"删除成功!";
+            [self presentViewController:self.alertController animated:true completion:nil];
+            //移除单元格
+            [self.addresses removeObjectAtIndex:indexPath.row];
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationLeft)];
+            
+        } andError:^(NSError * _Nullable error) {
+            //推出alertview
+            self.alertController.message = @"网络请求失败！";
+            [self presentViewController:self.alertController animated:true completion:nil];
+        }];
+    }];
+    
+    [alert addAction:okAction];
+    
+    //推出alertview
+    alert.message = @"确定要删除吗?";
+    [self presentViewController:alert animated:true completion:nil];
+
+    
+    
+
+}
 
 #pragma mark - 新增收货地址按钮
 /**  新增收货地址按钮 */
@@ -200,6 +252,8 @@
     //正向传值
     if (address) {
         edit.address = address;
+    } else {
+        edit.count = (int)self.addresses.count;
     }
     
     self.hidesBottomBarWhenPushed = YES;

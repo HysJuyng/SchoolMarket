@@ -158,7 +158,7 @@
     }];
 }
 /**
- *  添加收货地址
+ *  添加、修改或删除收货地址
  *
  *  @param url       请求地址
  *  @param parameter 参数（收货地址内容）
@@ -172,8 +172,12 @@
         NSString *message = [[NSString alloc] init];
         if ([dic[@"message"] isEqual:@"addSingleAddressError"]) {
             message = @"添加地址失败!";
+        } else if ([dic[@"message"] isEqual:@"alterAddressError"]) {
+            message = @"修改地址失败!";
+        } else if ([dic[@"message"] isEqual:@"deleteAddressError"]) {
+            message = @"删除地址失败!";
         } else {
-            message = dic[@"message"];
+            message = @"success";
         }
         postback(message);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

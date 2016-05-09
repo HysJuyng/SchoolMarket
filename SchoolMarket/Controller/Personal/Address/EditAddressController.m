@@ -11,6 +11,7 @@
 #import "EditAddressCell.h"
 #import "DefaultAddressCell.h"
 #import "AFRequest.h"
+#import "NotifitionSender.h"
 
 @interface EditAddressController () <UITableViewDataSource,DefaultAddressCellDelegate>
 
@@ -20,12 +21,23 @@
 @property (nonatomic,assign) int switchflag;
 @property (nonatomic,strong) UIAlertController *alertController;
 
+@property (nonatomic,assign) int isAdd;  //默认为添加
+
 @end
 
 @implementation EditAddressController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //判断是否是添加
+    if (!self.address.addressId) {
+        self.isAdd = 1;
+    } else {
+        self.isAdd = 0;
+    }
+    NSLog(@"%d",self.isAdd);
+    
     self.title = @"编辑地址";
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:@selector(saveClick)];
@@ -121,9 +133,6 @@
             self.switchflag = self.address.defaultAddress;
         }
         
-        //设置代理
-        cell.delegate = self;
-        
         return cell;
     }
     
@@ -134,6 +143,31 @@
 /** 保存按钮*/
 - (void)saveClick {
     
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+    //取消按钮
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"取消");
+    }];
+    
+    [alert addAction:cancelAction];
+    
+    //确定按钮
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        //进行保存操作
+        [self doSave];
+    }];
+    
+    [alert addAction:okAction];
+    
+    //推出alertview
+    alert.message = @"确定保存吗?";
+    [self presentViewController:alert animated:true completion:nil];
+    
+    
+}
+
+/** 保存操作*/
+- (void)doSave {
     //获取收货地址信息
     for (int i = 0; i < 3; i++) {
         NSIndexPath *index = [NSIndexPath indexPathForRow:i inSection:0];
@@ -146,7 +180,14 @@
             self.address.addressDetail = cell.tfContent.text;
         }
     }
+    
+    //默认地址
     self.address.defaultAddress = self.switchflag;
+    //新增时判断是否还没有地址
+    if (self.count == 0) {  //若没有 则默认为1
+        self.address.defaultAddress = 1;
+    }
+    
     //获取用户信息
     NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
     self.address.userId = [[userdef objectForKey:@"userId"] intValue];
@@ -161,7 +202,7 @@
         self.alertController.message = flag;
         [self presentViewController:self.alertController animated:true completion:nil];
     }
-    
+
 }
 
 /** 设置选择状态*/
@@ -169,10 +210,8 @@
     NSLog(@"123");
     if (self.switchflag == 1) {
         self.switchflag = 0;
-//        sender.on = false;
     } else {
         self.switchflag = 1;
-//        sender.on = true;
     }
 }
 
@@ -183,17 +222,39 @@
  */
 - (void)postAddress:(Address *)address {
     
-    NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/addSingleAddress.jhtml";
-    NSMutableDictionary *param = [[NSMutableDictionary alloc] initWithDictionary:[address addressToDic]];
+    NSString *url = [[NSString alloc] init];
+    //判断是添加还是修改
+    if (self.isAdd) {   //如果为添加
+        url = @"http://schoolserver.nat123.net/SchoolMarketServer/addSingleAddress.jhtml";
+    } else {   //如果为修改
+        url = @"http://schoolserver.nat123.net/SchoolMarketServer/alterAddress.jhtml";
+    }
+    NSMutableDictionary *param = [[NSMutableDictionary alloc] initWithDictionary:[address addressToDic:self.isAdd]];
     
-    NSLog(@"%@",param);
     
     //发送请求
     [AFRequest postAddress:url andParameter:param andResponse:^(NSString * _Nonnull message) {
+        NSLog(@"%@",param);
         //请求完成
         if ([message isEqualToString:@"success"]) {
-            //返回上级视图
-            [self.navigationController popViewControllerAnimated:true];
+            
+            self.alertController = [UIAlertController alertControllerWithTitle:nil message:@"保存成功!" preferredStyle:(UIAlertControllerStyleAlert)];
+            
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+               
+                //发送通知 更新地址视图
+                [NotifitionSender updateAddressList];
+                
+                //返回上级视图
+                [self.navigationController popViewControllerAnimated:true];
+            }];
+            
+            [self.alertController addAction:okAction];
+            
+            //推出alertview
+            self.alertController.message = @"保存成功!";
+            [self presentViewController:self.alertController animated:true completion:nil];
+            
         } else {
             //推出alertview
             self.alertController.message = message;
