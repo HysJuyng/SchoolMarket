@@ -70,11 +70,12 @@
 - (nonnull NSDictionary*)commToNotifitionDic {
     
     NSMutableDictionary *notificationDic = [[NSMutableDictionary alloc] init];
-    [notificationDic setObject:[NSString stringWithFormat:@"%d",self.commodityId] forKey:@"commid"];
+    [notificationDic setObject:[NSString stringWithFormat:@"%d",self.commodityId] forKey:@"commodityId"];
     [notificationDic setObject:[NSString stringWithFormat:@"%d",self.selectedNum] forKey:@"selectedNum"];
     [notificationDic setObject:self.type forKey:@"type"];
     [notificationDic setObject:[NSString stringWithFormat:@"%d",self.mainclassId] forKey:@"mainclassId"];
     [notificationDic setObject:[NSString stringWithFormat:@"%d",self.subclassId] forKey:@"subclassId"];
+    [notificationDic setObject:self.stock forKey:@"stock"];
     
     return notificationDic;
 }

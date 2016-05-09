@@ -17,6 +17,7 @@
 #import "AFRequest.h"
 #import "FMDBsql.h"
 #import "NotifitionSender.h"
+#import "User.h"
 
 @interface ConfirmOrderViewController () <UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate>
 
@@ -48,6 +49,8 @@
 @property (nonatomic, strong) Order *order;
 /**  默认收货地址模型 */
 @property (nonatomic, strong) Address *address;
+/**  用户模型 */
+@property (nonatomic, strong) User *user;
 
 @end
 
@@ -83,12 +86,16 @@
 /**  收货地址模型 */
 - (Address *)address {
     if (_address == nil) {
+        NSUserDefaults *userDefaults = [[NSUserDefaults alloc] init];
+        NSString *userId = [userDefaults objectForKey:@"userId"];
         // 向服务器请求拿到默认地址
         NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/findDefaultedAddress.jhtml";
-        NSDictionary *parameter = [[NSDictionary alloc] initWithObjectsAndKeys:@"1", @"userId", nil];
-        [AFRequest getAddresses:url andParameter:parameter andAddress:^(NSMutableArray * _Nonnull address) {
-            _address = address[0];
+        NSDictionary *parameter = [[NSDictionary alloc] initWithObjectsAndKeys:userId, @"userId", nil];
+        [AFRequest getAddresses:url andParameter:parameter andAddress:^(NSMutableArray * _Nonnull data) {
+            _address = data[0];
             [self.detailOrderTbl reloadData];
+        } andError:^(NSError * _Nullable error) {
+            
         }];
     }
     return _address;
@@ -99,7 +106,6 @@
     if (!_alertController) {
         _alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *done = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            NSLog(@"确定");
             if ([_alertController.message localizedCaseInsensitiveContainsString:@"成功"]) {
                 [self.navigationController popViewControllerAnimated:YES];
             }
@@ -395,7 +401,19 @@
     // 发送下单请求
     [AFRequest postConfirmOrder:url andParameter:parameter andResponse:^(NSString * _Nonnull resultStr) {
         if ([resultStr localizedCaseInsensitiveContainsString:@"success"]) {
+            for (Commodity *comm in self.commsNum) {
+                comm.stock = [NSString stringWithFormat:@"%d", (comm.stock.intValue - comm.selectedNum)];
+                comm.selectedNum = 0;
+            }
+            // 发送通知，修改已经下单的商品的模型数据
+            [NotifitionSender updateAllSelectedNumNotification:self.commsNum];
+            // 将已经下单的商品从数据库中删除
             [FMDBsql deleteAllShopcartComms];
+            
+            // 发送购物车已经更新的通知
+            NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+            [center postNotificationName:@"shopcartIsUpdate" object:self];
+            
             self.alertController.message = @"下单成功";
             [self presentViewController:self.alertController animated:YES completion:nil];
         } else if ([resultStr localizedCaseInsensitiveContainsString:@"error"]) {

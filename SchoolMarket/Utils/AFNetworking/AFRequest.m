@@ -22,13 +22,14 @@
  *  @param parameter       请求参数
  *  @param categoriesblock 闭包回调
  */
-+ (void)getCategorier:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andCategorierBlock:(nonnull categoriesResponseBlock)categoriesblock
++ (void)getCategorier:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andCategorierBlock:(nonnull categoriesResponseBlock)categoriesblock andError:(nullable errorBlock)errorblock
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager GET:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         categoriesblock(responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@", error);
+        errorblock(error);
     }];
 }
 
@@ -39,7 +40,7 @@
  *  @param parameter 参数
  *  @param commblock 闭包回调
  */
-+ (void)getComm:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andCommBlock:(nonnull commResponseBlock)commblock andError:(nullable errorBlock)errorblock
++ (void)getComm:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andCommBlock:(nonnull dataResponseBlock)commblock andError:(nullable errorBlock)errorblock
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager GET:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -117,7 +118,7 @@
  *  @param parameter    参数（用户id 或者 收货地址id）
  *  @param addressBlock 闭包（收货地址数组）
  */
-+ (void)getAddresses:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andAddress:(nonnull commResponseBlock)addressBlock andError:(nullable errorBlock)errorblock{
++ (void)getAddresses:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andAddress:(nonnull dataResponseBlock)addressBlock andError:(nullable errorBlock)errorblock{
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager GET:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSMutableArray *addresses = [[NSMutableArray alloc] init];  //地址数组
@@ -188,7 +189,7 @@
 
 }
 
-+ (void)postConfirmOrder:(NSString *)url andParameter:(NSDictionary *)parameter andResponse:(orderPostBack)postback {
++ (void)postConfirmOrder:(NSString *)url andParameter:(NSDictionary *)parameter andResponse:(postBackOrder)postback {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     // 设置提交的数据为json格式
     manager.requestSerializer = [AFJSONRequestSerializer serializer];

@@ -30,6 +30,19 @@
 @end
 
 @implementation ShoppingCartController
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.title = @"购物车";
+    
+    // 接受数据库更新消息
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(updateShopcart) name:@"shopcartIsUpdate" object:nil];
+    // 更新购物车视图
+    [self updateShopcart];
+}
+
+#pragma mark - 懒加载
 - (NSMutableArray *)commsNum {
     if (_commsNum == nil) {
         _commsNum = [NSMutableArray array];
@@ -46,17 +59,7 @@
     return _sumPrice;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
-    self.title = @"购物车";
-    
-    // 接受数据库更新消息
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(updateShopcart) name:@"shopcartIsUpdate" object:nil];
-    [self updateShopcart];
-}
-
+#pragma mark - 更新购物车视图
 /**  接收到通知后调用此方法，更新购物车视图 */
 - (void)updateShopcart {
     [self.commsNum removeAllObjects];

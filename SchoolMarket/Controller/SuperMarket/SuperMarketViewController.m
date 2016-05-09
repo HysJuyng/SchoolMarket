@@ -39,75 +39,20 @@
 @property (nonatomic, strong) Categories *selectedCategory;
 /**  被选择的子分类 */
 @property (nonatomic, strong) SubCategories *selectedSubcategory;
+/**  弹框 */
+@property (nonatomic, strong) UIAlertController *alertController;
 
 @end
 
 @implementation SuperMarketViewController
-- (NSMutableArray *)comms {
-    if (_comms == nil) {
-        _comms = [NSMutableArray array];
-    }
-    return _comms;
-}
-
-/**  获取分类信息 */
-- (NSMutableArray *)categories {
-    if (_categories == nil) {
-        // 创建临时数组
-        NSMutableArray *tempArray = [NSMutableArray array];
-        // 获取分类数据的接口
-        NSString *categoriesUrl = [NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/findAllClassify.jhtml"];
-        // 请求网络数据
-        [AFRequest getCategorier:categoriesUrl andParameter:nil andCategorierBlock:^(NSMutableArray * _Nonnull categories) {
-            // 遍历数组，依次转换模型，并添加到临时数组中
-            for (NSDictionary *dict in categories) {
-                [tempArray addObject:[Categories categoriesWithDict:dict]];
-            }
-            self.categories = tempArray;
-            // 刷新分类视图
-            [self.category reloadData];
-            
-            // 设置选中第一个主分类
-            [self setSelectedIndexPath:self.category];
-            // 被点击的分类
-            self.selectedCategory = [self.categories firstObject];
-            // 开启多一条线程获取商品信息
-            [NSThread detachNewThreadSelector:@selector(getComms:) toTarget:self withObject:self.selectedCategory];
-            // 刷新子分类数据
-            [self.subCategory reloadData];
-            // 设置选中第一个子分类
-            [self setSelectedIndexPath:self.subCategory];
-        }];
-    }
-    return _categories;
-}
-
-/**  获取商品信息 */
-- (void)getComms:(Categories *)category {
-    // 获取商品数据的接口
-    NSString *commUrl = [NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/findAllCommByMainId.jhtml"];
-    // 参数（主分类id）
-    NSDictionary *commParameter = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d", category.mainclassId], @"mainclassId", nil];
-    // 闭包回调
-    [AFRequest getComm:commUrl andParameter:commParameter andCommBlock:^(NSMutableArray * _Nonnull commArr) {
-        // 获得数据
-        self.categoryComms = commArr;
-        if (self.selectedCategoryComms.count == 0) {
-            self.selectedCategoryComms = commArr;
-        }
-        // 与购物车的商品进行对比
-        [FMDBsql contrastShopcartAndModels:self.selectedCategoryComms];
-        // 刷新商品视图
-        [self.commCV reloadData];
-        [self setSelectedIndexPath:self.subCategory];
-    }];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
-    /**  创建导航控制器Item */
+    
+    // 发送网络请求获取分类信息
+    [self getCategories];
+    // 创建导航控制器Item
     [self BarButtonItem];
     
     CGFloat frameY = CGRectGetMaxY(self.navigationController.navigationBar.frame);
@@ -128,6 +73,102 @@
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     // 商品数量改变通知
     [center addObserver:self selector:@selector(updateSMSelectedNum:) name:@"updateSelectedNum" object:nil];
+//    NSNotificationCenter *center1 = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(updateAllSelectedNum:) name:@"updateAllSelectedNum" object:nil];
+}
+
+#pragma mark - 懒加载
+- (NSMutableArray *)comms {
+    if (_comms == nil) {
+        _comms = [NSMutableArray array];
+    }
+    return _comms;
+}
+
+/**  获取分类信息 */
+- (NSMutableArray *)categories {
+    if (_categories == nil) {
+        _categories = [NSMutableArray array];
+    }
+    return _categories;
+}
+
+
+- (UIAlertController *)alertController {
+    if (_alertController == nil) {
+        _alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            if ([_alertController.message localizedCaseInsensitiveContainsString:@"分类"]) {
+                // 通过赋值，调用categories的懒加载来获取网络数据
+                [self getCategories];
+            } else if ([_alertController.message localizedCaseInsensitiveContainsString:@"商品"]) {
+                [self getComms:self.selectedCategory];
+            }
+        }];
+        [_alertController addAction:action];
+    }
+    return _alertController;
+}
+
+#pragma mark - 网络请求，刷新视图
+/**  获取分类信息 */
+- (void)getCategories {
+    // 获取分类数据的接口
+    NSString *categoriesUrl = [NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/findAllClassify.jhtml"];
+    // 请求网络数据
+    [AFRequest getCategorier:categoriesUrl andParameter:nil andCategorierBlock:^(NSMutableArray * _Nonnull categories) {
+        // 遍历分类数组，依次转换模型，并添加到临时数组中
+        for (NSDictionary *dict in categories) {
+            [self.categories addObject:[Categories categoriesWithDict:dict]];
+        }
+        // 刷新分类视图
+        [self.category reloadData];
+        
+        // 设置选中第一个主分类
+        [self setSelectedIndexPath:self.category];
+        // 被点击的分类
+        self.selectedCategory = [self.categories firstObject];
+        // 开启多一条线程获取商品信息
+        [NSThread detachNewThreadSelector:@selector(getComms:) toTarget:self withObject:self.selectedCategory];
+        // 刷新子分类数据
+        [self.subCategory reloadData];
+        // 设置选中第一个子分类
+        [self setSelectedIndexPath:self.subCategory];
+    } andError:^(NSError * _Nullable error) {
+        if (error) {
+            self.alertController.message = @"网络错误,无法获取分类信息";
+#warning 还需进一步测试
+            [self presentViewController:self.alertController animated:YES completion:nil];
+        }
+    }];
+}
+
+/**  获取商品信息 */
+- (void)getComms:(Categories *)category {
+    // 获取商品数据的接口
+    NSString *commUrl = [NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/findAllCommByMainId.jhtml"];
+    // 参数（主分类id）
+    NSDictionary *commParameter = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d", category.mainclassId], @"mainclassId", nil];
+    // 闭包回调
+    [AFRequest getComm:commUrl andParameter:commParameter andCommBlock:^(NSMutableArray * _Nonnull comms) {
+        // 获得数据
+        self.categoryComms = comms;
+        if (self.selectedCategoryComms.count == 0) {
+            self.selectedCategoryComms = comms;
+        }
+        // 与购物车的商品进行对比
+        [FMDBsql contrastShopcartAndModels:self.categoryComms];
+        [FMDBsql contrastShopcartAndModels:self.selectedCategoryComms];
+        // 刷新商品视图
+        [self.commCV reloadData];
+        [self setSelectedIndexPath:self.subCategory];
+    } andError:^(NSError * _Nullable error) {
+        if (error) {
+            self.alertController.message = @"网络错误，无法获取商品信息";
+#warning 还需进一步测试
+            [self presentViewController:self.alertController animated:YES completion:nil];
+        }
+    }];
 }
 
 #pragma mark - 创建导航控制器Item
@@ -474,15 +515,53 @@
 }
 
 #pragma mark - 通知方法
+/**  更新某个选择的商品的数量 */
 - (void)updateSMSelectedNum:(NSNotification *)notification {
-    int commid = [notification.userInfo[@"commid"] intValue];
+    int commid = [notification.userInfo[@"commodityId"] intValue];
+    [self changeCommCell:notification.userInfo commId:commid];
+}
+
+/**  更新所有已选择商品的数量 */
+- (void)updateAllSelectedNum:(NSNotification *)notification {
+    NSMutableArray *arrayM = notification.userInfo[@"comms"];
+    for (NSDictionary *dict in arrayM) {
+        int commid = [dict[@"commodityId"] intValue];
+        [self changeCommCell:dict commId:commid];
+        // 如果缓存下来的所有商品数组不为0的话，则将里面对应的商品模型进行数据修改
+        if (self.comms.count != 0) {
+            for (Commodity *comm in self.comms) {
+                if (commid == comm.commodityId) {
+                    [comm setValuesForKeysWithDictionary:dict];
+                    break;
+                }
+            }
+        }
+    }
+}
+
+/**
+ *  更改分类商品模型数据和商品Cell的显示
+ *
+ *  @param dict   商品模型字典
+ *  @param commid 商品id
+ */
+- (void)changeCommCell:(NSDictionary *)dict commId:(int)commid {
+    // 更改当前选择的子分类商品模型数据和商品Cell的显示
     for (int i = 0; i < self.selectedCategoryComms.count; i++) {
         Commodity *comm = self.selectedCategoryComms[i];
         if (commid == comm.commodityId) {
             NSIndexPath *commIndexPath = [NSIndexPath indexPathForItem:i inSection:0];
             CommCell *commCell = (CommCell *)[self.commCV cellForItemAtIndexPath:commIndexPath];
-            [commCell setCommcellOfSelectedNum:notification.userInfo[@"selectedNum"]];
-            comm.selectedNum = [notification.userInfo[@"selectedNum"] intValue];
+            [commCell setCommcellOfSelectedNum:dict[@"selectedNum"]];
+            [comm setValuesForKeysWithDictionary:dict];
+            break;
+        }
+    }
+    // 更改当前选择的大分类商品模型数据
+    for (Commodity *comm in self.categoryComms) {
+        if (commid == comm.commodityId) {
+            [comm setValuesForKeysWithDictionary:dict];
+            return;
         }
     }
 }
