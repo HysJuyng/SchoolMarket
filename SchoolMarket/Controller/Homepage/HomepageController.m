@@ -45,6 +45,8 @@
 
     //获取商品数据
     [self getHomeComms];
+    //获取广告内容
+    [self getHomeAdvertises];
     
     //设置通知
     [self setNotification];
@@ -68,6 +70,17 @@
     }
     
     return _alertController;
+}
+/** 懒加载广告视图*/
+- (HCHeaderView *)hcHeaderView {
+    if (_hcHeaderView) {
+        HCHeaderView *tempheadview = [[HCHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 148)];
+        _hcHeaderView = tempheadview;
+//        //设置公告
+//        [self.hcHeaderView setTitle:@"这里放公告"];
+        
+    }
+    return _hcHeaderView;
 }
 
 /** 设置通知*/
@@ -105,23 +118,23 @@
 }
 /** 获取广告内容*/
 - (void)getHomeAdvertises {
-    if (self.advertises) {
+//    if (self.hcHeaderView) {
+//        //设置广告内容
+//        self.hcHeaderView.advertises = self.advertises;
+//    } else {
+    NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllAdvertises.jhtml";
+    NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"supermarketId", nil];
+    //发送请求
+    [AFRequest getAdvertises:url andParameter:param andAdvertise:^(NSMutableArray * _Nonnull data) {
+        //获取广告model数组
+        self.advertises = data;
         //设置广告内容
         self.hcHeaderView.advertises = self.advertises;
-    } else {
-        NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllAdvertises.jhtml";
-        NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"supermarketId", nil];
-        //发送请求
-        [AFRequest getAdvertises:url andParameter:param andAdvertise:^(NSMutableArray * _Nonnull data) {
-            //获取广告model数组
-            self.advertises = data;
-            //设置广告内容
-            self.hcHeaderView.advertises = self.advertises;
-            
-        } andError:^(NSError * _Nullable error) {
-            //请求错误操作
-        }];
-    }
+        
+    } andError:^(NSError * _Nullable error) {
+        //请求错误操作
+    }];
+//    }
     
 }
 
@@ -189,15 +202,6 @@
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     //第一区的头视图内有公告
     if (section == 0) {
-        if (!self.hcHeaderView) {
-            HCHeaderView *tempheadview = [[HCHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 148)];
-            self.hcHeaderView = tempheadview;
-            //设置公告
-            [self.hcHeaderView setTitle:@"这里放公告"];
-            
-            //获取广告内容
-            [self getHomeAdvertises];
-        }
         return self.hcHeaderView;
     }
     return nil;

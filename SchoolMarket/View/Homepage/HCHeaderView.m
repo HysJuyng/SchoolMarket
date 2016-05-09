@@ -77,6 +77,8 @@
     }
     
     self.scrollview.contentSize = CGSizeMake(self.frame.size.width * advert.count, 0);
+    
+    [self addTimer];
 }
 
 //设置公告
@@ -116,15 +118,15 @@
         page++;
     }
    
-    //  滚动scrollview
+    //滚动scrollview
     CGFloat x = page * self.scrollview.frame.size.width;
-    self.scrollview.contentOffset = CGPointMake(x, 0);
+    [self.scrollview setContentOffset:CGPointMake(x, 0) animated:true];
 }
 /**
 *  开启定时器
 */
 - (void)addTimer{
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(nextImage) userInfo:nil repeats:YES];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(nextImage) userInfo:nil repeats:YES];
 }
 /**
 *  关闭定时器
