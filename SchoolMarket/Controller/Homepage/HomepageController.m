@@ -17,10 +17,11 @@
 @interface HomepageController ()   <HomepageCellDelegate,UITableViewDataSource,UITableViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,CommCellDelegate>
 
 @property (strong,nonatomic) UITableView *tableview;
+@property (nonatomic,weak) HCHeaderView *hcHeaderView;
 
 @property (nonatomic,strong) NSMutableArray *hotComms;
 @property (nonatomic,strong) NSMutableArray *recommendComms;
-@property (nonatomic,weak) NSMutableArray *adverImgs;
+@property (nonatomic,strong) NSMutableArray *advertises;
 
 @property (nonatomic,strong) UIAlertController *alertController;
 
@@ -40,15 +41,7 @@
     self.tableview.dataSource = self;
     self.tableview.separatorStyle = NO;  //去掉分割线
     [self.view addSubview:self.tableview];
-    
-//    //------广告
-//    self.adverImgs = [[NSMutableArray alloc] init];
-//    NSString *adverUrl = @"";
-//    [request getImgs:adverUrl andParameter:nil andImgsBlock:^(NSMutableArray * _Nonnull responseArr) {
-//        self.adverImgs = responseArr;  //获得广告图片
-//        //刷新广告区域视图
-//        [[self.tableview headerViewForSection:0] reloadInputViews];;  //测试 刷新头视图
-//    }];
+
 
     //获取商品数据
     [self getHomeComms];
@@ -109,6 +102,27 @@
         self.alertController.message = @"网络请求失败！";
         [self presentViewController:self.alertController animated:true completion:nil];
     }];
+}
+/** 获取广告内容*/
+- (void)getHomeAdvertises {
+    if (self.advertises) {
+        //设置广告内容
+        self.hcHeaderView.advertises = self.advertises;
+    } else {
+        NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllAdvertises.jhtml";
+        NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"supermarketId", nil];
+        //发送请求
+        [AFRequest getAdvertises:url andParameter:param andAdvertise:^(NSMutableArray * _Nonnull data) {
+            //获取广告model数组
+            self.advertises = data;
+            //设置广告内容
+            self.hcHeaderView.advertises = self.advertises;
+            
+        } andError:^(NSError * _Nullable error) {
+            //请求错误操作
+        }];
+    }
+    
 }
 
 #pragma mark 设置导航栏
@@ -175,11 +189,16 @@
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     //第一区的头视图内有公告
     if (section == 0) {
-        HCHeaderView *hcHeaderView = [[HCHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 148) andImgs:self.adverImgs];
-        //设置公告
-        [hcHeaderView setTitle:@"这里放公告"];
-        
-        return hcHeaderView;
+        if (!self.hcHeaderView) {
+            HCHeaderView *tempheadview = [[HCHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 148)];
+            self.hcHeaderView = tempheadview;
+            //设置公告
+            [self.hcHeaderView setTitle:@"这里放公告"];
+            
+            //获取广告内容
+            [self getHomeAdvertises];
+        }
+        return self.hcHeaderView;
     }
     return nil;
 }
@@ -199,7 +218,7 @@
     if (indexPath.section == 0) {   //第一区为广告和其它按钮
         HCHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"guanggao"];
         if (cell == nil) {
-            cell = [[HCHeaderCell alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width / 4)];
+            cell = [[HCHeaderCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"guanggao" andFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width / 4)];
         }
         
         //collectionview的实现

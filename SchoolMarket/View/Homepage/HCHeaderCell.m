@@ -9,10 +9,12 @@
 
 @implementation HCHeaderCell
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier andFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        
+        self.frame = frame;
         
         //collectionview
         UICollectionViewLayout *layout = [[UICollectionViewFlowLayout alloc] init];

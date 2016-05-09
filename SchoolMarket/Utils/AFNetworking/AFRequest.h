@@ -6,7 +6,7 @@
 
 
 //闭包
-typedef void (^commResponseBlock)( NSMutableArray * _Nonnull data);
+typedef void (^ResponseBlock)( NSMutableArray * _Nonnull data);
 typedef void (^saleAndSpecialComm)( NSMutableArray * _Nonnull hotComms,NSMutableArray * _Nonnull recommendComms);
 typedef void (^OrderBlock)( NSMutableArray * _Nonnull orders);
 typedef void (^categoriesResponseBlock)( NSMutableArray * _Nonnull categories);
@@ -25,7 +25,7 @@ typedef void (^errorBlock)(NSError * _Nullable error);
  *  @param parameter    参数（用户id 或者 收货地址id）
  *  @param addressBlock 闭包（收货地址数组）
  */
-+ (void)getAddresses:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andAddress:(nonnull commResponseBlock)addressBlock andError:(nullable errorBlock)errorblock;
++ (void)getAddresses:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andAddress:(nonnull ResponseBlock)addressBlock andError:(nullable errorBlock)errorblock;
 
 /**  获取分类信息 */
 + (void)getCategorier:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andCategorierBlock:(nonnull categoriesResponseBlock)categoriesblock;
@@ -36,7 +36,7 @@ typedef void (^errorBlock)(NSError * _Nullable error);
  *  @param parameter 参数 
  *  @param commblock 闭包回调 (商品)
  */
-+ (void)getComm:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andCommBlock:(nonnull commResponseBlock)commblock andError:(nullable errorBlock)errorblock;
++ (void)getComm:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andCommBlock:(nonnull ResponseBlock)commblock andError:(nullable errorBlock)errorblock;
 /**
  *  获取热卖和特价商品
  *
@@ -46,8 +46,6 @@ typedef void (^errorBlock)(NSError * _Nullable error);
  */
 + (void)getSaleAndSpecialComm:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andCommBlock:(nonnull saleAndSpecialComm)commblock andError:(nullable errorBlock)errorblock;
 
-//获取图片（数组）地址
-- (void)getImgs:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andImgsBlock:(nonnull commResponseBlock)imgsblock andError:(nullable errorBlock)errorblock;
 /**
  *  获取订单
  *
@@ -56,6 +54,21 @@ typedef void (^errorBlock)(NSError * _Nullable error);
  *  @param commblock 闭包回调 （订单）
  */
 + (void)getOrderByUserid:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andBlock:(nonnull OrderBlock)orderblock andError:(nullable errorBlock)errorblock;
+
+/**
+ *  获取广告
+ *
+ *  @param url            请求地址
+ *  @param parameter      参数
+ *  @param advertiseBlock 返回
+ *  @param errorblock     错误返回
+ */
++ (void)getAdvertises:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andAdvertise:(nonnull ResponseBlock)advertiseBlock andError:(nullable errorBlock)errorblock;
+
+
+
+
+
 /**
  *  添加收货地址
  *
@@ -76,6 +89,16 @@ typedef void (^errorBlock)(NSError * _Nullable error);
  *  @param errorblock 失败返回
  */
 + (void)postLogin:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBack)postback andError:(nullable errorBlock)errorblock;
+
+/**
+ *  修改用户信息
+ *
+ *  @param url        请求地址
+ *  @param parameter  参数
+ *  @param postback   返回
+ *  @param errorblock 错误返回
+ */
++ (void)postChangeUserMsg:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBackMessage)postback andError:(nullable errorBlock)errorblock;
 
 + (void)posttest;
 

@@ -21,6 +21,7 @@
 @property (nonatomic,strong) User *userMsg;
 
 @property (nonatomic,assign) int isChange; //判断修改标识
+@property (nonatomic,assign) int isLogin;  //判断登录标识
 
 @end
 
@@ -54,9 +55,9 @@
 - (void)setNotification {
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     //重新登录 刷新视图
-    [center addObserver:self selector:@selector(updateUserMsgCell) name:@"updateUserMsgCell" object:nil];
+    [center addObserver:self selector:@selector(updateUserMsgCellWhenIsLogin) name:@"updateUserMsgCell" object:nil];
     //修改信息 刷新视图
-    [center addObserver:self selector:@selector(updateUserMsgCell) name:@"userIsChange" object:nil];
+    [center addObserver:self selector:@selector(updateUserMsgCellWhenIsChange) name:@"userIsChange" object:nil];
 }
 
 /** 懒加载用户数据*/
@@ -73,6 +74,8 @@
         if (userid != _userMsg.userId) {
             //通过数据库查找用户信息
             _userMsg = [FMDBsql getUserMsg:userid];
+            //把默认标识取消
+            self.isLogin = 0;
         }
         //判断是否已经修改
         if (self.isChange) {
@@ -80,6 +83,12 @@
             _userMsg = [FMDBsql getUserMsg:userid];
             //把默认标识取消
             self.isChange = 0;
+        }
+        if (userid == _userMsg.userId && self.isLogin) {
+            //通过数据库查找用户信息
+            _userMsg = [FMDBsql getUserMsg:userid];
+            //把默认标识取消
+            self.isLogin = 0;
         }
     }
     
@@ -201,7 +210,21 @@
 
 #pragma mark 通知方法
 /** 通知方法 更新用户信息cell*/
-- (void)updateUserMsgCell {
+- (void)updateUserMsgCellWhenIsChange {
+    
+    //修改标识
+    self.isChange = 1;
+    
+    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
+    //刷新视图
+    [self.personalTableview reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:(UITableViewRowAnimationNone)];
+}
+/** 通知方法 更新用户信息cell*/
+- (void)updateUserMsgCellWhenIsLogin {
+    
+    //修改标识
+    self.isLogin = 1;
+    
     NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
     //刷新视图
     [self.personalTableview reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:(UITableViewRowAnimationNone)];

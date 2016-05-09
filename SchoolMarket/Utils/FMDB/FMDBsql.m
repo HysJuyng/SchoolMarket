@@ -192,7 +192,7 @@ static FMDatabase *db;
  */
 + (void)savePersonalMsg:(User*)user {
     //模型转字典
-    NSDictionary *userdic = [user userToDictionary:user];
+    NSDictionary *userdic = [user userToDictionary];
     //模型转data
     NSData *userData = [NSKeyedArchiver archivedDataWithRootObject:userdic];
     //插入数据库
@@ -226,7 +226,7 @@ static FMDatabase *db;
 + (void)updateUserMsg:(User*)user {
     //直接把新的用户数据 覆盖到原来的
     //模型转字典
-    NSDictionary *userdic = [user userToDictionary:user];
+    NSDictionary *userdic = [user userToDictionary];
     //字典转data
     NSData *userData = [NSKeyedArchiver archivedDataWithRootObject:userdic];
     //修改数据库

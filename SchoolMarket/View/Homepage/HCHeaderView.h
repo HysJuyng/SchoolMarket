@@ -4,16 +4,18 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HCHeaderView : UIView
+@interface HCHeaderView : UIView <UIScrollViewDelegate>
 
 @property (weak,nonatomic) UIScrollView *scrollview;   //滚动视图
 @property (weak,nonatomic) UIPageControl *pagec;
 @property (weak,nonatomic) UIImageView *imgvTitle;   //头图片
 @property (weak,nonatomic) UILabel *lbTitle;   //头标题
 @property (weak,nonatomic) UIView *titleView;   //放头图片和头标题的view
+@property (strong,nonatomic) NSArray *advertises;  //广告数组
+@property (nonatomic, strong) NSTimer *timer;  //计时器
 
-//初始化方法  附带图片数组
-- (nonnull instancetype)initWithFrame:(CGRect)frame andImgs:(nullable NSArray*)imgs;
+//初始化方法  
+- (nonnull instancetype)initWithFrame:(CGRect)frame;
 
 //设置公告
 - (void)setTitle:(nonnull NSString*)guanggao;

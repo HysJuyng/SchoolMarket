@@ -8,6 +8,7 @@
 #import "Commodity.h"
 #import "Order.h"
 #import "Address.h"
+#import "Advert.h"
 
 //#import "Categories.h"
 
@@ -35,7 +36,7 @@
  *  @param parameter 参数
  *  @param commblock 闭包回调
  */
-+ (void)getComm:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andCommBlock:(nonnull commResponseBlock)commblock andError:(nullable errorBlock)errorblock
++ (void)getComm:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andCommBlock:(nonnull ResponseBlock)commblock andError:(nullable errorBlock)errorblock
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager GET:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -112,7 +113,7 @@
  *  @param parameter    参数（用户id 或者 收货地址id）
  *  @param addressBlock 闭包（收货地址数组）
  */
-+ (void)getAddresses:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andAddress:(nonnull commResponseBlock)addressBlock andError:(nullable errorBlock)errorblock{
++ (void)getAddresses:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andAddress:(nonnull ResponseBlock)addressBlock andError:(nullable errorBlock)errorblock{
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager GET:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSMutableArray *addresses = [[NSMutableArray alloc] init];  //地址数组
@@ -130,9 +131,44 @@
     }];
 
 }
+/**
+ *  获取广告
+ *
+ *  @param url            请求地址
+ *  @param parameter      参数
+ *  @param advertiseBlock 返回
+ *  @param errorblock     错误返回
+ */
++ (void)getAdvertises:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andAdvertise:(nonnull ResponseBlock)advertiseBlock andError:(nullable errorBlock)errorblock{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"%@",responseObject);
+        
+        NSArray *dics = responseObject;
+        NSMutableArray *data = [[NSMutableArray alloc] init];
+        
+        for (NSDictionary *dic in dics) {
+            Advert *advert = [[Advert alloc] initWitDic:dic];
+            [data addObject:advert];
+        }
+        
+        advertiseBlock(data);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+        errorblock(error);
+    }];
+}
 
 #pragma mark POST
-//发送请求（登录注册）
+/**
+ *  发送请求（登录注册）
+ *
+ *  @param url        请求地址
+ *  @param parameter  参数
+ *  @param postback   返回
+ *  @param errorblock 错误返回
+ */
 + (void)postLogin:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBack)postback andError:(nullable errorBlock)errorblock{
     NSLog(@"%@",parameter);
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -184,7 +220,28 @@
         NSLog(@"%@",error);
         errorblock(error);
     }];
-
+}
+/**
+ *  修改用户信息
+ *
+ *  @param url        请求地址
+ *  @param parameter  参数
+ *  @param postback   返回
+ *  @param errorblock 错误返回
+ */
++ (void)postChangeUserMsg:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBackMessage)postback andError:(nullable errorBlock)errorblock {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager POST:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"%@",responseObject);
+        NSDictionary *dic = responseObject;
+        NSString *message = dic[@"message"];
+        
+        postback(message);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+        errorblock(error);
+    }];
 }
 
 + (void)posttest {

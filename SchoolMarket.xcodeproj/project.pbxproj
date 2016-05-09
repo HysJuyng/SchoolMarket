@@ -52,6 +52,7 @@
 		3BB8B8E11CD248FE00C77FA9 /* OrderDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB8B8E01CD248FE00C77FA9 /* OrderDetailCell.m */; };
 		3BBA9D851CAD13C100DF67B7 /* CommCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBA9D841CAD13C100DF67B7 /* CommCell.m */; };
 		3BBF20C81CE05C1F0089C954 /* ChangeNameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBF20C71CE05C1F0089C954 /* ChangeNameView.m */; };
+		3BBF20CB1CE0D1820089C954 /* Advert.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBF20CA1CE0D1820089C954 /* Advert.m */; };
 		3BD638911CB6293D0077D2A4 /* PersonalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD638901CB6293D0077D2A4 /* PersonalCell.m */; };
 		3BD638991CB643CC0077D2A4 /* PersonalMsgCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD638981CB643CC0077D2A4 /* PersonalMsgCell.m */; };
 		3BD638A01CB653480077D2A4 /* PersonMsgCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD6389F1CB653480077D2A4 /* PersonMsgCell.m */; };
@@ -176,6 +177,8 @@
 		3BBA9D841CAD13C100DF67B7 /* CommCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommCell.m; path = Cell/CommCell.m; sourceTree = "<group>"; };
 		3BBF20C61CE05C1F0089C954 /* ChangeNameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChangeNameView.h; path = Personal/PersonalMsg/ChangeNameView.h; sourceTree = "<group>"; };
 		3BBF20C71CE05C1F0089C954 /* ChangeNameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChangeNameView.m; path = Personal/PersonalMsg/ChangeNameView.m; sourceTree = "<group>"; };
+		3BBF20C91CE0D1810089C954 /* Advert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Advert.h; sourceTree = "<group>"; };
+		3BBF20CA1CE0D1820089C954 /* Advert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Advert.m; sourceTree = "<group>"; };
 		3BD6388F1CB6293D0077D2A4 /* PersonalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalCell.h; path = Personal/PersonalCell.h; sourceTree = "<group>"; };
 		3BD638901CB6293D0077D2A4 /* PersonalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalCell.m; path = Personal/PersonalCell.m; sourceTree = "<group>"; };
 		3BD638931CB62C280077D2A4 /* PersonalHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalHeader.h; path = Personal/PersonalHeader.h; sourceTree = "<group>"; };
@@ -521,6 +524,8 @@
 				335066661CCD17A400DD91E9 /* User.m */,
 				3B71D73F1CD1FB8000F5B9F6 /* Order.h */,
 				3B71D7401CD1FB8000F5B9F6 /* Order.m */,
+				3BBF20C91CE0D1810089C954 /* Advert.h */,
+				3BBF20CA1CE0D1820089C954 /* Advert.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -870,6 +875,7 @@
 				3B8946831CAF95A500959786 /* HomepageCell.m in Sources */,
 				33D550891CBFD4FD003E4EE3 /* SpecialCommCell.m in Sources */,
 				3BD638991CB643CC0077D2A4 /* PersonalMsgCell.m in Sources */,
+				3BBF20CB1CE0D1820089C954 /* Advert.m in Sources */,
 				3B8946861CAFBA4400959786 /* HCLastFootView.m in Sources */,
 				3BDEDD931CBCBE8900E67A3F /* CommDetailViewController.m in Sources */,
 				33357FD51CC907E2008C22A5 /* ConfirmOrderViewController.m in Sources */,
