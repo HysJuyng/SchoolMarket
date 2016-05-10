@@ -6,7 +6,7 @@
 #import "Advert.h"
 #import "SDWebImage-umbrella.h"
 
-@implementation HCHeaderView
+@implementation HCHeaderView 
 
 
 - (nonnull instancetype)initWithFrame:(CGRect)frame
@@ -74,9 +74,14 @@
             NSLog(@"广告：%@",pic);
         }];
         [self.scrollview addSubview:imgv];
+        
+        
     }
     
     self.scrollview.contentSize = CGSizeMake(self.frame.size.width * advert.count, 0);
+    
+    
+    
     
     [self addTimer];
 }

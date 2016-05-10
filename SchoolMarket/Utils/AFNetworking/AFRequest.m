@@ -175,7 +175,7 @@
     [manager POST:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"%@",responseObject);   //获得数据
         NSDictionary *dic = responseObject;
-        NSDictionary *userdic = [[NSDictionary alloc] init];
+        NSDictionary *userdic;
         NSString *flag = [[NSString alloc] init];
         if ([[dic objectForKey:@"message"]  isEqual:@"passwordError" ]) {
             flag = @"密码错误！";
@@ -243,11 +243,41 @@
         errorblock(error);
     }];
 }
+/**
+ *  上传图片
+ *
+ *  @param url        请求地址
+ *  @param parameter  参数
+ *  @param data       文件
+ *  @param postback   返回
+ *  @param errorblock 错误返回
+ */
++ (void)uploadUserPortrait:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andData:(nonnull NSData*)data andResponse:(nonnull postBackMessage)postback andError:(nullable errorBlock)errorblock {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager POST:url parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        //上传文件
+        //图片名字
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyyMMddHHmmss";
+        NSString *str = [formatter stringFromDate:[NSDate date]];
+        NSString *fileName = [NSString stringWithFormat:@"%@.jpg", str];
+        
+        [formData appendPartWithFileData:data name:@"file" fileName:fileName mimeType:@"image/png"];
+        
+    } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        //成功
+        NSLog(@"%@",responseObject);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        //失败
+        NSLog(@"%@",error);
+        errorblock(error);
+    }];
+}
 
 + (void)posttest {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/addOrder.jhtml";
-    
     
     Order *order = [[Order alloc] init];
     order.address.addressId = 6;
@@ -263,7 +293,6 @@
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:[order orderToDictionary:order]];
     NSLog(@"%@",dic);
-//    NSArray *arr1 = @[@"123",@"4"];
     NSDictionary *arr1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"123",@"commodityId",@"4",@"commNumber", nil];
     NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:arr1,arr1, nil];
     [dic setObject:arr forKey:@"commListBeans"];
@@ -277,5 +306,6 @@
     }];
 
 }
+
 
 @end

@@ -31,7 +31,7 @@
 //检测输入
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     if (range.length == 0) {   //先判断是不是输入   length = 0 是表示输入 否则则是回退（仅限一个一个的输入）
-        if (!textField.secureTextEntry) {         //这里判断是否是密码框 （密码框可字母可数字  其余的纯数字）
+        if (textField.tag == 101) {         //这里判断是否是手机输入框 （手机输入框纯数字）
             if (![string intValue]) {              //检测是否能转换成数字
                 if (![string compare:@"0"]) {    //除去0
                     return true;

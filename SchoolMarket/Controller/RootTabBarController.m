@@ -78,7 +78,6 @@
             
             //隐藏tabbar
             self.selectedViewController.hidesBottomBarWhenPushed = YES;
-
             [self.selectedViewController pushViewController:loginvc animated:true];
             self.selectedViewController.hidesBottomBarWhenPushed = NO;
             return false;

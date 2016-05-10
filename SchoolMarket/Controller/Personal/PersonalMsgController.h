@@ -13,7 +13,7 @@
 
 @property (nonatomic,weak) UIBarButtonItem *btnBack;  //导航栏左侧返回按钮
 
-@property (nonatomic,strong) User *userMsg;  //用户信息
+@property (nonatomic,weak) User *userMsg;  //用户信息
 
 
 @end

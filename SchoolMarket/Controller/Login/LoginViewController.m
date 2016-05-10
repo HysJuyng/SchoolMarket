@@ -70,6 +70,10 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone; //cell选择样式
     if (indexPath.row == 0) {
         cell.tfContent.placeholder = @"输入您的手机号码";  //设置提示文本
+        
+        //设置手机号码tag
+        cell.tfContent.tag = 101;
+        
     } else if (indexPath.row == 1) {
         cell.tfContent.placeholder = @"输入您的密码";  //设置提示文本
         cell.tfContent.secureTextEntry = true; //密码输入

@@ -12,9 +12,11 @@
 #import "AFRequest.h"
 #import "FMDBsql.h"
 #import "NotifitionSender.h"
+#import "AdvertViewController.h"
+#import "Advert.h"
 
 
-@interface HomepageController ()   <HomepageCellDelegate,UITableViewDataSource,UITableViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,CommCellDelegate>
+@interface HomepageController ()   <HomepageCellDelegate,UITableViewDataSource,UITableViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,CommCellDelegate,HCHeaderViewDelegate,UIGestureRecognizerDelegate>
 
 @property (strong,nonatomic) UITableView *tableview;
 @property (nonatomic,strong) HCHeaderView *hcHeaderView;
@@ -74,6 +76,14 @@
 - (HCHeaderView *)hcHeaderView {
     if (!_hcHeaderView) {
         _hcHeaderView = [[HCHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 148)];
+        
+        //设置点击
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goImgLink)];
+        tapGesture.delegate = self;
+        tapGesture.numberOfTapsRequired = 1;  //点击次数
+        tapGesture.numberOfTouchesRequired = 1; //点击的手指
+        [_hcHeaderView.scrollview addGestureRecognizer:tapGesture];
+        
     }
     return _hcHeaderView;
 }
@@ -433,6 +443,26 @@
     
     //发送通知
     [NotifitionSender updateSelectedNumNotification:comm];
+}
+
+#pragma mark 广告区代理
+- (void)goImgLink {
+    //获取滚动视图的page
+    int page = (int)self.hcHeaderView.pagec.currentPage;
+    //跳转广告链接
+    NSString *advertLink = ((Advert*)self.advertises[page]).linkContent;
+    
+    //跳转广告web页面
+    AdvertViewController *subvc = [[AdvertViewController alloc] init];
+    //正向传值
+    subvc.advertLink = advertLink;
+    
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:subvc animated:true];
+    self.hidesBottomBarWhenPushed = NO;
+    
 }
 
 #pragma mark 通知方法

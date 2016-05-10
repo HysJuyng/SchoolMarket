@@ -4,7 +4,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-
+#import <BmobSDK/Bmob.h> //短信验证包
 
 @interface RegisterViewController : BaseViewController 
 
