@@ -17,7 +17,7 @@
 @interface HomepageController ()   <HomepageCellDelegate,UITableViewDataSource,UITableViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,CommCellDelegate>
 
 @property (strong,nonatomic) UITableView *tableview;
-@property (nonatomic,weak) HCHeaderView *hcHeaderView;
+@property (nonatomic,strong) HCHeaderView *hcHeaderView;
 
 @property (nonatomic,strong) NSMutableArray *hotComms;
 @property (nonatomic,strong) NSMutableArray *recommendComms;
@@ -51,7 +51,6 @@
     //设置通知
     [self setNotification];
     
-//    [AFRequest posttest];
 }
 
 /**
@@ -73,12 +72,8 @@
 }
 /** 懒加载广告视图*/
 - (HCHeaderView *)hcHeaderView {
-    if (_hcHeaderView) {
-        HCHeaderView *tempheadview = [[HCHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 148)];
-        _hcHeaderView = tempheadview;
-//        //设置公告
-//        [self.hcHeaderView setTitle:@"这里放公告"];
-        
+    if (!_hcHeaderView) {
+        _hcHeaderView = [[HCHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 148)];
     }
     return _hcHeaderView;
 }
@@ -118,10 +113,6 @@
 }
 /** 获取广告内容*/
 - (void)getHomeAdvertises {
-//    if (self.hcHeaderView) {
-//        //设置广告内容
-//        self.hcHeaderView.advertises = self.advertises;
-//    } else {
     NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/findAllAdvertises.jhtml";
     NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"supermarketId", nil];
     //发送请求
@@ -134,7 +125,6 @@
     } andError:^(NSError * _Nullable error) {
         //请求错误操作
     }];
-//    }
     
 }
 
