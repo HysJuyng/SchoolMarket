@@ -6,7 +6,6 @@
 
 @interface PersonalNameController : UIViewController
 
+@property (nonatomic,strong) NSString *userName;
 
-@property (nonatomic,weak) UITextField *tfName;
-@property (nonatomic,weak) UIButton *btnChange;
 @end

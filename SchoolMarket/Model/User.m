@@ -21,24 +21,34 @@
         self.portrait = userDic[@"portrait"];
         
         //判断性别
-        if (userDic[@"sex"] == 0) {
+        int sex = [userDic[@"sex"] intValue];
+        if (sex == 0) {
             self.sex = @"男";
-        } else {
+        } else if (sex == 1) {
             self.sex = @"女";
+        } else {
+            self.sex = @"未设定";
         }
         
     }
     return self;
 }
 /** 模型转字典*/
-- (NSDictionary*)userToDictionary:(User*)user {
+- (NSDictionary*)userToDictionary {
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     
     [dic setObject:[NSString stringWithFormat:@"%d",self.userId] forKey:@"userId"];
     [dic setObject:self.userName forKey:@"userName"];
     [dic setObject:self.userPhone forKey:@"userPhone"];
     [dic setObject:self.portrait forKey:@"portrait"];
-    [dic setObject:self.sex forKey:@"sex"];
+    
+    if ([self.sex isEqualToString:@"男"]) {
+        [dic setObject:@"0" forKey:@"sex"];
+    } else if ([self.sex isEqualToString:@"女"]) {
+        [dic setObject:@"1" forKey:@"sex"];
+    } else {
+        [dic setObject:@"3" forKey:@"sex"];
+    }
     
     return dic;
 }

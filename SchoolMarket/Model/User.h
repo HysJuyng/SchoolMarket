@@ -37,6 +37,6 @@
  */
 - (instancetype)initWithUserDic:(NSDictionary*)userDic;
 /** 模型转字典*/
-- (NSDictionary*)userToDictionary:(User*)user;
+- (NSDictionary*)userToDictionary;
 
 @end

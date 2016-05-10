@@ -19,6 +19,10 @@
 @property (nonatomic,copy) NSArray *sectionTitle;
 @property (nonatomic,copy) NSArray *sectionImage;
 @property (nonatomic,strong) User *userMsg;
+
+@property (nonatomic,assign) int isChange; //判断修改标识
+@property (nonatomic,assign) int isLogin;  //判断登录标识
+
 @end
 
 @implementation PersonalViewController
@@ -28,6 +32,8 @@
 
     self.title = @"个人中心";
     
+    //修改标识默认为0
+    self.isChange = 0;
     
     //创建tableview
     self.personalTableview = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStyleGrouped)];
@@ -40,17 +46,52 @@
     self.sectionTitle = [[NSArray alloc] initWithObjects:@"订单",@"收货地址",@"常见问题",@"意见反馈",@"关于我们",@"检查更新", nil];
     self.sectionImage = [[NSArray alloc] initWithObjects:@"personal_order",@"personal_addr",@"personal_problem",@"personal_feedback",@"personal_aboutme",@"personal_update", nil];
     
+    //设置通知
+    [self setNotification];
+    
+}
+
+/** 设置通知*/
+- (void)setNotification {
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    //重新登录 刷新视图
+    [center addObserver:self selector:@selector(updateUserMsgCellWhenIsLogin) name:@"updateUserMsgCell" object:nil];
+    //修改信息 刷新视图
+    [center addObserver:self selector:@selector(updateUserMsgCellWhenIsChange) name:@"userIsChange" object:nil];
 }
 
 /** 懒加载用户数据*/
 - (User *)userMsg {
+    //获取用户id
+    NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
+    int userid = [[userdef objectForKey:@"userId"] intValue];
+    //懒加载
     if (!_userMsg) {
-        //获取用户id
-        NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
-        int userid = [[userdef objectForKey:@"userId"] intValue];
         //通过数据库查找用户信息
         _userMsg = [FMDBsql getUserMsg:userid];
+    } else {
+        //判断登录id和原有的id是否一致
+        if (userid != _userMsg.userId) {
+            //通过数据库查找用户信息
+            _userMsg = [FMDBsql getUserMsg:userid];
+            //把默认标识取消
+            self.isLogin = 0;
+        }
+        //判断是否已经修改
+        if (self.isChange) {
+            //通过数据库查找用户信息
+            _userMsg = [FMDBsql getUserMsg:userid];
+            //把默认标识取消
+            self.isChange = 0;
+        }
+        if (userid == _userMsg.userId && self.isLogin) {
+            //通过数据库查找用户信息
+            _userMsg = [FMDBsql getUserMsg:userid];
+            //把默认标识取消
+            self.isLogin = 0;
+        }
     }
+    
     return _userMsg;
 }
 
@@ -135,6 +176,10 @@
         NSLog(@"进入个人信息");
         //推出个人信息页面
         PersonalMsgController *subvc = [[PersonalMsgController alloc] init];
+        
+        //正向传值
+        subvc.userMsg = self.userMsg;
+        
         //返回按钮
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:(UIBarButtonItemStylePlain) target:nil action:nil];
         
@@ -163,6 +208,28 @@
     }
 }
 
+#pragma mark 通知方法
+/** 通知方法 更新用户信息cell*/
+- (void)updateUserMsgCellWhenIsChange {
+    
+    //修改标识
+    self.isChange = 1;
+    
+    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
+    //刷新视图
+    [self.personalTableview reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:(UITableViewRowAnimationNone)];
+}
+/** 通知方法 更新用户信息cell*/
+- (void)updateUserMsgCellWhenIsLogin {
+    
+    //修改标识
+    self.isLogin = 1;
+    
+    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
+    //刷新视图
+    [self.personalTableview reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:(UITableViewRowAnimationNone)];
+}
+
 #pragma mark 自定义方法
 /**
  *  退出登录
@@ -171,6 +238,8 @@
     //修改userdefault
     NSUserDefaults *userdef = [[NSUserDefaults alloc] init];
     [userdef setValue:@"false" forKey:@"logined"];  //取消登录状态
+    //删除数据库中用户信息
+    [FMDBsql deleteUser:self.userMsg.userId];
     
     //返回主页
     self.tabBarController.selectedIndex = 0;

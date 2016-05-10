@@ -29,12 +29,19 @@
 }
 
 /**
- *  模型转字典
+ *  模型转字典 (用于添加和修改地址请求)
  */
-- (NSMutableDictionary*)addressToDic {
+- (NSMutableDictionary*)addressToDic:(int)isAdd {
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     
-    [dic setObject:[NSString stringWithFormat:@"%d",self.userId] forKey:@"userId"];
+    //判断是否是添加
+    if (isAdd) {
+        [dic setObject:[NSString stringWithFormat:@"%d",self.userId] forKey:@"userId"];
+    } else {
+        [dic setObject:[NSString stringWithFormat:@"%d",self.addressId] forKey:@"addressId"];
+    }
+    
+    
     [dic setObject:self.addressDetail forKey:@"addressDetail"];
     [dic setObject:self.consignee forKey:@"consignee"];
     [dic setObject:self.phone forKey:@"phone"];

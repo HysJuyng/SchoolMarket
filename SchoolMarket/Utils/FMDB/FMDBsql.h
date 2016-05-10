@@ -76,5 +76,11 @@ typedef void(^spComplete)(NSArray* comms);
  *  @param user 用户信息
  */
 + (void)updateUserMsg:(User*)user;
+/**
+ *  删除用户信息
+ *
+ *  @param userid 用户id
+ */
++ (void)deleteUser:(int)userid;
 
 @end

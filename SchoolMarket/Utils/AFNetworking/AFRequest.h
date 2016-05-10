@@ -65,6 +65,21 @@ typedef void (^errorBlock)(NSError * _Nullable error);
  *  @param commblock 闭包回调 （订单）
  */
 + (void)getOrderByUserid:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andBlock:(nonnull OrderBlock)orderblock andError:(nullable errorBlock)errorblock;
+
+/**
+ *  获取广告
+ *
+ *  @param url            请求地址
+ *  @param parameter      参数
+ *  @param advertiseBlock 返回
+ *  @param errorblock     错误返回
+ */
++ (void)getAdvertises:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andAdvertise:(nonnull ResponseBlock)advertiseBlock andError:(nullable errorBlock)errorblock;
+
+
+
+
+
 /**
  *  添加收货地址
  *
@@ -85,6 +100,16 @@ typedef void (^errorBlock)(NSError * _Nullable error);
  *  @param errorblock 失败返回
  */
 + (void)postLogin:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBack)postback andError:(nullable errorBlock)errorblock;
+
+/**
+ *  修改用户信息
+ *
+ *  @param url        请求地址
+ *  @param parameter  参数
+ *  @param postback   返回
+ *  @param errorblock 错误返回
+ */
++ (void)postChangeUserMsg:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBackMessage)postback andError:(nullable errorBlock)errorblock;
 
 + (void)posttest;
 

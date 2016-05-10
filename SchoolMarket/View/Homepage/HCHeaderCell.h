@@ -12,6 +12,6 @@
 
 
 //初始化
-- (instancetype)initWithFrame:(CGRect)frame;
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier andFrame:(CGRect)frame;
 
 @end

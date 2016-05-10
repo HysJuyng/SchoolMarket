@@ -8,6 +8,7 @@
 #import "Commodity.h"
 #import "Order.h"
 #import "Address.h"
+#import "Advert.h"
 
 //#import "Categories.h"
 
@@ -136,9 +137,44 @@
         errorblock(error);
     }];
 }
+/**
+ *  获取广告
+ *
+ *  @param url            请求地址
+ *  @param parameter      参数
+ *  @param advertiseBlock 返回
+ *  @param errorblock     错误返回
+ */
++ (void)getAdvertises:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andAdvertise:(nonnull ResponseBlock)advertiseBlock andError:(nullable errorBlock)errorblock{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"%@",responseObject);
+        
+        NSArray *dics = responseObject;
+        NSMutableArray *data = [[NSMutableArray alloc] init];
+        
+        for (NSDictionary *dic in dics) {
+            Advert *advert = [[Advert alloc] initWitDic:dic];
+            [data addObject:advert];
+        }
+        
+        advertiseBlock(data);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+        errorblock(error);
+    }];
+}
 
 #pragma mark POST
-//发送请求（登录注册）
+/**
+ *  发送请求（登录注册）
+ *
+ *  @param url        请求地址
+ *  @param parameter  参数
+ *  @param postback   返回
+ *  @param errorblock 错误返回
+ */
 + (void)postLogin:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBack)postback andError:(nullable errorBlock)errorblock{
     NSLog(@"%@",parameter);
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -164,7 +200,7 @@
     }];
 }
 /**
- *  添加收货地址
+ *  添加、修改或删除收货地址
  *
  *  @param url       请求地址
  *  @param parameter 参数（收货地址内容）
@@ -178,15 +214,40 @@
         NSString *message = [[NSString alloc] init];
         if ([dic[@"message"] isEqual:@"addSingleAddressError"]) {
             message = @"添加地址失败!";
+        } else if ([dic[@"message"] isEqual:@"alterAddressError"]) {
+            message = @"修改地址失败!";
+        } else if ([dic[@"message"] isEqual:@"deleteAddressError"]) {
+            message = @"删除地址失败!";
         } else {
-            message = dic[@"message"];
+            message = @"success";
         }
         postback(message);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
         errorblock(error);
     }];
-
+}
+/**
+ *  修改用户信息
+ *
+ *  @param url        请求地址
+ *  @param parameter  参数
+ *  @param postback   返回
+ *  @param errorblock 错误返回
+ */
++ (void)postChangeUserMsg:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBackMessage)postback andError:(nullable errorBlock)errorblock {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager POST:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"%@",responseObject);
+        NSDictionary *dic = responseObject;
+        NSString *message = dic[@"message"];
+        
+        postback(message);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+        errorblock(error);
+    }];
 }
 
 + (void)postConfirmOrder:(NSString *)url andParameter:(NSDictionary *)parameter andResponse:(postBackOrder)postback {

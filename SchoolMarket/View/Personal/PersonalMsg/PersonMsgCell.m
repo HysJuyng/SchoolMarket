@@ -36,6 +36,17 @@
     return self;
 }
 
+/**
+ *  设置cell内容
+ *
+ *  @param title   标题
+ *  @param content 内容
+ */
+- (void)setPersonMsgCell:(NSString*)title andContent:(NSString*)content {
+    self.lbTitle.text = title;
+    self.lbContent.text = content;
+}
+
 - (void)awakeFromNib {
     
 }

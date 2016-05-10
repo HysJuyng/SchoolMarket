@@ -3,10 +3,13 @@
  */
 
 #import "HCHeaderView.h"
+#import "Advert.h"
+#import "SDWebImage-umbrella.h"
 
 @implementation HCHeaderView
 
-- (nonnull instancetype)initWithFrame:(CGRect)frame andImgs:(nullable NSArray*)imgs
+
+- (nonnull instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -15,23 +18,17 @@
         UIScrollView *tempscroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height - 20)];
         self.scrollview = tempscroll;
         self.scrollview.pagingEnabled = true;
+        self.scrollview.showsHorizontalScrollIndicator = false;
         [self addSubview:self.scrollview];
+        
+        self.scrollview.delegate = self;
         
         //创建page
         UIPageControl *temppage = [[UIPageControl alloc] init];
         self.pagec = temppage;
         self.pagec.center = CGPointMake(self.frame.size.width / 2, self.frame.size.height / 5 * 4);
-        self.pagec.numberOfPages = imgs.count;
+        
         [self addSubview:self.pagec];
-        
-        
-        for (int i = 0 ; i < imgs.count ; i++ ) {
-            UIImageView *imgv = [[UIImageView alloc] initWithFrame:CGRectMake(frame.size.width * i , 0, frame.size.width, frame.size.height - 20)];
-            imgv.image = [UIImage imageNamed:imgs[i]];
-            [self.scrollview addSubview:imgv];
-        }
-        
-        self.scrollview.contentSize = CGSizeMake(frame.size.width * imgs.count, 0);
         
         //放头图片和头标题的view
         UIView *tempview = [[UIView alloc] initWithFrame:CGRectMake(0, frame.size.height - 20, frame.size.width, 20)];
@@ -55,9 +52,90 @@
     return self;
 }
 
+/**
+ *  设置广告
+ *
+ *  @param advertises 广告model数组
+ */
+- (void)setAdvertises:(nullable NSArray*)advert {
+    
+    _advertises = [[NSArray alloc] initWithArray:advert];
+    
+    //page个数
+    self.pagec.numberOfPages = advert.count;
+    
+    //图片
+    for (int i = 0 ; i < advert.count ; i++ ) {
+        UIImageView *imgv = [[UIImageView alloc] initWithFrame:CGRectMake(self.frame.size.width * i , 0, self.frame.size.width, self.frame.size.height - 20)];
+        
+        NSString *pic = ((Advert*)advert[i]).advertisePic;
+        
+        [imgv sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/uploadDir/%@",pic]] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            NSLog(@"广告：%@",pic);
+        }];
+        [self.scrollview addSubview:imgv];
+    }
+    
+    self.scrollview.contentSize = CGSizeMake(self.frame.size.width * advert.count, 0);
+    
+    [self addTimer];
+}
+
 //设置公告
 - (void)setTitle:(nonnull NSString*)guanggao {
     self.lbTitle.text = guanggao;
 }
+
+#pragma mark 滚动视图代理
+/** 滚动*/
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    //设置page
+    CGFloat scrollviewW =  scrollView.frame.size.width;
+    CGFloat x = scrollView.contentOffset.x;
+    int page = (x + scrollviewW / 2) /  scrollviewW;
+    self.pagec.currentPage = page;
+}
+/** 开始拖拽的时候调用*/
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self removeTimer];
+}
+/** 结束拖拽*/
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    //开启定时器
+    [self addTimer];
+}
+
+#pragma mark 轮播方法
+/** 下一张图片*/
+- (void)nextImage {
+    int page = (int)self.pagec.currentPage;
+    if (page == self.advertises.count - 1) {
+        page = 0;
+    }else
+    {
+        page++;
+    }
+   
+    //滚动scrollview
+    CGFloat x = page * self.scrollview.frame.size.width;
+    [self.scrollview setContentOffset:CGPointMake(x, 0) animated:true];
+}
+/**
+*  开启定时器
+*/
+- (void)addTimer{
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(nextImage) userInfo:nil repeats:YES];
+}
+/**
+*  关闭定时器
+*/
+- (void)removeTimer
+{
+    [self.timer invalidate];
+}
+
+
 
 @end
