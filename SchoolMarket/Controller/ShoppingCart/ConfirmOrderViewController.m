@@ -48,8 +48,6 @@
 /**  菊花转动视图（正在加载） */
 @property (nonatomic, weak) ActivityIndicatorView *activityView;
 
-/**  运费 */
-@property (nonatomic, copy) NSString *freight;
 /**  订单模型 */
 @property (nonatomic, strong) Order *order;
 /**  默认收货地址模型 */
@@ -197,6 +195,7 @@
             cell.textLabel.font = [UIFont systemFontOfSize:18.0];
             cell.detailTextLabel.text = self.address.addressDetail;
             cell.detailTextLabel.font = [UIFont systemFontOfSize:17.0];
+            ((AddressCell *)cell).btnEdit.hidden = YES;
         }
     } else {
         cell = [[ConfirmOrderCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
@@ -228,12 +227,12 @@
                 cell.detailTextLabel.text = self.commSumPrice;
             } else {
                 cell.textLabel.text = @"运费";
-                if (self.freight == nil) {
-                    self.freight = @"0";
+                if (self.address.freight == nil) {
+                    self.address.freight = @"0";
                 }
-                cell.detailTextLabel.text = self.freight;
+                cell.detailTextLabel.text = self.address.freight;
                 // 设置订单模型中的运费
-                self.order.freight = self.freight;
+                self.order.freight = self.address.freight;
             }
         }
     }
@@ -390,7 +389,7 @@
         CGFloat totalPriceLblX = CGRectGetMaxX(actuallyPayLbl.frame);
         CGFloat totalPriceLblW = bottomTool.frame.size.width - confirmBtnW - totalPriceLblX;
         UILabel *totalPriceLbl = [[UILabel alloc] initWithFrame:CGRectMake(totalPriceLblX, 0, totalPriceLblW, frame.size.height)];
-        totalPriceLbl.text = [NSString stringWithFormat:@"%.2f", (self.commSumPrice.floatValue + self.freight.floatValue)];
+        totalPriceLbl.text = [NSString stringWithFormat:@"%.2f", (self.commSumPrice.floatValue + self.address.freight.floatValue)];
         totalPriceLbl.textColor = [UIColor redColor];
         // 设置订单模型中的实际支付金额
         self.order.total = totalPriceLbl.text;
@@ -518,6 +517,7 @@
         [self errorTip];
     }];
 }
+
 /**  显示网络错误提示 */
 - (void)errorTip {
     [self.activityView removeFromSuperview];
@@ -527,6 +527,7 @@
     // 设置3秒后自动将错误提示从视图中移除
     [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(removeErrorTip:) userInfo:errorBtn repeats:NO];
 }
+
 /**  将错误提示移除，并刷新视图 */
 - (void)removeErrorTip:(NSTimer *)timer {
     ErrorTipButton *errorTip = [timer userInfo];
@@ -553,8 +554,11 @@
     [self.navigationController pushViewController:loginVC animated:YES];
     self.hidesBottomBarWhenPushed = YES;
 }
+
 #pragma mark - 通知事件
 - (void)getAddressFromList:(NSNotification *)notification {
     [self.address setValuesForKeysWithDictionary:notification.userInfo];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.detailOrderTbl reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 @end

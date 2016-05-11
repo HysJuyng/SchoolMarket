@@ -22,7 +22,9 @@
         self.addressDetail = addressDic[@"addressDetail"];
         self.consignee = addressDic[@"consignee"];
         self.phone = addressDic[@"phone"];
-        self.defaultAddress = [addressDic[@"defaultedAddress"] intValue];
+        self.defaultedAddress = [addressDic[@"defaultedAddress"] intValue];
+        self.freight = [NSString stringWithFormat:@"%@", addressDic[@"freight"]];
+
         
     }
     return self;
@@ -45,7 +47,7 @@
     [dic setObject:self.addressDetail forKey:@"addressDetail"];
     [dic setObject:self.consignee forKey:@"consignee"];
     [dic setObject:self.phone forKey:@"phone"];
-    [dic setObject:[NSString stringWithFormat:@"%d",self.defaultAddress] forKey:@"defaultedAddress"];
+    [dic setObject:[NSString stringWithFormat:@"%d",self.defaultedAddress] forKey:@"defaultedAddress"];
     
     return dic;
 }
@@ -61,7 +63,8 @@
     [dic setObject:self.addressDetail forKey:@"addressDetail"];
     [dic setObject:self.consignee forKey:@"consignee"];
     [dic setObject:self.phone forKey:@"phone"];
-    [dic setObject:[NSString stringWithFormat:@"%d",self.defaultAddress] forKey:@"defaultedAddress"];
+    [dic setObject:[NSString stringWithFormat:@"%d",self.defaultedAddress] forKey:@"defaultedAddress"];
+    [dic setObject:self.freight forKey:@"freight"];
     
     return dic;
 }

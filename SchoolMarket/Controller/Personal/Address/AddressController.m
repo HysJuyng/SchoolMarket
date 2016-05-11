@@ -141,7 +141,7 @@
     AddressCell *cell = [AddressCell cellWithTableView:tableView];
     //设置内容
     //判断是否为默认地址
-    if (((Address*)self.addresses[indexPath.row]).defaultAddress == 1) {
+    if (((Address*)self.addresses[indexPath.row]).defaultedAddress == 1) {
         cell.textLabel.text = [NSString stringWithFormat:@"%@  %@ (默认)",((Address*)self.addresses[indexPath.row]).consignee,((Address*)self.addresses[indexPath.row]).phone];
     } else {
         cell.textLabel.text = [NSString stringWithFormat:@"%@  %@",((Address*)self.addresses[indexPath.row]).consignee,((Address*)self.addresses[indexPath.row]).phone];
@@ -188,7 +188,7 @@
         //通过通知返回选中地址model
         [NotifitionSender selectAddress:self.addresses[indexPath.row]];
         //返回上级页面
-        [self.navigationController popToRootViewControllerAnimated:true];
+        [self.navigationController popViewControllerAnimated:YES];
     }
     
 }

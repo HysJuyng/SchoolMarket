@@ -129,8 +129,8 @@
             self.switchflag = 0;
             [cell setDefaultAddressCell:@"默认地址:" andIsDefault:0];
         } else {
-            [cell setDefaultAddressCell:@"默认地址:" andIsDefault:self.address.defaultAddress];
-            self.switchflag = self.address.defaultAddress;
+            [cell setDefaultAddressCell:@"默认地址:" andIsDefault:self.address.defaultedAddress];
+            self.switchflag = self.address.defaultedAddress;
         }
         
         return cell;
@@ -157,10 +157,10 @@
     }
     
     //默认地址
-    self.address.defaultAddress = self.switchflag;
+    self.address.defaultedAddress = self.switchflag;
     //新增时判断是否还没有地址
     if (self.count == 0) {  //若没有 则默认为1
-        self.address.defaultAddress = 1;
+        self.address.defaultedAddress = 1;
     }
     
     //获取用户信息

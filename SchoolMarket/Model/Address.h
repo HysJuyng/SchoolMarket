@@ -30,7 +30,9 @@
 /**
  *  默认地址
  */
-@property (nonatomic,assign) int defaultAddress;
+@property (nonatomic,assign) int defaultedAddress;
+/**  运费 */
+@property (nonatomic, copy) NSString *freight;
 
 
 //初始化
