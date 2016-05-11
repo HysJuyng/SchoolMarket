@@ -6,7 +6,7 @@
 
 
 //闭包
-typedef void (^dataResponseBlock)( NSMutableArray * _Nonnull data);
+typedef void (^ResponseBlock)( NSMutableArray * _Nonnull data);
 typedef void (^saleAndSpecialComm)( NSMutableArray * _Nonnull hotComms,NSMutableArray * _Nonnull recommendComms);
 typedef void (^OrderBlock)( NSMutableArray * _Nonnull orders);
 typedef void (^addressResponseBlock)( NSMutableArray * _Nonnull address);
@@ -28,7 +28,7 @@ typedef void (^errorBlock)(NSError * _Nullable error);
  *  @param parameter    参数（用户id 或者 收货地址id）
  *  @param addressBlock 闭包（收货地址数组）
  */
-+ (void)getAddresses:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andAddress:(nonnull dataResponseBlock)addressBlock andError:(nullable errorBlock)errorblock;
++ (void)getAddresses:(nonnull NSString *)url andParameter:(nullable NSDictionary *)parameter andAddress:(nonnull ResponseBlock)addressBlock andError:(nullable errorBlock)errorblock;
 
 /**
  *  获取分类信息
@@ -45,7 +45,7 @@ typedef void (^errorBlock)(NSError * _Nullable error);
  *  @param parameter 参数 
  *  @param commblock 闭包回调 (商品)
  */
-+ (void)getComm:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andCommBlock:(nonnull dataResponseBlock)commblock andError:(nullable errorBlock)errorblock;
++ (void)getComm:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andCommBlock:(nonnull ResponseBlock)commblock andError:(nullable errorBlock)errorblock;
 /**
  *  获取热卖和特价商品
  *
@@ -56,7 +56,7 @@ typedef void (^errorBlock)(NSError * _Nullable error);
 + (void)getSaleAndSpecialComm:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andCommBlock:(nonnull saleAndSpecialComm)commblock andError:(nullable errorBlock)errorblock;
 
 //获取图片（数组）地址
-- (void)getImgs:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andImgsBlock:(nonnull dataResponseBlock)imgsblock andError:(nullable errorBlock)errorblock;
+- (void)getImgs:(nonnull NSString*)url andParameter:(nullable NSDictionary*)parameter andImgsBlock:(nonnull ResponseBlock)imgsblock andError:(nullable errorBlock)errorblock;
 /**
  *  获取订单
  *
@@ -120,6 +120,6 @@ typedef void (^errorBlock)(NSError * _Nullable error);
  *  @param parameter 发送对象
  *  @param postback  闭包回调（是否成功下单）
  */
-+ (void)postConfirmOrder:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBackOrder)postback;
++ (void)postConfirmOrder:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBackOrder)postback andError:(nullable errorBlock)errorblock;
 
 @end

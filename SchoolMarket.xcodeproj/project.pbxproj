@@ -28,6 +28,7 @@
 		33D5508C1CBFD678003E4EE3 /* CDBottomTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D5508B1CBFD678003E4EE3 /* CDBottomTool.m */; };
 		33D5A1171CBFE4E700E88EA8 /* SCCommCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D5A1161CBFE4E700E88EA8 /* SCCommCell.m */; };
 		33D8AD451CCC8C1800CEF593 /* ConfirmOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D8AD441CCC8C1800CEF593 /* ConfirmOrderCell.m */; };
+		33E38E361CE1E25A006F1880 /* ErrorTipButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E38E351CE1E25A006F1880 /* ErrorTipButton.m */; };
 		33EE6DB01CB3B5DD00FA55FC /* categories.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33EE6DAF1CB3B5DD00FA55FC /* categories.plist */; };
 		3B0A6D2C1CCA2C2D00C99CB7 /* FMDBsql.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0A6D2B1CCA2C2D00C99CB7 /* FMDBsql.m */; };
 		3B1D3E9D1CD9FAD700D77D6F /* EditAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1D3E9C1CD9FAD700D77D6F /* EditAddressCell.m */; };
@@ -128,6 +129,8 @@
 		33D5A1161CBFE4E700E88EA8 /* SCCommCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCCommCell.m; path = ShoppingCart/SCCommCell.m; sourceTree = "<group>"; };
 		33D8AD431CCC8C1800CEF593 /* ConfirmOrderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConfirmOrderCell.h; path = ShoppingCart/ConfirmOrderCell.h; sourceTree = "<group>"; };
 		33D8AD441CCC8C1800CEF593 /* ConfirmOrderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConfirmOrderCell.m; path = ShoppingCart/ConfirmOrderCell.m; sourceTree = "<group>"; };
+		33E38E341CE1E25A006F1880 /* ErrorTipButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ErrorTipButton.h; sourceTree = "<group>"; };
+		33E38E351CE1E25A006F1880 /* ErrorTipButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ErrorTipButton.m; sourceTree = "<group>"; };
 		33EE6DAF1CB3B5DD00FA55FC /* categories.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = categories.plist; sourceTree = "<group>"; };
 		3B0A6D2A1CCA2C2D00C99CB7 /* FMDBsql.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDBsql.h; path = FMDB/FMDBsql.h; sourceTree = "<group>"; };
 		3B0A6D2B1CCA2C2D00C99CB7 /* FMDBsql.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMDBsql.m; path = FMDB/FMDBsql.m; sourceTree = "<group>"; };
@@ -555,6 +558,8 @@
 				3BBA9D861CAD13C500DF67B7 /* Cell */,
 				3360A9FE1CE078C1005239BD /* ActivityIndicatorView.h */,
 				3360A9FF1CE078C1005239BD /* ActivityIndicatorView.m */,
+				33E38E341CE1E25A006F1880 /* ErrorTipButton.h */,
+				33E38E351CE1E25A006F1880 /* ErrorTipButton.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -905,6 +910,7 @@
 				3BFFAE551CACF7F40099D766 /* AppDelegate.m in Sources */,
 				3BD638A01CB653480077D2A4 /* PersonMsgCell.m in Sources */,
 				33D5506E1CBFB5BD003E4EE3 /* RegisterViewController.m in Sources */,
+				33E38E361CE1E25A006F1880 /* ErrorTipButton.m in Sources */,
 				3B1D3E9D1CD9FAD700D77D6F /* EditAddressCell.m in Sources */,
 				3B2961101CD389CC00A4E89D /* NotifitionSender.m in Sources */,
 				33A9D57B1CB4D96F0005F7BA /* Categories.m in Sources */,

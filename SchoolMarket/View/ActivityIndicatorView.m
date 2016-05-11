@@ -11,14 +11,21 @@
 @implementation ActivityIndicatorView
 
 - (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:CGRectMake(0, 0, frame.size.height * 0.2, frame.size.height * 0.2)];
-    self.center = CGPointMake(frame.size.width / 2, frame.size.height / 2);
-    self.layer.cornerRadius = self.frame.size.height * 0.2;
+    self = [super initWithFrame:frame];
     if (self) {
         UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-        activityView.center = CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2);
+        CGRect frame = activityView.frame;
+        frame.size.width *= 1.3;
+        frame.size.height *= 1.3;
+        activityView.frame = frame;
+        activityView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
+        activityView.layer.cornerRadius = activityView.frame.size.height * 0.2;
+        activityView.center = CGPointMake(self.frame.size.width * 0.5, self.frame.size.height * 0.5);
         [self addSubview:activityView];
         [activityView startAnimating];
+        if ([activityView isAnimating]) {
+            NSLog(@"%s", __func__);
+        }
     }
     return self;
 }

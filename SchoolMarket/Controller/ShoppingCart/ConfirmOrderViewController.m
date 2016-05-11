@@ -11,6 +11,7 @@
 #import "ConfirmOrderCell.h"
 #import "AddressCell.h"
 #import "AddressController.h"
+#import "LoginViewController.h"
 #import "Commodity.h"
 #import "Order.h"
 #import "Address.h"
@@ -18,6 +19,8 @@
 #import "FMDBsql.h"
 #import "NotifitionSender.h"
 #import "User.h"
+#import "ActivityIndicatorView.h"
+#import "ErrorTipButton.h"
 
 @interface ConfirmOrderViewController () <UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate>
 
@@ -41,7 +44,9 @@
 /**  底部工具栏 */
 @property (nonatomic, weak) UIView *bottomTool;
 /**  弹框提示 */
-@property (nonatomic, strong) UIAlertController *alertController;
+@property (nonatomic, weak) UIAlertController *alertController;
+/**  菊花转动视图（正在加载） */
+@property (nonatomic, weak) ActivityIndicatorView *activityView;
 
 /**  运费 */
 @property (nonatomic, copy) NSString *freight;
@@ -49,8 +54,6 @@
 @property (nonatomic, strong) Order *order;
 /**  默认收货地址模型 */
 @property (nonatomic, strong) Address *address;
-/**  用户模型 */
-@property (nonatomic, strong) User *user;
 
 @end
 
@@ -58,6 +61,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"确认订单";
+    
+    // 获取默认地址
+    [self getAddress];
     
     CGFloat detailOrderY = CGRectGetMaxY(self.navigationController.navigationBar.frame);
     CGFloat detailOrderW = self.view.bounds.size.width;
@@ -72,6 +78,13 @@
     CGFloat bottomToolY = CGRectGetMaxY(self.detailOrderTbl.frame);
     
     [self bottomToolWithFrame:CGRectMake(0, bottomToolY, bottomToolW, bottomToolH)];
+    if (self.address.userId != 0) {
+        [self activityView:self.view.bounds];
+    }
+    
+    // 设置通知
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(getAddressFromList:) name:@"selectAddress" object:nil];
 }
 
 #pragma mark - 懒加载
@@ -86,34 +99,32 @@
 /**  收货地址模型 */
 - (Address *)address {
     if (_address == nil) {
-        NSUserDefaults *userDefaults = [[NSUserDefaults alloc] init];
-        NSString *userId = [userDefaults objectForKey:@"userId"];
-        // 向服务器请求拿到默认地址
-        NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/findDefaultedAddress.jhtml";
-        NSDictionary *parameter = [[NSDictionary alloc] initWithObjectsAndKeys:userId, @"userId", nil];
-        [AFRequest getAddresses:url andParameter:parameter andAddress:^(NSMutableArray * _Nonnull data) {
-            _address = data[0];
-            _address.userId = userId.intValue;
-            [self.detailOrderTbl reloadData];
-        } andError:^(NSError * _Nullable error) {
-            
-        }];
+        _address = [[Address alloc] init];
     }
     return _address;
 }
 
 /**  弹框提示 */
 - (UIAlertController *)alertController {
-    if (!_alertController) {
-        _alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *done = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            if ([_alertController.message localizedCaseInsensitiveContainsString:@"成功"]) {
-                [self.navigationController popViewControllerAnimated:YES];
-            }
-        }];
-        [_alertController addAction:done];
+    if (_alertController == nil) {
+        _alertController = [self alertControllerInit];
     }
     return _alertController;
+}
+
+- (UIAlertController *)alertControllerInit {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *done = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        if ([alertController.message localizedCaseInsensitiveContainsString:@"成功"]) {
+            [self.navigationController popViewControllerAnimated:YES];
+            [self removeFromParentViewController];
+        } else if ([alertController.message localizedCaseInsensitiveContainsString:@"登录"]) {
+            [self goToLoginView];
+        }
+    }];
+    [alertController addAction:done];
+    self.alertController = alertController;
+    return self.alertController;
 }
 
 #pragma mark - 订单内容
@@ -148,16 +159,45 @@
     }
 }
 
-/**  cell的明细 */
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+/**  cell的明细 */- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = nil;
     if (indexPath.section == 0) {
-        cell = [AddressCell cellWithTableView:tableView];
-        NSString *tempStr = [self.address.consignee stringByAppendingString:@"    "];
-        cell.textLabel.text = [tempStr stringByAppendingString:self.address.phone];
-        cell.textLabel.font = [UIFont systemFontOfSize:18.0];
-        cell.detailTextLabel.text = self.address.addressDetail;
-        cell.detailTextLabel.font = [UIFont systemFontOfSize:17.0];
+        if (self.address.addressId == 0) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+            UIButton *addAddressBtn = [[UIButton alloc] init];
+            if (self.address.userId == 0) {
+                [addAddressBtn setTitle:@"请登录" forState:UIControlStateNormal];
+                [addAddressBtn addTarget:self action:@selector(goToLoginView) forControlEvents:UIControlEventTouchUpInside];
+            } else {
+                if (self.address.addressDetail == nil) {
+                    [addAddressBtn setTitle:@"加载收货地址" forState:UIControlStateNormal];
+                    [addAddressBtn addTarget:self action:@selector(getAddress) forControlEvents:UIControlEventTouchUpInside];
+                } else if ([self.address.addressDetail localizedCaseInsensitiveContainsString:@"无"]) {
+                    [addAddressBtn setTitle:@"添加收货地址" forState:UIControlStateNormal];
+                    [addAddressBtn addTarget:self action:@selector(goToAddressList) forControlEvents:UIControlEventTouchUpInside];
+                }                
+            }
+            [addAddressBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [addAddressBtn setTitleColor:[UIColor blueColor] forState:UIControlStateHighlighted];
+            [addAddressBtn sizeToFit];
+            // 设置重新加载按钮边框
+            addAddressBtn.layer.borderColor = [[UIColor colorWithWhite:0.0f alpha:1.0f] CGColor];
+            addAddressBtn.layer.borderWidth = 1.0f;
+            addAddressBtn.layer.cornerRadius = addAddressBtn.frame.size.height * 0.3;
+            addAddressBtn.translatesAutoresizingMaskIntoConstraints = NO;
+            [cell addSubview:addAddressBtn];
+            // 添加居中约束
+            [cell addConstraint:[NSLayoutConstraint constraintWithItem:addAddressBtn attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:cell attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+            [cell addConstraint:[NSLayoutConstraint constraintWithItem:addAddressBtn attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
+            [cell addConstraint:[NSLayoutConstraint constraintWithItem:addAddressBtn attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:cell attribute:NSLayoutAttributeWidth multiplier:0.4 constant:0]];
+        } else {
+            cell = [AddressCell cellWithTableView:tableView];
+            NSString *tempStr = [self.address.consignee stringByAppendingString:@"    "];
+            cell.textLabel.text = [tempStr stringByAppendingString:self.address.phone];
+            cell.textLabel.font = [UIFont systemFontOfSize:18.0];
+            cell.detailTextLabel.text = self.address.addressDetail;
+            cell.detailTextLabel.font = [UIFont systemFontOfSize:17.0];
+        }
     } else {
         cell = [[ConfirmOrderCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
         if (indexPath.section == 1) {
@@ -222,11 +262,8 @@
 /**  cell被选中时执行此方法 */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        //选中收件人信息的cell时跳到收件人信息列表视图
-        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
-        AddressController *addressController = [[AddressController alloc] init];
-        self.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:addressController animated:YES];
+        //选中收件人信息的cell时跳到收货地址信息列表视图
+        [self goToAddressList];
     } else if (indexPath.section == 1 && indexPath.row == 1){
         // 设置cell为第一响应者
         ConfirmOrderCell *cell = [tableView cellForRowAtIndexPath:indexPath];
@@ -322,7 +359,7 @@
     return YES;
 }
 
-#pragma mark - 底部工具栏
+#pragma mark - 底部工具栏,其它控件
 /**  底部工具栏 */
 - (UIView *)bottomToolWithFrame:(CGRect)frame {
     if (self.bottomTool == nil) {
@@ -366,8 +403,31 @@
     return self.bottomTool;
 }
 
-/**  点击事件 */
+/**  菊花旋转视图（正在加载数据） */
+- (ActivityIndicatorView *)activityView:(CGRect)frame {
+    if (self.activityView == nil) {
+        ActivityIndicatorView *activityView = [[ActivityIndicatorView alloc] initWithFrame:frame];
+        self.activityView = activityView;
+        [self.view addSubview:self.activityView];
+    }
+    return self.activityView;
+}
+
+#pragma mark - 点击事件，网络请求
+/**  点击确认下单按钮调用此方法，发送下单请求 */
 - (void)confirmOrder {
+    if (self.address.userId == 0) {
+        self.alertController.message = @"请登录";
+        [self presentViewController:self.alertController animated:YES completion:nil];
+        return;
+    } else if (self.address.addressDetail == nil) {
+        self.alertController.message = @"请添加收货地址";
+        [self presentViewController:self.alertController animated:YES completion:nil];
+        return;
+    }
+    
+    // 调出正在加载的旋转视图
+    [self activityView:self.view.bounds];
     
     // 获取当前时间(点击确认下单后进行此操作)
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -402,13 +462,6 @@
     // 发送下单请求
     [AFRequest postConfirmOrder:url andParameter:parameter andResponse:^(NSString * _Nonnull resultStr) {
         if ([resultStr localizedCaseInsensitiveContainsString:@"success"]) {
-//            for (Commodity *comm in self.commsNum) {
-//                comm.stock = [NSString stringWithFormat:@"%d", (comm.stock.intValue - comm.selectedNum)];
-//                comm.selectedNum = 0;
-//            }
-            // 发送通知，修改已经下单的商品的模型数据
-//            [NotifitionSender updateAllSelectedNumNotification:self.commsNum];
-            
             // 将已经下单的商品从数据库中删除
             [FMDBsql deleteAllShopcartComms];
             NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
@@ -416,6 +469,7 @@
             [center postNotificationName:@"reacquireCommodity" object:self];
             // 发送购物车已经更新的通知
             [center postNotificationName:@"shopcartIsUpdate" object:self];
+            [self.activityView removeFromSuperview];
             // 弹出下单成功的提示
             self.alertController.message = @"下单成功";
             [self presentViewController:self.alertController animated:YES completion:nil];
@@ -424,6 +478,83 @@
             self.alertController.message = @"下单失败，请重新下单";
             [self presentViewController:self.alertController animated:YES completion:nil];
         }
+    } andError:^(NSError * _Nullable error) {
+        if (error) {
+            [self errorTip];
+        }
     }];
+}
+
+/**  获取默认地址 */
+- (void)getAddress {
+    if (self.detailOrderTbl != nil) {
+        [self activityView:self.view.bounds];
+    }
+    NSUserDefaults *userDefaults = [[NSUserDefaults alloc] init];
+    if (![[userDefaults objectForKey:@"logined"] isEqualToString:@"true"]) {
+        // 将加载转动视图移除
+        [self.activityView removeFromSuperview];
+        return;
+    }
+    NSString *userId = [userDefaults objectForKey:@"userId"];
+    self.address.userId = userId.intValue;
+    // 向服务器请求拿到默认地址
+    NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/findDefaultedAddress.jhtml";
+    NSDictionary *parameter = [[NSDictionary alloc] initWithObjectsAndKeys:userId, @"userId", nil];
+    [AFRequest getAddresses:url andParameter:parameter andAddress:^(NSMutableArray * _Nonnull data) {
+        if ([data[0] isEqual:@"error"]) {
+            self.address.addressDetail = @"无收货地址";
+            self.alertController.message = @"请添加收货地址";
+            [self presentViewController:self.alertController animated:NO completion:nil];
+        } else {
+            self.address = data[0];
+            self.address.userId = userId.intValue;
+        }
+        // 将加载转动视图移除
+        [self.activityView removeFromSuperview];
+        // 重新加载数据
+        [self.detailOrderTbl reloadData];
+    } andError:^(NSError * _Nullable error) {
+        [self errorTip];
+    }];
+}
+/**  显示网络错误提示 */
+- (void)errorTip {
+    [self.activityView removeFromSuperview];
+    ErrorTipButton *errorBtn = [[ErrorTipButton alloc] init];
+    errorBtn.center = self.view.center;
+    [self.view addSubview:errorBtn];
+    // 设置3秒后自动将错误提示从视图中移除
+    [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(removeErrorTip:) userInfo:errorBtn repeats:NO];
+}
+/**  将错误提示移除，并刷新视图 */
+- (void)removeErrorTip:(NSTimer *)timer {
+    ErrorTipButton *errorTip = [timer userInfo];
+    [errorTip removeFromSuperview];
+    if (self.address.addressDetail == nil) {
+        [self.detailOrderTbl reloadData];
+    }
+}
+
+/**  跳转到收货地址列表 */
+- (void)goToAddressList {
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
+    AddressController *addressController = [[AddressController alloc] init];
+    addressController.isSelectAddress = 1;
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:addressController animated:YES];
+}
+
+/**  跳转到登录视图 */
+- (void)goToLoginView {
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    LoginViewController *loginVC = [[LoginViewController alloc] init];
+    self.hidesBottomBarWhenPushed = NO;
+    [self.navigationController pushViewController:loginVC animated:YES];
+    self.hidesBottomBarWhenPushed = YES;
+}
+#pragma mark - 通知事件
+- (void)getAddressFromList:(NSNotification *)notification {
+    [self.address setValuesForKeysWithDictionary:notification.userInfo];
 }
 @end

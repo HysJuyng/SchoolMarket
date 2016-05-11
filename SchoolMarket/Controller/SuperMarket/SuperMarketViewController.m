@@ -14,8 +14,11 @@
 #import "FMDBsql.h"
 #import "NotifitionSender.h"
 #import "ActivityIndicatorView.h"
+#import "ErrorTipButton.h"
 
 @interface SuperMarketViewController () <UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, CommCellDelegate>
+/**  中间内容区域 */
+@property (nonatomic, assign) CGRect middleframe;
 /**  营业时间试图 */
 @property (nonatomic, weak) UIButton *openTimeView;
 /**  大分类 */
@@ -24,8 +27,10 @@
 @property (nonatomic, weak) UITableView *subCategory;
 /**  商品展示 */
 @property (nonatomic, weak) UICollectionView *commCV;
-/**  旋转菊花视图 */
+/**  菊花旋转视图 */
 @property (nonatomic, weak) ActivityIndicatorView *activityView;
+/**  重新加载按钮 */
+@property (nonatomic, weak) UIButton *reacquireBtn;
 /**  collectionViewCell边距 */
 @property (nonatomic, assign) CGFloat margin;
 
@@ -42,12 +47,19 @@
 @property (nonatomic, strong) Categories *selectedCategory;
 /**  被选择的子分类 */
 @property (nonatomic, strong) SubCategories *selectedSubcategory;
-/**  弹框 */
-@property (nonatomic, strong) UIAlertController *alertController;
 
 @end
 
 @implementation SuperMarketViewController
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    // 设置通知
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    // 商品数量改变通知
+    [center addObserver:self selector:@selector(updateSMSelectedNum:) name:@"updateSelectedNum" object:nil];
+    [center addObserver:self selector:@selector(reacquireCommodity) name:@"reacquireCommodity" object:nil];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -60,24 +72,21 @@
     
     CGFloat frameY = CGRectGetMaxY(self.navigationController.navigationBar.frame);
     CGFloat frameW = self.view.bounds.size.width;
-    CGFloat frameH = CGRectGetMinY(self.tabBarController.tabBar.frame);
-    CGRect frame = CGRectMake(0, frameY, frameW, frameH);
-    
+    CGFloat frameH = CGRectGetMinY(self.tabBarController.tabBar.frame) - frameY;
     // 创建营业时间条视图
-    [self openTimeViewWithFrame:frame];
-    // 创建主分类视图
-    [self categoryTableViewWithFrame:frame];
-    // 创建子分类视图
-    [self subCategoryTablelViewWithFrame:frame];
-    // 创建商品视图
-    [self commCollectionViewWithFrame:frame];
-    [self activityView:frame];
+    [self openTimeViewWithFrame:CGRectMake(0, frameY, frameW, frameH)];
     
-    // 设置通知
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    // 商品数量改变通知
-    [center addObserver:self selector:@selector(updateSMSelectedNum:) name:@"updateSelectedNum" object:nil];
-    [center addObserver:self selector:@selector(reacquireCommodity) name:@"reacquireCommodity" object:nil];
+    CGFloat otherFrameY = frameY + self.openTimeView.frame.size.height;
+    CGFloat otherFrameH = frameH - self.openTimeView.frame.size.height;
+    self.middleframe = CGRectMake(0, otherFrameY, frameW, otherFrameH);
+    // 创建主分类视图
+    [self categoryTableViewWithFrame:self.middleframe];
+    // 创建子分类视图
+    [self subCategoryTablelViewWithFrame:self.middleframe];
+    // 创建商品视图
+    [self commCollectionViewWithFrame:self.middleframe];
+    // 创建菊花旋转视图
+    [self activityView:self.middleframe];
 }
 
 #pragma mark - 懒加载
@@ -96,25 +105,15 @@
     return _categories;
 }
 
-- (UIAlertController *)alertController {
-    if (_alertController == nil) {
-        _alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            if ([_alertController.message localizedCaseInsensitiveContainsString:@"分类"]) {
-                // 通过赋值，调用categories的懒加载来获取网络数据
-                [self getCategories];
-            } else if ([_alertController.message localizedCaseInsensitiveContainsString:@"商品"]) {
-                [self getComms:self.selectedCategory];
-            }
-        }];
-        [_alertController addAction:action];
-    }
-    return _alertController;
-}
-
 #pragma mark - 网络请求，刷新视图
 /**  获取分类信息 */
 - (void)getCategories {
+    if (self.reacquireBtn != nil) {
+        [self.reacquireBtn removeFromSuperview];
+    }
+    if (self.category != nil ) {
+        [self activityView:self.middleframe];
+    }
     // 获取分类数据的接口
     NSString *categoriesUrl = [NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/findAllClassify.jhtml"];
     // 请求网络数据
@@ -138,15 +137,20 @@
         [self setSelectedIndexPath:self.subCategory];
     } andError:^(NSError * _Nullable error) {
         if (error) {
-            self.alertController.message = @"网络错误,无法获取分类信息";
-#warning 还需进一步测试
-            [self presentViewController:self.alertController animated:YES completion:nil];
+            // 弹出错误提示
+            [self errorTip];
         }
     }];
 }
 
 /**  获取商品信息 */
 - (void)getComms:(Categories *)category {
+    if (self.reacquireBtn != nil) {
+        [self.reacquireBtn removeFromSuperview];
+    }
+    if (self.activityView == nil) {
+        [self activityView:self.middleframe];
+    }
     // 获取商品数据的接口
     NSString *commUrl = [NSString stringWithFormat:@"http://schoolserver.nat123.net/SchoolMarketServer/findAllCommByMainId.jhtml"];
     // 参数（主分类id）
@@ -161,14 +165,15 @@
         // 与购物车的商品进行对比
         [FMDBsql contrastShopcartAndModels:self.categoryComms];
         [FMDBsql contrastShopcartAndModels:self.selectedCategoryComms];
+        // 将菊花转动视图移除
+        [self.activityView removeFromSuperview];
         // 刷新商品视图
         [self.commCV reloadData];
         [self setSelectedIndexPath:self.subCategory];
     } andError:^(NSError * _Nullable error) {
         if (error) {
-            self.alertController.message = @"网络错误，无法获取商品信息";
-#warning 还需进一步测试
-            [self presentViewController:self.alertController animated:YES completion:nil];
+            // 弹出错误提示
+            [self errorTip];
         }
     }];
 }
@@ -177,18 +182,60 @@
 - (void)reacquireCommodity {
     [self.selectedCategoryComms removeAllObjects];
     [self.comms removeAllObjects];
-    [NSThread detachNewThreadSelector:@selector(getComms:) toTarget:self withObject:self.selectedCategory];
+    [self getComms:self.selectedCategory];
 }
 
-/**  旋转菊花视图（正在加载数据） */
+/**  菊花旋转视图（正在加载数据） */
 - (ActivityIndicatorView *)activityView:(CGRect)frame {
     if (self.activityView == nil) {
         ActivityIndicatorView *activityView = [[ActivityIndicatorView alloc] initWithFrame:frame];
-        activityView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
         self.activityView = activityView;
         [self.view addSubview:self.activityView];
     }
     return self.activityView;
+}
+
+/**  错误提示 */
+- (void)errorTip {
+    [self.activityView removeFromSuperview];
+    ErrorTipButton *errorBtn = [[ErrorTipButton alloc] init];
+    errorBtn.center = self.view.center;
+    [self.view addSubview:errorBtn];
+    // 设置3秒后自动将错误提示从视图中移除
+    [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(removeErrorTip:) userInfo:errorBtn repeats:NO];
+}
+
+/**  将错误提示从视图中移除 */
+- (void)removeErrorTip:(NSTimer *)timer {
+    ErrorTipButton *errorBtn = [timer userInfo];
+    [errorBtn removeFromSuperview];
+    if (self.reacquireBtn == nil) {
+        UIButton *reacquireBtn = [[UIButton alloc] init];
+        [reacquireBtn setTitle:@"重新加载" forState:UIControlStateNormal];
+        [reacquireBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [reacquireBtn sizeToFit];
+        CGRect frame = reacquireBtn.frame;
+        frame.size.width *= 1.2;
+        reacquireBtn.frame = frame;
+        // 设置重新加载按钮边框
+        reacquireBtn.layer.borderColor = [[UIColor colorWithWhite:0.0f alpha:1.0f] CGColor];
+        reacquireBtn.layer.borderWidth = 0.6f;
+        reacquireBtn.layer.cornerRadius = reacquireBtn.frame.size.height * 0.2;
+        reacquireBtn.center = self.view.center;
+        if (self.categories.count == 0) {
+            // 如果分类数据没有获取，则调用请求分类数据的方法
+            [reacquireBtn addTarget:self action:@selector(getCategories) forControlEvents:UIControlEventTouchUpInside];
+        } else if (self.categoryComms.count == 0) {
+            // 如果分类数据已经获取，则调用请求商品数据方法
+            [reacquireBtn addTarget:self action:@selector(commError) forControlEvents:UIControlEventTouchUpInside];
+        }
+        self.reacquireBtn = reacquireBtn;
+        [self.view addSubview:self.reacquireBtn];
+    }
+}
+
+- (void)commError {
+    [self getComms:self.selectedCategory];
 }
 
 #pragma mark - 创建导航控制器Item
@@ -249,9 +296,9 @@
 /**  创建大分类category */
 - (UITableView *)categoryTableViewWithFrame:(CGRect)frame {
     if (self.category == nil) {
-        CGFloat categoryY = CGRectGetMaxY(self.openTimeView.frame);
+        CGFloat categoryY = frame.origin.y;
         CGFloat categoryW = frame.size.width * 0.3;
-        CGFloat categoryH = frame.size.height - categoryY;
+        CGFloat categoryH = frame.size.height;
         
         UITableView *category = [[UITableView alloc] initWithFrame:CGRectMake(0, categoryY, categoryW, categoryH) style:UITableViewStylePlain];
         category.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.06];
@@ -259,8 +306,8 @@
         category.dataSource = self;
         // 设置单元格分割线
         category.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
-        [self.view addSubview:(self.category = category)];
+        self.category = category;
+        [self.view addSubview:self.category];
     }
     return self.category;
 }
@@ -282,8 +329,8 @@
         subCategory.separatorStyle = UITableViewCellSeparatorStyleNone;
         subCategory.delegate = self;
         subCategory.dataSource = self;
-        
-        [self.view addSubview:(self.subCategory = subCategory)];
+        self.subCategory = subCategory;
+        [self.view addSubview:self.subCategory];
     }
     return self.subCategory;
 }
@@ -397,7 +444,7 @@
         CGFloat commCVX = self.subCategory.frame.origin.x;
         CGFloat commCVY = CGRectGetMaxY(self.subCategory.frame);
         CGFloat commCVW = frame.size.width - self.category.frame.size.width;
-        CGFloat commCVH = frame.size.height - commCVY;
+        CGFloat commCVH = frame.size.height - self.subCategory.frame.size.height;
         
         UICollectionViewLayout *layout = [[UICollectionViewFlowLayout alloc] init];
         UICollectionView *commCV = [[UICollectionView alloc] initWithFrame:CGRectMake(commCVX, commCVY, commCVW, commCVH) collectionViewLayout:layout];
