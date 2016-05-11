@@ -118,8 +118,9 @@
     [manager GET:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSMutableArray *addresses = [[NSMutableArray alloc] init];  //地址数组
         //处理数据
-        NSMutableArray *addressArr = responseObject;
-        NSLog(@"%@", responseObject);
+         NSLog(@"%@", responseObject);
+        NSDictionary *dic = responseObject;
+        NSMutableArray *addressArr = dic[@"message"];
         //提取数组
         for (NSDictionary *dict in addressArr) {
             [addresses addObject:[[Address alloc] initWithAddressDic:dict]];

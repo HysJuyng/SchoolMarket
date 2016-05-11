@@ -10,4 +10,7 @@
 
 @interface AddressController : ViewController
 
+//判断选择标识  选择为1
+@property (nonatomic,assign) int isSelectAddress;
+
 @end

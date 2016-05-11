@@ -66,6 +66,22 @@ static NSNotificationCenter *center;
 + (void)updateAddressList {
     [center postNotificationName:@"updateAddressList" object:self];
 }
+/**
+ *  选中收货地址
+ *
+ *  @param address 收货地址
+ */
++ (void)selectAddress:(Address*)address {
+    //如果地址空
+    if (!address) {
+        return;
+    }
+    
+    //通知参数  地址model
+    NSDictionary *notificationDic = [address addressToNotificationDic];
+    [center postNotificationName:@"selectAddress" object:self userInfo:notificationDic];
+    
+}
 
 #pragma mark 个人中心
 /**

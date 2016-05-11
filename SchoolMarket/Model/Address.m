@@ -50,4 +50,20 @@
     return dic;
 }
 
+/**
+ *  模型转通知字典 (用于下单选择地址)
+ */
+- (NSMutableDictionary*)addressToNotificationDic {
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    
+    [dic setObject:[NSString stringWithFormat:@"%d",self.userId] forKey:@"userId"];
+    [dic setObject:[NSString stringWithFormat:@"%d",self.addressId] forKey:@"addressId"];
+    [dic setObject:self.addressDetail forKey:@"addressDetail"];
+    [dic setObject:self.consignee forKey:@"consignee"];
+    [dic setObject:self.phone forKey:@"phone"];
+    [dic setObject:[NSString stringWithFormat:@"%d",self.defaultAddress] forKey:@"defaultedAddress"];
+    
+    return dic;
+}
+
 @end

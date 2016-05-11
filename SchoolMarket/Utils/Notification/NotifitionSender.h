@@ -4,6 +4,7 @@
 
 #import <Foundation/Foundation.h>
 @class Commodity;
+@class Address;
 
 @interface NotifitionSender : NSObject
 
@@ -25,6 +26,13 @@
  *  发送更新地址视图
  */
 + (void)updateAddressList;
+
+/**
+ *  选中收货地址
+ *
+ *  @param address 收货地址
+ */
++ (void)selectAddress:(Address*)address;
 
 /**
  *  更新个人中心用户信息视图

@@ -143,31 +143,6 @@
 /** 保存按钮*/
 - (void)saveClick {
     
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:(UIAlertControllerStyleAlert)];
-    //取消按钮
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
-        NSLog(@"取消");
-    }];
-    
-    [alert addAction:cancelAction];
-    
-    //确定按钮
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-        //进行保存操作
-        [self doSave];
-    }];
-    
-    [alert addAction:okAction];
-    
-    //推出alertview
-    alert.message = @"确定保存吗?";
-    [self presentViewController:alert animated:true completion:nil];
-    
-    
-}
-
-/** 保存操作*/
-- (void)doSave {
     //获取收货地址信息
     for (int i = 0; i < 3; i++) {
         NSIndexPath *index = [NSIndexPath indexPathForRow:i inSection:0];
@@ -194,15 +169,43 @@
     
     //检测输入是否正确
     NSString *flag = [self textIsRequirements:self.address.phone andConsignee:self.address.consignee andAddressDetail:self.address.addressDetail];
-    if ([flag isEqualToString:@"success"]) {  //成功则发送请求
-        //发送请求
-        [self postAddress:self.address];
+    if ([flag isEqualToString:@"success"]) {  //成功则下一步
+        //进行保存操作
+        [self doSave];
     } else {  //失败弹出提示
         //推出alertview
         self.alertController.message = flag;
         [self presentViewController:self.alertController animated:true completion:nil];
     }
+    
+}
 
+/** 保存操作*/
+- (void)doSave {
+    
+
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+    //取消按钮
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"取消");
+    }];
+    
+    [alert addAction:cancelAction];
+    
+    //确定按钮
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        //发送请求
+        [self postAddress:self.address];
+    }];
+    
+    [alert addAction:okAction];
+    
+    //推出alertview
+    alert.message = @"确定保存吗?";
+    [self presentViewController:alert animated:true completion:nil];
+    
+    
+    
 }
 
 /** 设置选择状态*/

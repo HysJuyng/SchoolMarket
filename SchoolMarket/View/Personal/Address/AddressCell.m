@@ -35,6 +35,15 @@
         UIImageView *edit = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"edit"]];
         edit.frame = CGRectMake(0, 0, 20, 20);
         self.accessoryView = edit;
+        
+        UIButton *tempbtn = [UIButton buttonWithType:UIButtonTypeSystem];
+        self.btnEdit = tempbtn;
+        self.btnEdit.frame = CGRectMake(self.frame.size.width - self.frame.size.height, self.frame.size.height / 4, self.frame.size.height / 2, self.frame.size.height / 2);
+        [self.btnEdit setImage:[[UIImage imageNamed:@"personal_feedback"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] forState:(UIControlStateNormal)];
+        [self.btnEdit addTarget:self.delegate action:@selector(editClick:) forControlEvents:(UIControlEventTouchUpInside)];
+        [self addSubview:self.btnEdit];
+    
+        
     }
     return self;
 }

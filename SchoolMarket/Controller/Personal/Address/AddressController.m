@@ -11,8 +11,9 @@
 #import "EditAddressController.h"
 #import "AFRequest.h"
 #import "Address.h"
+#import "NotifitionSender.h"
 
-@interface AddressController () <UITableViewDataSource, UITableViewDelegate>
+@interface AddressController () <UITableViewDataSource, UITableViewDelegate,AddressCellDelegate>
 
 /**  收货地址列表 */
 @property (nonatomic, weak) UITableView *addressTbl;
@@ -149,6 +150,10 @@
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",((Address*)self.addresses[indexPath.row]).addressDetail];
     cell.detailTextLabel.font = [UIFont systemFontOfSize:17.0];
     
+    //编辑按钮tag
+    cell.btnEdit.tag = indexPath.row;
+    
+    
     return cell;
 }
 
@@ -177,7 +182,15 @@
 /**  被选中后执行的方法 */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self goToEditAddress:self.addresses[indexPath.row]];
+    
+    //判断是否需要选择
+    if (self.isSelectAddress) {  //选择
+        //通过通知返回选中地址model
+        [NotifitionSender selectAddress:self.addresses[indexPath.row]];
+        //返回上级页面
+        [self.navigationController popToRootViewControllerAnimated:true];
+    }
+    
 }
 /**  实现拖拽删除 */
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -217,10 +230,21 @@
     alert.message = @"确定要删除吗?";
     [self presentViewController:alert animated:true completion:nil];
 
-    
-    
-
 }
+
+#pragma mark addresscell代理
+/**
+ *  编辑按钮点击方法
+ *
+ *  @param button 按钮
+ */
+- (void)editClick:(UIButton *)button {
+    
+    //跳转编辑按钮
+    [self goToEditAddress:self.addresses[button.tag]];
+    
+}
+
 
 #pragma mark - 新增收货地址按钮
 /**  新增收货地址按钮 */
