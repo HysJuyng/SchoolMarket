@@ -20,8 +20,6 @@
         self.freight = orderDic[@"freight"];
         self.total = orderDic[@"total"];
         self.remarks = orderDic[@"remarks"];
-        
-        NSLog(@"%@",orderDic[@"state"]);
         //状态
         if ([orderDic[@"state"] intValue] == 0) {
             self.state = @"进行中";

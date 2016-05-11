@@ -13,7 +13,7 @@
 #import "NotifitionSender.h"
 #import "AFRequest.h"
 
-@interface PersonalMsgController ()  <UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface PersonalMsgController ()  <UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
 @property (nonatomic,strong) UITableView *personalMsgTableview;
 @property (nonatomic,copy) NSArray *msgs;
@@ -21,6 +21,9 @@
 @property (nonatomic,strong) UIAlertController *alertController;
 
 @property (nonatomic,assign) int isBack;
+
+@property (nonatomic,strong) NSData *imgData; //图片数据流
+@property (nonatomic,weak) UIImageView *userpic; //用户头像
 
 @end
 
@@ -104,6 +107,11 @@
     //通过model填写数据
     if (indexPath.row == 0) {
         [cell setPersonMsgCell:self.msgs[indexPath.row] andContent:nil];
+        
+        UIImageView *imgv = [[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.size.width - cell.nextImgv.frame.size.width - 50, 7.5, 35, 35)];
+        self.userpic = imgv;
+        [cell addSubview:self.userpic];
+        
     } else if (indexPath.row == 1) {
         [cell setPersonMsgCell:self.msgs[indexPath.row] andContent:self.userMsg.userName];
     } else if (indexPath.row == 2) {
@@ -128,7 +136,32 @@
         [self selectSex:cell];
     }
 }
+#pragma mark 图片代理方法
+/** 选中图片*/
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    [picker dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+    //获取图片
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    //转成data的形式
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.5);  //压缩比例待定
+    self.imgData = imageData;
+    
+    
+    //更新图片到cell上
+    self.userpic.image = image;
 
+    
+    //上传图片
+    NSString *url = @"";
+    NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"userId", nil];
+    [AFRequest uploadUserPortrait:url andParameter:dic andData:self.imgData andResponse:^(NSString * _Nullable message) {
+        NSLog(@"成功");
+    } andError:^(NSError * _Nullable error) {
+        NSLog(@"失败!");
+    }];
+}
 #pragma mark 自定义方法
 /**
  *  打开图库
@@ -168,6 +201,8 @@
     
     //返回按钮
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:(UIBarButtonItemStylePlain) target:nil action:nil];
+    
+    self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:subvc animated:YES];
 }
 /**

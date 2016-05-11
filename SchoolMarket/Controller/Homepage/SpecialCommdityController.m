@@ -159,7 +159,7 @@
 /** 脚视图高度*/
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     
-    return 70;
+    return 0.01f;
 }
 /** 选中单元格*/
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

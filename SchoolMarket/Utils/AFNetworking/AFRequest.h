@@ -111,6 +111,18 @@ typedef void (^errorBlock)(NSError * _Nullable error);
  */
 + (void)postChangeUserMsg:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andResponse:(nonnull postBackMessage)postback andError:(nullable errorBlock)errorblock;
 
+/**
+ *  上传图片
+ *
+ *  @param url        请求地址
+ *  @param parameter  参数
+ *  @param data       文件
+ *  @param postback   返回
+ *  @param errorblock 错误返回
+ */
++ (void)uploadUserPortrait:(nonnull NSString*)url andParameter:(nonnull NSDictionary*)parameter andData:(nonnull NSData*)data andResponse:(nonnull postBackMessage)postback andError:(nullable errorBlock)errorblock;
+
+
 + (void)posttest;
 
 /**

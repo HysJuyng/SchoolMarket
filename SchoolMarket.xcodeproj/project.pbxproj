@@ -49,6 +49,8 @@
 		3B89468C1CAFC84900959786 /* HCHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B89468B1CAFC84900959786 /* HCHeaderView.m */; };
 		3B89468F1CAFF03C00959786 /* HCHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B89468E1CAFF03C00959786 /* HCHeaderCell.m */; };
 		3B9E13661CBA29E2003BB0A5 /* AFRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9E13651CBA29E1003BB0A5 /* AFRequest.m */; };
+		3B9E4E611CE19A1200C159B0 /* AdvertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9E4E601CE19A1200C159B0 /* AdvertViewController.m */; };
+		3B9E4E651CE19AAD00C159B0 /* AdvertWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9E4E641CE19AAD00C159B0 /* AdvertWebView.m */; };
 		3BB8B8DB1CD22EA600C77FA9 /* OrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB8B8DA1CD22EA600C77FA9 /* OrderCell.m */; };
 		3BB8B8DE1CD23D9800C77FA9 /* OrderDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB8B8DD1CD23D9800C77FA9 /* OrderDetailController.m */; };
 		3BB8B8E11CD248FE00C77FA9 /* OrderDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB8B8E01CD248FE00C77FA9 /* OrderDetailCell.m */; };
@@ -173,6 +175,10 @@
 		3B89468D1CAFF03C00959786 /* HCHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HCHeaderCell.h; path = Homepage/HCHeaderCell.h; sourceTree = "<group>"; };
 		3B89468E1CAFF03C00959786 /* HCHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HCHeaderCell.m; path = Homepage/HCHeaderCell.m; sourceTree = "<group>"; };
 		3B9E13651CBA29E1003BB0A5 /* AFRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFRequest.m; path = AFNetworking/AFRequest.m; sourceTree = "<group>"; };
+		3B9E4E5F1CE19A1200C159B0 /* AdvertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdvertViewController.h; path = Homepage/AdvertViewController.h; sourceTree = "<group>"; };
+		3B9E4E601CE19A1200C159B0 /* AdvertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdvertViewController.m; path = Homepage/AdvertViewController.m; sourceTree = "<group>"; };
+		3B9E4E631CE19AAD00C159B0 /* AdvertWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdvertWebView.h; path = Homepage/AdvertView/AdvertWebView.h; sourceTree = "<group>"; };
+		3B9E4E641CE19AAD00C159B0 /* AdvertWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdvertWebView.m; path = Homepage/AdvertView/AdvertWebView.m; sourceTree = "<group>"; };
 		3BB8B8D91CD22EA600C77FA9 /* OrderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderCell.h; path = Personal/Order/OrderCell.h; sourceTree = "<group>"; };
 		3BB8B8DA1CD22EA600C77FA9 /* OrderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderCell.m; path = Personal/Order/OrderCell.m; sourceTree = "<group>"; };
 		3BB8B8DC1CD23D9800C77FA9 /* OrderDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderDetailController.h; path = Personal/Order/OrderDetailController.h; sourceTree = "<group>"; };
@@ -384,6 +390,15 @@
 			name = SpecialView;
 			sourceTree = "<group>";
 		};
+		3B9E4E621CE19A6100C159B0 /* AdvertView */ = {
+			isa = PBXGroup;
+			children = (
+				3B9E4E631CE19AAD00C159B0 /* AdvertWebView.h */,
+				3B9E4E641CE19AAD00C159B0 /* AdvertWebView.m */,
+			);
+			name = AdvertView;
+			sourceTree = "<group>";
+		};
 		3BBA9D861CAD13C500DF67B7 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -571,6 +586,8 @@
 				3BF492581CAE68BB00FB8B10 /* HomepageController.m */,
 				3B83119A1CBE15F200D6FA69 /* SpecialCommdityController.h */,
 				3B83119B1CBE15F200D6FA69 /* SpecialCommdityController.m */,
+				3B9E4E5F1CE19A1200C159B0 /* AdvertViewController.h */,
+				3B9E4E601CE19A1200C159B0 /* AdvertViewController.m */,
 			);
 			name = Homepage;
 			sourceTree = "<group>";
@@ -578,6 +595,7 @@
 		3BF4925E1CAE6BA800FB8B10 /* Homepage */ = {
 			isa = PBXGroup;
 			children = (
+				3B9E4E621CE19A6100C159B0 /* AdvertView */,
 				3B83119E1CBE18C700D6FA69 /* SpecialView */,
 				3B8946811CAF95A500959786 /* HomepageCell.h */,
 				3B8946821CAF95A500959786 /* HomepageCell.m */,
@@ -868,7 +886,9 @@
 			files = (
 				3378E8F31CBE40B5004E7DFE /* ViewController.m in Sources */,
 				33A9D5661CB4D9310005F7BA /* SuperMarketViewController.m in Sources */,
+				3B9E4E611CE19A1200C159B0 /* AdvertViewController.m in Sources */,
 				3BF492591CAE68BB00FB8B10 /* HomepageController.m in Sources */,
+				3B9E4E651CE19AAD00C159B0 /* AdvertWebView.m in Sources */,
 				3B8311A51CBE9B8E00D6FA69 /* LbMiddleLine.m in Sources */,
 				3B0A6D2C1CCA2C2D00C99CB7 /* FMDBsql.m in Sources */,
 				3360AA001CE078C1005239BD /* ActivityIndicatorView.m in Sources */,

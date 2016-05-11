@@ -44,5 +44,9 @@
  *  模型转字典
  */
 - (NSMutableDictionary*)addressToDic:(int)isAdd;
+/**
+ *  模型转通知字典 (用于下单选择地址)
+ */
+- (NSMutableDictionary*)addressToNotificationDic;
 
 @end

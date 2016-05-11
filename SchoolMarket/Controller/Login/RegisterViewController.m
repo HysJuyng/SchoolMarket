@@ -10,6 +10,7 @@
 #import "User.h"
 #import "NotifitionSender.h"
 
+
 @interface RegisterViewController () <LRFootViewDelegate,UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic,weak) UITableView *registerTableview;
@@ -40,6 +41,10 @@
     self.btnGetCode = tempcode;
     [self.btnGetCode setTitle:@"获取验证码" forState:(UIControlStateNormal)];
     [self.btnGetCode addTarget:self action:@selector(getIdentifyingCode) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    //注册bmob
+    [Bmob registerWithAppKey:@"081e1bee01b2c2e23e9de01aa2b25685"];
+    
 }
 
 /**
@@ -90,6 +95,10 @@
         cell.tfContent.placeholder = @"输入您的手机号码";  //设置提示文本
         self.btnGetCode.frame = CGRectMake(self.view.frame.size.width / 4 * 3, 8, self.view.frame.size.width / 5, 30);
         self.btnGetCode.titleLabel.adjustsFontSizeToFitWidth = true;
+        
+        //设置手机号码tag
+        cell.tfContent.tag = 101;
+        
         [cell addSubview:self.btnGetCode];
     } else if (indexPath.row == 1) {
         cell.tfContent.placeholder = @"输入您的密码";  //设置提示文本
@@ -131,7 +140,20 @@
         [self presentViewController:self.alertController animated:true completion:nil];
     }else { //检验成功 发送数据
         NSLog(@"%@",flag);
-        [self doRegister:phone andPassword:password andCode:code];
+        
+        //验证短信验证码
+        [BmobSMS verifySMSCodeInBackgroundWithPhoneNumber:phone andSMSCode:code resultBlock:^(BOOL isSuccessful, NSError *error) {
+            if (isSuccessful) {
+                NSLog(@"验证码正确!");
+                //验证成功 发送请求
+                [self doRegister:phone andPassword:password];
+            } else {
+                NSLog(@"%@",error);
+                //推出alert
+                self.alertController.message = @"验证码错误!";
+                [self presentViewController:self.alertController animated:true completion:nil];
+            }
+        }];
     }
 }
 /**
@@ -161,6 +183,26 @@
  */
 - (void)getIdentifyingCode {
     NSLog(@"获取验证码");
+    //获取手机号码
+    NSIndexPath *phoneIndex = [NSIndexPath indexPathForRow:0 inSection:0];
+    NSString *phone = [NSString stringWithString:((LRTableviewCell*)[self.registerTableview cellForRowAtIndexPath:phoneIndex]).tfContent.text];
+    if (phone.length != 11) {
+        //推出alertview
+        self.alertController.message = @"手机号码为11位!";
+        [self presentViewController:self.alertController animated:true completion:nil];
+    } else {
+        //发送验证码
+        [BmobSMS requestSMSCodeInBackgroundWithPhoneNumber:phone andTemplate:@"Market" resultBlock:^(int number, NSError *error) {
+            if (!error) {
+                NSLog(@"%d",number);
+                NSLog(@"发送成功！id:%d",number);
+            } else {
+                NSLog(@"%@",error);
+                NSLog(@"发送失败!");
+            }
+        }];
+    }
+    
 }
 /**
  *  注册并验证
@@ -169,7 +211,7 @@
  *  @param password  密码
  *  @param code      验证码
  */
-- (void)doRegister:(NSString*)userphone andPassword:(NSString*)password andCode:(NSString*)code {
+- (void)doRegister:(NSString*)userphone andPassword:(NSString*)password {
     //url
     NSString *url = @"http://schoolserver.nat123.net/SchoolMarketServer/registerNewUser.jhtml";
     //参数
