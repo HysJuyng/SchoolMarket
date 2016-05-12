@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "RootTabBarController.h"
-#import "ConfirmOrderViewController.h"
 
 @interface AppDelegate ()
 
@@ -18,9 +17,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
-//    ConfirmOrderViewController *coVC = [[ConfirmOrderViewController alloc] init];
-//    self.window.rootViewController = coVC;
+    [NSThread sleepForTimeInterval:8.0];
     
     RootTabBarController *rootTabbar = [[RootTabBarController alloc] init];
     self.window.rootViewController = rootTabbar;
